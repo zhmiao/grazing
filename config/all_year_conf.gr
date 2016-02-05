@@ -1,0 +1,15 @@
+=====================================================================================================
+= For seasonal differences
+=====================================================================================================
+2                                               ! Number of seasons
+0                                               ! If use user specified check points or program intrinsic chieck points? 1 = user input; 0 = intrinsic
+1,15,30                                         ! Check points for different seasons if exists
+=====================================================================================================
+= For rotational grazing (management difference #1)
+=====================================================================================================
+12                                              ! Rotation number period
+1,31,59,90,120,151,181,212,243,273,304,334,365  ! Rotation period check points
+=====================================================================================================
+= For unavailable biomass rate
+=====================================================================================================
+0.3,0.1                                         ! Unavailable biomass rate for each plant species, when DE_SW(3) is on. if not leave it open

@@ -1,0 +1,35 @@
+=====================================================================================================
+= Site selection options for animal species number 1
+=====================================================================================================
+2                                               ! Abundance selection class number
+0, 0.2, 0.4                                         ! Abundance check points(kg/m^2), higher abundance has lower score
+-----------------------------------------------------------------------------------------------------
+2                                               ! Slope selection class number
+0, 0, 0                                         ! Slope check points(degree)
+-----------------------------------------------------------------------------------------------------
+2                                               ! Water resource selection class number (distance to water resource)
+0, 0, 0                                         ! Water resource check points(m^2)
+-----------------------------------------------------------------------------------------------------
+2                                               ! Snow cover selection class number
+0, 0, 0                                         ! Snow cover check points(m^2)
+-----------------------------------------------------------------------------------------------------
+2                                               ! Total site selection class number
+0, 1, 2                                         ! Total site selection check points, lower score has higher preference level
+=====================================================================================================
+= Site selection options for animal species number 2
+=====================================================================================================
+2                                               ! Abundance selection class number
+0, 0, 0                                         ! Abundance check points(kg/m^2), higher abundance has lower score
+-----------------------------------------------------------------------------------------------------
+2                                               ! Slope selection class number
+0, 0, 0                                         ! Slope check points(degree)
+-----------------------------------------------------------------------------------------------------
+2                                               ! Water resource selection class number (distance to water resource)
+0, 0, 0                                         ! Water resource check points(m^2)
+-----------------------------------------------------------------------------------------------------
+2                                               ! Snow cover selection class number
+0, 0, 0                                         ! Snow cover check points(m^2)
+-----------------------------------------------------------------------------------------------------
+2                                               ! Total site selection class number
+0, 0, 0                                         ! Total site selection check points, lower score has higher preference level
+-----------------------------------------------------------------------------------------------------

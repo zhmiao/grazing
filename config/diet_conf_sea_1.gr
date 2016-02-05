@@ -1,0 +1,12 @@
+=====================================================================================================
+= Preference index for animal species 1
+=====================================================================================================
+1, 0                                           ! Preference index for prefered plant species of animal species 1
+2, 0                                           ! Preference index for less prefered plant spcies of animal species 1
+0, 0                                           ! Preference index for unprefered plant species of animal species 1
+=====================================================================================================
+= Preference index for animal species 2
+=====================================================================================================
+2, 0                                           ! Preference index for prefered plant species of animal species 2
+1, 0                                           ! Preference index for less prefered plant spcies of animal species 2
+0, 0                                           ! Preference index for unprefered plant species of animal species 2
