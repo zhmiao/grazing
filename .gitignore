@@ -13,4 +13,4 @@ output/*.csv
 # 5. Log files
 .DS_Store
 .Rapp.history
-.echo.gr
+config/.echo.gr
