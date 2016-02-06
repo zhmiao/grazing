@@ -1,0 +1,15 @@
+# 1. Object file
+*.o
+
+# 2. Exacctable file
+*.out
+
+# 3. Module file
+*.mod
+
+# 4. Output csv files
+output/*.csv
+
+# 5. Log files
+.DS_Store
+.Rapp.history

@@ -47,8 +47,11 @@ program grazing_model
       ! ### Grazing options
       call grazing_process_opt
 
-      ! ### Actual grazing processes and effects
+      ! ### Actual grazing processes
       call grazing
+
+      ! ### Experimental grazing effects functions  
+      call graz_eff_func
 
       ! ### Model output configurations
       ! call model_output
