@@ -109,6 +109,7 @@ subroutine model_initialization
   allocate(SPP_BIOMASS(PLA_SPP_NUM))
   do y_dim = 1, MAX_Y_DIM
     do x_dim = 1, MAX_X_DIM
+			allocate(CELL(y_dim,x_dim)%GROW_DAYS(PLA_SPP_NUM))
       allocate(CELL(y_dim,x_dim)%TOT_BIO_SPP(PLA_SPP_NUM))
       allocate(CELL(y_dim,x_dim)%AV_BIO_SPP(PLA_SPP_NUM))
       allocate(CELL(y_dim,x_dim)%AV_BIO_SPP_P(PLA_SPP_NUM))

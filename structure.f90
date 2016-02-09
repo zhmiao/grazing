@@ -13,9 +13,9 @@ module structure
     real                               :: RAINFALL                        ! rain fall amount in each cell
 
     ! for plant growth
-    integer                            :: GROW_DAYS                       ! plant growing days each year in each cell
+    integer, dimension(:), allocatable :: GROW_DAYS                       ! plant growing days each year in each cell
     real                               :: DAILY_RAIN                      ! daily rainfall
-    real                               :: MAX_DAILY_GROWTH                ! maximum daily grass growth
+    ! real                               :: MAX_DAILY_GROWTH                ! maximum daily grass growth
     real, dimension(:), allocatable    :: TOT_BIO_SPP                     ! total aboveground plant biomass of different species
     real                               :: TOT_BIOMASS                     ! total biomass
     real, dimension(:), allocatable    :: AV_BIO_SPP                      ! available aboveground plant biomass of different species

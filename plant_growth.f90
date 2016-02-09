@@ -16,8 +16,10 @@ subroutine plant_growth
         if (day .le. CELL(y_dim,x_dim)%GROW_DAYS) then
 
           ! ## In growing seasons
-          CELL(y_dim, x_dim)%MAX_DAILY_GROWTH     = -1.79+2.11*CELL(y_dim, x_dim)%DAILY_RAIN
+          ! CELL(y_dim, x_dim)%MAX_DAILY_GROWTH     = -1.79+2.11*CELL(y_dim, x_dim)%DAILY_RAIN
+
           CELL(y_dim, x_dim)%SPP_K(cur_pla)       = phi*CELL(y_dim, x_dim)%DAILY_RAIN
+
           CELL(y_dim, x_dim)%TOT_BIO_SPP(cur_pla) = CELL(y_dim, x_dim)%TOT_BIO_SPP(cur_pla)&
                                                     +(R_MAX*(CELL(y_dim, x_dim)%TOT_BIO_SPP(cur_pla)&
                                                     +CELL(y_dim,x_dim)%SPP_K(cur_pla))&

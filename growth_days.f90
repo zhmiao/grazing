@@ -10,7 +10,11 @@ subroutine growth_days
 
   do y_dim=1,MAX_Y_DIM
     do x_dim=1,MAX_X_DIM
-      CELL(y_dim, x_dim)%GROW_DAYS=65+(300*EXP(0.01*CELL(y_dim,x_dim)%RAINFALL))/(EXP(0.01*CELL(y_dim,x_dim)%RAINFALL)+EXP(6.25))
+
+			do cur_pla=1,PLA_SPP_NUM
+        CELL(y_dim, x_dim)%GROW_DAYS(cur_pla)=65+(300*EXP(0.01*CELL(y_dim,x_dim)%RAINFALL))/(EXP(0.01*CELL(y_dim,x_dim)%RAINFALL)+EXP(6.25))
+		  end do
+
       CELL(y_dim, x_dim)%DAILY_RAIN=CELL(y_dim, x_dim)%RAINFALL/CELL(y_dim, x_dim)%GROW_DAYS
       ! write(*,*) CELL(y_dim, x_dim)%GROW_DAYS
     end do 
