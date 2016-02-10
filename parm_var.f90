@@ -41,16 +41,6 @@ module parameter_var
   integer                              :: end_yr
   character(10)                        :: SEASON                                 ! Used to store directories for each season
 
-
-  ! Plant growth parameter
-
-  real, parameter                      :: phi=80.872                             ! carrying capacity coefficient
-  real, parameter                      :: DECREASE_R=1.79                        ! biomass decrese rate during dry season
-  real, parameter                      :: R_MAX=0.039                            ! maximum grass growth rate
-
-  ! Rainfall parameter
-  real, parameter                      :: AVG_N=671, AVG_S=529                   ! northern most and southern most average annual rainfall
-
   !--------- -------- --------- --------- --------- --------- --------- --------- -----
   ! For grazing switches
   !--------- -------- --------- --------- --------- --------- --------- --------- -----

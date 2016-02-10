@@ -1,4 +1,4 @@
-subroutine model_initialization
+subroutine model_ini
 
   use parameter_var
   use structure
@@ -107,6 +107,9 @@ subroutine model_initialization
   allocate(UAV_RATE(PLA_SPP_NUM))
   allocate(RES_RATE(PLA_SPP_NUM))
   allocate(SPP_BIOMASS(PLA_SPP_NUM))
+	allocate(K_CO(PLA_SPP_NUM))
+	allocate(DECREASE_R(PLA_SPP_NUM))
+	allocate(R_MAX(PLA_SPP_NUM))
   do y_dim = 1, MAX_Y_DIM
     do x_dim = 1, MAX_X_DIM
 			allocate(CELL(y_dim,x_dim)%GROW_DAYS(PLA_SPP_NUM))
@@ -130,6 +133,36 @@ subroutine model_initialization
     end do
   end do
 
+  ! ## Read in some plant growth variables
+  read(SIM_CON_NUM,*,iostat=ioerr) (K_CO(i), i=1,PLA_SPP_NUM)
+  if (ioerr .ne. 0 ) then 
+    write(*,*) 'Carrying capacity coefficient reading error'
+    stop
+  else
+    write(*,*) 'Carrying capacity coefficients are: '
+    write(*,*) K_CO
+  end if
+
+  read(SIM_CON_NUM,*,iostat=ioerr) (DECREASE_R(i), i=1,PLA_SPP_NUM)
+  if (ioerr .ne. 0 ) then 
+    write(*,*) 'Decrease rate reading error'
+    stop
+  else
+    write(*,*) 'Decrease rates are: '
+    write(*,*) DECREASE_R
+  end if
+
+  read(SIM_CON_NUM,*,iostat=ioerr) (R_MAX(i), i=1,PLA_SPP_NUM)
+  if (ioerr .ne. 0 ) then 
+    write(*,*) 'Maximum growth rate reading error'
+    stop
+  else
+    write(*,*) 'Maximum growth rates are: '
+    write(*,*) R_MAX
+  end if
+
+	close(SIM_CON_NUM)
+
   ! # Open echo file and keep open throughout the running time [echo.gr]
   open(ECHO_NUM, file=CWD(1:len_trim(CWD))//ECHO_NAME, status='replace', action='write', iostat=ioerr)
     if (ioerr .ne. 0) then 
@@ -140,4 +173,4 @@ subroutine model_initialization
     write(*,*) ' '
     write(*,*) 'Model initialization done!!'
 
-end subroutine model_initialization
+end subroutine model_ini

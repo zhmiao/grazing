@@ -1,4 +1,4 @@
-subroutine grazing_initial
+subroutine grazing_ini
   
   use parameter_var
   use structure
@@ -493,4 +493,4 @@ subroutine grazing_initial
 
   write(*,*) ''
   write(*,*) ' Grazing initialization done!!'
-end subroutine grazing_initial
+end subroutine grazing_ini

@@ -13,8 +13,9 @@ module structure
     real                               :: RAINFALL                        ! rain fall amount in each cell
 
     ! for plant growth
+    integer                            :: RAIN_SEA                        ! Rain season
     integer, dimension(:), allocatable :: GROW_DAYS                       ! plant growing days each year in each cell
-    real                               :: DAILY_RAIN                      ! daily rainfall
+    real													     :: DAY_RAIN                        ! Daily rainfall use efficiency
     ! real                               :: MAX_DAILY_GROWTH                ! maximum daily grass growth
     real, dimension(:), allocatable    :: TOT_BIO_SPP                     ! total aboveground plant biomass of different species
     real                               :: TOT_BIOMASS                     ! total biomass
@@ -84,7 +85,13 @@ module structure
 
   ! ================================================
 
+  ! Rainfall parameter
+  real, parameter                 :: AVG_N=671, AVG_S=529            ! northern most and southern most average annual rainfall
+
   ! Global plant variables
+  real, dimension(:), allocatable :: K_CO                            ! carrying capacity coefficient (default value=80.872)
+  real, dimension(:), allocatable :: DECREASE_R                      ! biomass decrese rate during dry season (default value=1.79)
+  real, dimension(:), allocatable :: R_MAX                           ! maximum grass growth rate (default value=0.039)
   real, dimension(:), allocatable :: SPP_BIOMASS                     ! Global total biomass for each plant species
   real                            :: TOT_BIOMASS                     ! Global total plant biomass
   real                            :: AV_BIOMASS                      ! Global available plant biomass

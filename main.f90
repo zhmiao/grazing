@@ -7,8 +7,8 @@ program grazing_model
   integer i
   
   ! # start the program with model initializtion 
-  call model_initialization
-  call grazing_initial
+  call model_ini
+  call grazing_ini
 
   ! # do a yearly and daily loop
   do year=start_yr, end_yr
@@ -21,17 +21,7 @@ program grazing_model
     ! ## Set cell initial biomass for each plant species to zero in the begining of each year
     do y_dim = 1, MAX_Y_DIM
       do x_dim = 1, MAX_X_DIM
-
-      ! if (mod(x_dim,2) .eq. 1) then
-      !   CELL(y_dim,x_dim)%TOT_BIO_SPP(:)=1
-      !   CELL(y_dim,x_dim)%SPP_K(:)=1
-      ! else
-      !   CELL(y_dim,x_dim)%TOT_BIO_SPP(:)=2
-      !   CELL(y_dim,x_dim)%SPP_K(:)=2
-      ! end if
-
         CELL(y_dim,x_dim)%TOT_BIO_SPP(:)=0
-
       end do
     end do
 
