@@ -130,6 +130,7 @@ subroutine model_ini
       allocate(CELL(y_dim,x_dim)%SPP_CC(PLA_SPP_NUM))
       allocate(CELL(y_dim,x_dim)%SPP_NU(PLA_SPP_NUM))
       allocate(CELL(y_dim,x_dim)%SPP_RT(PLA_SPP_NUM))
+      allocate(CELL(y_dim,x_dim)%SPP_TRP(PLA_SPP_NUM))
     end do
   end do
 

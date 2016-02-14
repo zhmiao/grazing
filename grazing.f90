@@ -128,7 +128,7 @@ end if ! end checking GR_SW
       CELL(y_dim,x_dim)%SPP_LAI(cur_pla)=10*(128-62*exp(-10.2*CELL(y_dim,x_dim)%TOT_BIO_SPP(cur_pla)))&
                                                       *CELL(y_dim,x_dim)%TOT_BIO_SPP(cur_pla)/CELLAREA
     else
-      CELL(y_dim,x_dim)%SPP_LAI(cur_pla)=1
+      CELL(y_dim,x_dim)%SPP_LAI(cur_pla)=1 ! Default values
     end if
 
   ! ## Respiration rate
@@ -224,12 +224,12 @@ end if ! end checking GR_SW
     ! 3.2) Potential transpiration
     if(LA_EF_SW(4) .eq. 1) then
       if(CELL(y_dim,x_dim)%SPP_LAI(cur_pla) .le. 3) then
-        CELL(y_dim,x_dim)%SPP_TRP=CELL(y_dim,x_dim)%POT_ETP*CELL(y_dim,x_dim)%SPP_LAI(cur_pla)/3
+        CELL(y_dim,x_dim)%SPP_TRP(cur_pla)=CELL(y_dim,x_dim)%POT_ETP*CELL(y_dim,x_dim)%SPP_LAI(cur_pla)/3
       else
-        CELL(y_dim,x_dim)%SPP_TRP=CELL(y_dim,x_dim)%POT_ETP
+        CELL(y_dim,x_dim)%SPP_TRP(cur_pla)=CELL(y_dim,x_dim)%POT_ETP
       end if
     else
-      CELL(y_dim,x_dim)%SPP_TRP=1
+      CELL(y_dim,x_dim)%SPP_TRP(cur_pla)=1
     end if
 
     ! 4) Change in available light for other species
@@ -247,7 +247,7 @@ end if ! end checking GR_SW
 
     ! 2) Change in carbon conversion
     if (AN_EF_SW(2) .eq. 1) then
-      CELL(y_dim,x_dim)%SPP_CC(cur_pla)=AN_CC_VAR_A(cur_pla)*CELL(y_dim,x_dim)%SPP_N_CON(cur_pla)&
+      CELL(y_dim,x_dim)%SPP_CC(cur_pla)=AN_CC_VAR_A(cur_pla)*CELL(y_dim,x_dim)%(cur_pla(cur_pla(cur_pla(cur_pla))))SPP_N_CON(cur_pla)&
                                         +AN_CC_VAR_B(cur_pla)
     else
       CELL(y_dim,x_dim)%SPP_CC(cur_pla)=POT_CC(cur_pla)

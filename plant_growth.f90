@@ -44,6 +44,8 @@ subroutine plant_growth
 
         end if ! end checking plant growing season
 
+				CELL(y_dim,x_dim)%SPP_N_CON(cur_pla)=0.00103
+
       end do ! end looping plant species
 
     end do ! end looping x
