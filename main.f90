@@ -21,7 +21,9 @@ program grazing_model
     ! ## Set cell initial biomass for each plant species to zero in the begining of each year
     do y_dim = 1, MAX_Y_DIM
       do x_dim = 1, MAX_X_DIM
+
         CELL(y_dim,x_dim)%TOT_BIO_SPP(:)=0
+
       end do
     end do
 

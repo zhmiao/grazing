@@ -15,7 +15,7 @@ subroutine growth_days
       CELL(y_dim, x_dim)%DAY_RAIN = CELL(y_dim,x_dim)%RAINFALL/CELL(y_dim,x_dim)%RAIN_SEA
 
 			do cur_pla=1,PLA_SPP_NUM
-        CELL(y_dim, x_dim)%GROW_DAYS(cur_pla)=CELL(y_dim,x_dim)%RAIN_SEA ! **** add functions
+        CELL(y_dim, x_dim)%GROW_DAYS(cur_pla)=CELL(y_dim,x_dim)%GROW_DAYS_CO(cur_pla)*CELL(y_dim,x_dim)%RAIN_SEA ! **** add functions
 		  end do
 
       ! write(*,*) CELL(y_dim, x_dim)%GROW_DAYS

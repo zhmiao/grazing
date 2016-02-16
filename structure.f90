@@ -15,6 +15,7 @@ module structure
     ! for plant growth
     integer                            :: RAIN_SEA                        ! Rain season
     integer, dimension(:), allocatable :: GROW_DAYS                       ! plant growing days each year in each cell
+    integer, dimension(:), allocatable :: GROW_DAYS_CO                    ! Growth days coefficient
     real													     :: DAY_RAIN                        ! Daily rainfall use efficiency
     ! real                               :: MAX_DAILY_GROWTH                ! maximum daily grass growth
     real, dimension(:), allocatable    :: TOT_BIO_SPP                     ! total aboveground plant biomass of different species
@@ -26,6 +27,7 @@ module structure
     real, dimension(:), allocatable    :: UAV_BIO_SPP                     ! unavailable aboveground plant biomass of different species
     real                               :: UAV_BIOMASS                     ! total unavailable biomass
     real, dimension(:), allocatable    :: SPP_K                           ! grass growth carrying capacity for each plant species
+    real, dimension(:), allocatable    :: SPP_K_CO                        ! Carrying capacit coefficient
     real                               :: TOT_K                           ! total carrying capacity
 
     ! variables that's not included in the original plant growth model
@@ -91,7 +93,9 @@ module structure
   ! Global plant variables
   real, dimension(:), allocatable :: K_CO                            ! carrying capacity coefficient (default value=80.872)
   real, dimension(:), allocatable :: DECREASE_R                      ! biomass decrese rate during dry season (default value=1.79)
+  real, dimension(:), allocatable :: DECREASE_R_CO                   ! DECREASE_R coefficient
   real, dimension(:), allocatable :: R_MAX                           ! maximum grass growth rate (default value=0.039)
+  real, dimension(:), allocatable :: R_MAX_CO                        ! R_MAX coefficient
   real, dimension(:), allocatable :: SPP_BIOMASS                     ! Global total biomass for each plant species
   real                            :: TOT_BIOMASS                     ! Global total plant biomass
   real                            :: AV_BIOMASS                      ! Global available plant biomass

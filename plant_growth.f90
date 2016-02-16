@@ -18,7 +18,7 @@ subroutine plant_growth
           ! ## In growing seasons
           ! CELL(y_dim, x_dim)%MAX_DAILY_GROWTH     = -1.79+2.11*CELL(y_dim, x_dim)%DAILY_RAIN
 
-					CELL(y_dim, x_dim)%SPP_K(cur_pla)       = K_CO(cur_pla)*CELL(y_dim, x_dim)%DAY_RAIN ! ***** add function and species different phi
+					CELL(y_dim, x_dim)%SPP_K(cur_pla)       = CELL(y_dim,x_dim)%SPP_K_CO(cur_pla)*K_CO(cur_pla)*CELL(y_dim, x_dim)%DAY_RAIN 
 
           CELL(y_dim, x_dim)%TOT_BIO_SPP(cur_pla) = CELL(y_dim, x_dim)%TOT_BIO_SPP(cur_pla)&
                                                     +(R_MAX(cur_pla)*(CELL(y_dim, x_dim)%TOT_BIO_SPP(cur_pla)&
