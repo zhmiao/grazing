@@ -28,6 +28,10 @@ module structure
     real                               :: UAV_BIOMASS                     ! total unavailable biomass
     real, dimension(:), allocatable    :: SPP_K                           ! grass growth carrying capacity for each plant species
     real, dimension(:), allocatable    :: SPP_K_CO                        ! Carrying capacit coefficient
+    real, dimension(:), allocatable    :: G_R			                        ! Actual grwoth rate
+    real, dimension(:), allocatable    :: R_MAX_CO                        ! R_MAX coefficient
+    real, dimension(:), allocatable    :: D_R                             ! Actual decrease rate
+    real, dimension(:), allocatable    :: DECREASE_R_CO                   ! DECREASE_R coefficient
     real                               :: TOT_K                           ! total carrying capacity
 
     ! variables that's not included in the original plant growth model
@@ -93,9 +97,7 @@ module structure
   ! Global plant variables
   real, dimension(:), allocatable :: K_CO                            ! carrying capacity coefficient (default value=80.872)
   real, dimension(:), allocatable :: DECREASE_R                      ! biomass decrese rate during dry season (default value=1.79)
-  real, dimension(:), allocatable :: DECREASE_R_CO                   ! DECREASE_R coefficient
   real, dimension(:), allocatable :: R_MAX                           ! maximum grass growth rate (default value=0.039)
-  real, dimension(:), allocatable :: R_MAX_CO                        ! R_MAX coefficient
   real, dimension(:), allocatable :: SPP_BIOMASS                     ! Global total biomass for each plant species
   real                            :: TOT_BIOMASS                     ! Global total plant biomass
   real                            :: AV_BIOMASS                      ! Global available plant biomass

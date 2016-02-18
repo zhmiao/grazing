@@ -109,9 +109,7 @@ subroutine model_ini
   allocate(SPP_BIOMASS(PLA_SPP_NUM))
 	allocate(K_CO(PLA_SPP_NUM))
 	allocate(DECREASE_R(PLA_SPP_NUM))
-	allocate(DECREASE_R_CO(PLA_SPP_NUM))
 	allocate(R_MAX(PLA_SPP_NUM))
-	allocate(R_MAX_CO(PLA_SPP_NUM))
 
 	! # Initialized coefficient variable
 	DECREASE_R_CO(:)=1
@@ -127,6 +125,10 @@ subroutine model_ini
       allocate(CELL(y_dim,x_dim)%UAV_BIO_SPP(PLA_SPP_NUM))
       allocate(CELL(y_dim,x_dim)%SPP_K(PLA_SPP_NUM))
       allocate(CELL(y_dim,x_dim)%SPP_K_CO(PLA_SPP_NUM))
+      allocate(CELL(y_dim,x_dim)%G_R(PLA_SPP_NUM))
+	    allocate(CELL(y_dim,x_dim)%R_MAX_CO(PLA_SPP_NUM))
+      allocate(CELL(y_dim,x_dim)%D_R(PLA_SPP_NUM))
+			allocate(CELL(y_dim,x_dim)%DECREASE_R_CO(PLA_SPP_NUM))
       allocate(CELL(y_dim,x_dim)%SPP_LAI(PLA_SPP_NUM))
       allocate(CELL(y_dim,x_dim)%SPP_N_CON(PLA_SPP_NUM))
       allocate(CELL(y_dim,x_dim)%SPP_DEN(PLA_SPP_NUM))
