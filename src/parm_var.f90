@@ -11,7 +11,7 @@ module parameter_var
   real                                 :: CELLAREA                                    ! Cell area
   integer                              :: seed                                        ! seed multipliers, used for random number generation
   character(100)                       :: CWD                                         ! current working directory
-  character(40)                        :: SIM_CON_NAME='/config/sim_config.gr'        ! general configuration file
+  character(40)                        :: SIM_CON_NAME='/conf/sim_config.gr'        ! general configuration file
   integer, parameter                   :: SIM_CON_NUM=99                              ! general config device number
   character(30)                        :: OUTPUT_DIR                                  ! output file name
   integer, parameter                   :: OUTPUT_NUM=100                              ! output device number
@@ -19,15 +19,15 @@ module parameter_var
   integer, parameter                   :: ECHO_NUM=300                                ! echo file device number
   integer                              :: SW_NUM                                      ! Used to store number of switches is there are multiple switches
   integer                              :: SWITCH=200                                  ! Device switchice number for grazing process switch file
-  character(50)                        :: SWITCH_FILE='/config/switches.gr'           ! Grazing process file name
+  character(50)                        :: SWITCH_FILE='/conf/switches.gr'           ! Grazing process file name
   integer                              :: AY_CON=201
-  character(50)                        :: AY_CON_F='/config/all_year_conf.gr'
+  character(50)                        :: AY_CON_F='/conf/all_year_conf.gr'
   integer                              :: GR_CON_SEA=150                              ! temp function device number
   integer                              :: DS_CON=151
   integer                              :: SS_CON=152
-  character(30)                        :: PRE_DIR_GC='/config/graz_conf_'             ! Since there would be season folders, this piece needs to be separated for now
-  character(30)                        :: PRE_DIR_DS='/config/diet_conf_'
-  character(30)                        :: PRE_DIR_SS='/config/site_conf_'
+  character(30)                        :: PRE_DIR_GC='/conf/graz_conf_'             ! Since there would be season folders, this piece needs to be separated for now
+  character(30)                        :: PRE_DIR_DS='/conf/diet_conf_'
+  character(30)                        :: PRE_DIR_SS='/conf/site_conf_'
   logical                              :: isopen                                      ! Check whether a file is opened
   integer                              :: ioerr                                       ! i/o error indicator
   integer                              :: direrr                                      ! directory error indicator

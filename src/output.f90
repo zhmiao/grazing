@@ -13,7 +13,7 @@ subroutine model_output
   ! CELL(y_dim,x_dim)%TOT_BIOMASS=sum(CELL(y_dim,x_dim)%TOT_BIO_SPP(:))
   ! ! Output for species total biomass in each cell
   ! do cur_pla=1,PLA_SPP_NUM
-  !   write(OUTPUT_DIR,'(A19,I1)')'/output/totbio_pla_',cur_pla
+  !   write(OUTPUT_DIR,'(A19,I1)')'/out/totbio_pla_',cur_pla
   !   open(OUTPUT_NUM+cur_pla, FILE=CWD(1:len_trim(CWD))//OUTPUT_DIR(1:len_trim(OUTPUT_DIR))//'.csv',STATUS='REPLACE'&
   !                                                                     ,ACTION='WRITE',IOSTAT=ioerr)
   !     if (ioerr .ne. 0) then
@@ -78,7 +78,7 @@ subroutine model_output
 
     TOT_BIOMASS=sum(SPP_BIOMASS(:))
 
-    write(OUTPUT_DIR,'(A18)')'/output/glo_totbio'
+    write(OUTPUT_DIR,'(A18)')'/out/glo_totbio'
 
     inquire(unit=OUTPUT_NUM, opened=isopen)
     if (isopen .eq. .false.) then

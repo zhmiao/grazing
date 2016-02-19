@@ -8,7 +8,7 @@
 *.mod
 
 # 4. Output csv files
-output/*.csv
+out/*.csv
 
 # 5. Log files
 .DS_Store
