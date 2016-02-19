@@ -14,8 +14,10 @@ subroutine grazing_ini
   ! =========================
 
   write(*,*) ' '
+  write(*,*) '============================'
   write(*,*) 'Now start reading switches. '
   write(*,*) '0 is off, 1 is on. '
+  write(*,*) '============================'
   write(*,*) ' '
 
   ! ## Read in switch file
@@ -28,7 +30,9 @@ subroutine grazing_ini
   else
 
     write(*,*) ' '
+    write(*,*) '=============================='
     write(*,*) 'For grazing process switches: '
+    write(*,*) '=============================='
     write(*,*) ' '
 
     ! =========================
@@ -180,7 +184,9 @@ subroutine grazing_ini
     ! =========================
 
     write(*,*) ' '
+    write(*,*) '=========================='
     write(*,*) 'For first stage switches: '
+    write(*,*) '=========================='
     write(*,*) ' '
 
     read(SWITCH,*)
@@ -234,8 +240,10 @@ subroutine grazing_ini
     ! ## Second stage effects switches
     ! =========================
 
-    write(*,*) ' '
+		write(*,*) ' '
+    write(*,*) '==========================='
     write(*,*) 'For second stage switches: '
+    write(*,*) '==========================='
     write(*,*) ' '
 
     read(SWITCH,*)
@@ -300,7 +308,9 @@ subroutine grazing_ini
     ! =========================
 
     write(*,*) ' '
+    write(*,*) '=========================='
     write(*,*) 'For third stage switches: '
+    write(*,*) '=========================='
     write(*,*) ' '
 
     read(SWITCH,*)
@@ -374,7 +384,9 @@ subroutine grazing_ini
 
     if (SEA_SW .eq. 1 .or. MAN_SW(1) .eq. 1 .or. UN_SW .eq. 1) then
       write(*,*) ' '
+      write(*,*) '============================='
       write(*,*) 'For all year configurations: '
+      write(*,*) '============================='
       write(*,*) ' '
     end if
 
@@ -492,5 +504,7 @@ subroutine grazing_ini
 
 
   write(*,*) ''
+  write(*,*) '=============================='
   write(*,*) ' Grazing initialization done!!'
+  write(*,*) '=============================='
 end subroutine grazing_ini

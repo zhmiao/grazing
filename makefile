@@ -13,3 +13,6 @@ $(EXECUTABLE): $(OBJECTS)
 obj/%.o: src/%.f90
 	$(FC) $(FFLAGS) $< -o $@
 
+# clean: 
+# 	rm obj/*.o 
+

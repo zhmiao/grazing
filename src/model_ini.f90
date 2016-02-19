@@ -21,6 +21,13 @@ subroutine model_ini
       stop
     end if
 
+  ! # Open echo file and keep open throughout the running time [echo.gr]
+  open(ECHO_NUM, file=CWD(1:len_trim(CWD))//ECHO_NAME, status='replace', action='write', iostat=ioerr)
+    if (ioerr .ne. 0) then 
+      write(*,*) 'echo file not opend'
+      stop
+    end if
+
   ! # Open general simulation configuration file [sim_config.gr]
   open(SIM_CON_NUM, file=CWD(1:len_trim(CWD))//SIM_CON_NAME, action='read', iostat=ioerr)
     if (ioerr .ne. 0) then 
@@ -153,8 +160,8 @@ subroutine model_ini
     write(*,*) 'Carrying capacity coefficient reading error'
     stop
   else
-    write(*,*) 'Carrying capacity coefficients are: '
-    write(*,*) K_CO
+    write(ECHO_NUM,*) 'Carrying capacity coefficients are: '
+    write(ECHO_NUM,*) K_CO
   end if
 
   read(SIM_CON_NUM,*,iostat=ioerr) (DECREASE_R(i), i=1,PLA_SPP_NUM)
@@ -162,8 +169,8 @@ subroutine model_ini
     write(*,*) 'Decrease rate reading error'
     stop
   else
-    write(*,*) 'Decrease rates are: '
-    write(*,*) DECREASE_R
+    write(ECHO_NUM,*) 'Decrease rates are: '
+    write(ECHO_NUM,*) DECREASE_R
   end if
 
   read(SIM_CON_NUM,*,iostat=ioerr) (R_MAX(i), i=1,PLA_SPP_NUM)
@@ -171,20 +178,16 @@ subroutine model_ini
     write(*,*) 'Maximum growth rate reading error'
     stop
   else
-    write(*,*) 'Maximum growth rates are: '
-    write(*,*) R_MAX
+    write(ECHO_NUM,*) 'Maximum growth rates are: '
+    write(ECHO_NUM,*) R_MAX
   end if
 
 	close(SIM_CON_NUM)
 
-  ! # Open echo file and keep open throughout the running time [echo.gr]
-  open(ECHO_NUM, file=CWD(1:len_trim(CWD))//ECHO_NAME, status='replace', action='write', iostat=ioerr)
-    if (ioerr .ne. 0) then 
-      write(*,*) 'echo file not opend'
-      stop
-    end if
 
     write(*,*) ' '
+    write(*,*) '==========================='
     write(*,*) 'Model initialization done!!'
+    write(*,*) '==========================='
 
 end subroutine model_ini

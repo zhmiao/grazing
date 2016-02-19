@@ -115,6 +115,7 @@ if (GR_SW .eq. 1) then
 
 else  ! When there is no grazing
   CELL(y_dim,x_dim)%SOIL_DCOM=0
+
 end if ! end checking GR_SW
 
 ! ------------------------

@@ -74,6 +74,8 @@ program grazing_model
   end do    ! End looping for years
 
   write(*,*) ' '
-  write(*,*) 'Program is complete.'
+  write(*,*) '^^^^^^^^^^^^^^^^^^^^^^^^'
+  write(*,*) '< Program is complete. >'
+  write(*,*) '^^^^^^^^^^^^^^^^^^^^^^^^'
 
 end program grazing_model
