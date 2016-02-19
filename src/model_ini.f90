@@ -111,10 +111,6 @@ subroutine model_ini
 	allocate(DECREASE_R(PLA_SPP_NUM))
 	allocate(R_MAX(PLA_SPP_NUM))
 
-	! # Initialized coefficient variable
-	DECREASE_R_CO(:)=1
-	R_MAX_CO(:)=1
-
   do y_dim = 1, MAX_Y_DIM
     do x_dim = 1, MAX_X_DIM
 			allocate(CELL(y_dim,x_dim)%GROW_DAYS(PLA_SPP_NUM))
@@ -146,6 +142,8 @@ subroutine model_ini
 			! Initialized growth variables coefficient
 			CELL(y_dim,x_dim)%GROW_DAYS_CO(:)=1
 			CELL(y_dim,x_dim)%SPP_K_CO(:)=1
+			CELL(y_dim,x_dim)%DECREASE_R_CO(:)=1
+			CELL(y_dim,x_dim)%R_MAX_CO(:)=1
     end do
   end do
 

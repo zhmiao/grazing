@@ -3,6 +3,7 @@
 
 # 2. Exacctable file
 *.out
+START
 
 # 3. Module file
 *.mod
@@ -13,4 +14,4 @@ out/*.csv
 # 5. Log files
 .DS_Store
 .Rapp.history
-config/.echo.gr
+.echo.gr

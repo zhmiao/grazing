@@ -12,7 +12,7 @@ subroutine graz_eff_func
 			do cur_pla=1, PLA_SPP_NUM
 
 				! # First, GROW_DAYS modifications (Only do this at the end of the year)
-       	if (day=365) then
+       	if (day .eq. 365) then
 	      	gx = 2/(EXP((0.8*CELL(y_dim,x_dim)%SOIL_COM-1.5)**2))-1&
 				      		  	+ (2*2.7183-2)/((2.7183-2)+EXP((2*CELL(y_dim,x_dim)%LIT_POOL-1)**2))-1&
   				      		 	- 1/(CELL(y_dim,x_dim)%AN_POOL+CELL(y_dim,x_dim)%LIT_N+1)+1

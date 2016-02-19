@@ -32,7 +32,7 @@ subroutine grazing_process_opt
     ! ## User check points switch check, when it is off, set check point 1 to 1, cp_2 to growth days, and cp_3 to end of the year
     if (SPCP_SW .eq. 0) then
       SEA_CP(1)=1
-      SEA_CP(2)=sum(CELL(:,:)%GROW_DAYS)/(MAX_Y_DIM*MAX_X_DIM)
+      SEA_CP(2)=sum(CELL(:,:)%RAIN_SEA)/(MAX_Y_DIM*MAX_X_DIM)
       SEA_CP(3)=365
     end if
 

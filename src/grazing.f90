@@ -247,7 +247,7 @@ end if ! end checking GR_SW
 
     ! 2) Change in carbon conversion
     if (AN_EF_SW(2) .eq. 1) then
-      CELL(y_dim,x_dim)%SPP_CC(cur_pla)=AN_CC_VAR_A(cur_pla)*CELL(y_dim,x_dim)%(cur_pla(cur_pla(cur_pla(cur_pla))))SPP_N_CON(cur_pla)&
+      CELL(y_dim,x_dim)%SPP_CC(cur_pla)=AN_CC_VAR_A(cur_pla)*CELL(y_dim,x_dim)%SPP_N_CON(cur_pla)&
                                         +AN_CC_VAR_B(cur_pla)
     else
       CELL(y_dim,x_dim)%SPP_CC(cur_pla)=POT_CC(cur_pla)

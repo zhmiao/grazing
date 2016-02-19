@@ -15,7 +15,7 @@ module parameter_var
   integer, parameter                   :: SIM_CON_NUM=99                              ! general config device number
   character(30)                        :: OUTPUT_DIR                                  ! output file name
   integer, parameter                   :: OUTPUT_NUM=100                              ! output device number
-  character(30)                        :: ECHO_NAME='/echo.gr'                        ! echo file name
+  character(30)                        :: ECHO_NAME='/.echo.gr'                        ! echo file name
   integer, parameter                   :: ECHO_NUM=300                                ! echo file device number
   integer                              :: SW_NUM                                      ! Used to store number of switches is there are multiple switches
   integer                              :: SWITCH=200                                  ! Device switchice number for grazing process switch file
