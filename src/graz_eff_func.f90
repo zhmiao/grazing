@@ -44,7 +44,6 @@ subroutine graz_eff_func
       !                                             *CELL(y_dim,x_dim)%SOIL_DCOM/0.15)!&
                                                   ! -SC_EF_VAR_B(cur_ani)
 
-
 		  	! # Fourth, DECREASE_R modifications
 		  	gx = 2/(EXP((0.8*CELL(y_dim,x_dim)%SOIL_COM-1.5)**2))-1&
 										  - 1/(CELL(y_dim,x_dim)%SPP_RES(cur_pla)+1)+1&

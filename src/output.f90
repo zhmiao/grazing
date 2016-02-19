@@ -51,6 +51,7 @@ subroutine model_output
   do cur_pla=1,PLA_SPP_NUM
 
     SPP_BIOMASS(cur_pla)=0
+
     do y_dim=1,MAX_Y_DIM
       do x_dim=1,MAX_X_DIM
         SPP_BIOMASS(cur_pla)=SPP_BIOMASS(cur_pla)+CELL(y_dim,x_dim)%TOT_BIO_SPP(cur_pla)
