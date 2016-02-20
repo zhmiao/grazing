@@ -4,6 +4,7 @@
 # 2. Exacctable file
 *.out
 START
+RUN
 
 # 3. Module file
 *.mod
