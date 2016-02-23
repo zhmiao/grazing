@@ -390,6 +390,46 @@ subroutine grazing_ini
     else
 			write(*,*) 'If Effects Switche is: '
 			write(*,*) IF_EFF_SW
+    end if
+
+		! ### If Effects Grwothdays
+		read(SWITCH,*,iostat=ioerr) IF_EFF_GD
+    if (ioerr .ne. 0 ) then 
+			write(*,*) 'If Effects Growthdays Switche Reading Error.'
+      stop
+    else
+			write(*,*) 'If Effects Growthdays  Switche is: '
+			write(*,*) IF_EFF_GD
+    end if
+
+		! ### If Effects Carrying Capacity
+		read(SWITCH,*,iostat=ioerr) IF_EFF_K
+    if (ioerr .ne. 0 ) then 
+			write(*,*) 'If Effects Carrying Capacity Switche Reading Error.'
+      stop
+    else
+			write(*,*) 'If Effects Carrying Capacity Switche is: '
+			write(*,*) IF_EFF_K
+    end if
+
+		! ### If Effects R
+		read(SWITCH,*,iostat=ioerr) IF_EFF_R
+    if (ioerr .ne. 0 ) then 
+			write(*,*) 'If Effects R Switche Reading Error.'
+      stop
+    else
+			write(*,*) 'If Effects R Switche is: '
+			write(*,*) IF_EFF_R
+    end if
+
+		! ### If Effects DR
+		read(SWITCH,*,iostat=ioerr) IF_EFF_DR
+    if (ioerr .ne. 0 ) then 
+			write(*,*) 'If Effects DR Switche Reading Error.'
+      stop
+    else
+			write(*,*) 'If Effects DR Switche is: '
+			write(*,*) IF_EFF_DR
       read(SWITCH,*)
     end if
 

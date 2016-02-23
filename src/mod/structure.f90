@@ -14,8 +14,8 @@ module structure
 
     ! for plant growth
     integer                            :: RAIN_SEA                        ! Rain season
-    integer, dimension(:), allocatable :: GROW_DAYS                       ! plant growing days each year in each cell
-    integer, dimension(:), allocatable :: GROW_DAYS_CO                    ! Growth days coefficient
+    real, dimension(:), allocatable    :: GROW_DAYS                       ! plant growing days each year in each cell
+    real, dimension(:), allocatable    :: GROW_DAYS_CO                    ! Growth days coefficient
     real													     :: DAY_RAIN                        ! Daily rainfall use efficiency
     ! real                               :: MAX_DAILY_GROWTH                ! maximum daily grass growth
     real, dimension(:), allocatable    :: TOT_BIO_SPP                     ! total aboveground plant biomass of different species

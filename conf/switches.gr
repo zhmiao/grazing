@@ -8,7 +8,7 @@
 0                                               ! Switch for seasoncal differences
 -----------------------------------------------------------------------------------------------------
 3                                               ! Switch for management differences, switch number
-0, 0, 0                                         ! 1) Rotational grazing; 2) Maximum amount of grazing; 3) Minimum amount of grazing
+0,0,0                                           ! 1) Rotational grazing; 2) Maximum amount of grazing; 3) Minimum amount of grazing
 =====================================================================================================
 = Grazing rate options
 =====================================================================================================
@@ -21,10 +21,10 @@
 = Selection options
 =====================================================================================================
 3                                               ! Switch for diet selection, switch number
-0, 0, 0                                         ! 1) Select based on plant preference; 2) Selection based on LAI; 3) Selection based on nitrogen level
+0,0,0                                           ! 1) Select based on plant preference; 2) Selection based on LAI; 3) Selection based on nitrogen level
 -----------------------------------------------------------------------------------------------------
 4                                               ! Switches for site selection, switch number
-0, 0, 0, 0                                      ! 1) Select by plant abundance; 2) Select by slope; 3) Select by distance to water resource; 4) Select by snow cover
+0,0,0,0                                         ! 1) Select by plant abundance; 2) Select by slope; 3) Select by distance to water resource; 4) Select by snow cover
 =====================================================================================================
 = First stage effects
 =====================================================================================================
@@ -59,6 +59,10 @@
 =====================================================================================================
 = If Effects
 =====================================================================================================
-0                                               ! If there should be grazing effects on plant growth in this particular model
+1                                               ! If there should be grazing effects on plant growth in this particular model
+1                                               ! If Eff Grwoth Days
+0                                               ! If Eff Carrying Capacity
+0                                               ! If Eff R
+0                                               ! If Eff DR
 -----------------------------------------------------------------------------------------------------
 

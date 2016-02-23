@@ -108,13 +108,22 @@ if (GR_SW .eq. 1) then
       CELL(y_dim,x_dim)%SOIL_DCOM=CELL(y_dim,x_dim)%SOIL_DCOM+(SC_VAR_A(cur_ani)*CELL(y_dim,x_dim)%SD(cur_ani)&
                                                            /(SC_VAR_B(cur_ani)+CELL(y_dim,x_dim)%SD(cur_ani)))
     end do
+
+    if (CELL(y_dim,x_dim)%SOIL_DCOM .le. 0) then
+      CELL(y_dim,x_dim)%SOIL_DCOM=0
+    end if
+
   else
     CELL(y_dim,x_dim)%SOIL_DCOM=0
+    CELL(y_dim,x_dim)%SOIL_COM=0
   end if
+
   CELL(y_dim,x_dim)%SOIL_COM=SC_FREE+CELL(y_dim,x_dim)%SOIL_DCOM
 
 else  ! When there is no grazing
+
   CELL(y_dim,x_dim)%SOIL_DCOM=0
+  CELL(y_dim,x_dim)%SOIL_COM=0
 
 end if ! end checking GR_SW
 
@@ -128,15 +137,25 @@ end if ! end checking GR_SW
     if (LA_SW .eq. 1) then
       CELL(y_dim,x_dim)%SPP_LAI(cur_pla)=10*(128-62*exp(-10.2*CELL(y_dim,x_dim)%TOT_BIO_SPP(cur_pla)))&
                                                       *CELL(y_dim,x_dim)%TOT_BIO_SPP(cur_pla)/CELLAREA
+
+      if (CELL(y_dim,x_dim)%SPP_LAI(cur_pla) .le. 0) then
+        CELL(y_dim,x_dim)%SPP_LAI(cur_pla)=0
+      end if
+
     else
-      CELL(y_dim,x_dim)%SPP_LAI(cur_pla)=1 ! Default values
+      CELL(y_dim,x_dim)%SPP_LAI(cur_pla)=0 ! Default values
     end if
 
   ! ## Respiration rate
     if (RS_SW .eq. 1) then
        CELL(y_dim,x_dim)%SPP_RES(cur_pla)=RES_RATE(cur_pla)*CELL(y_dim,x_dim)%TOT_BIO_SPP(cur_pla)
+
+       if (CELL(y_dim,x_dim)%SPP_RES(cur_pla) .le. 0) then
+         CELL(y_dim,x_dim)%SPP_RES(cur_pla)=0
+       end if
+
      else
-       CELL(y_dim,x_dim)%SPP_RES(cur_pla)=1
+       CELL(y_dim,x_dim)%SPP_RES(cur_pla)=0
     end if
 
   ! ## Available N
@@ -153,6 +172,15 @@ end if ! end checking GR_SW
         CELL(y_dim,x_dim)%AN_POOL=CELL(y_dim,x_dim)%AN_POOL+N_RET&
                                                 *(0.7*(CELL(y_dim,x_dim)%SPP_N_CON(cur_pla)&
                                                 /cell(y_dim,x_dim)%SPP_C_CON(cur_pla)-12)/13)
+
+        if (CELL(y_dim,x_dim)%AN_POOL .le. 0) then
+          CELL(y_dim,x_dim)%AN_POOL=0
+        end if
+
+			else
+
+				CELL(y_dim,x_dim)%AN_POOL=0
+
       end if
 
       ! ###  2) From feces
@@ -160,6 +188,15 @@ end if ! end checking GR_SW
         CELL(y_dim,x_dim)%LIT_N=CELL(y_dim,x_dim)%LIT_N+N_RET&
                                                 *(1-0.7*(CELL(y_dim,x_dim)%SPP_N_CON(cur_pla)&
                                                 /cell(y_dim,x_dim)%SPP_C_CON(cur_pla)-12)/13)
+
+        if (CELL(y_dim,x_dim)%LIT_N .le. 0) then
+          CELL(y_dim,x_dim)%LIT_N=0
+        end if
+
+			else
+
+				CELL(y_dim,x_dim)%LIT_N=0
+
       end if
 
     end do ! end looping of animal species
@@ -167,6 +204,13 @@ end if ! end checking GR_SW
   ! Litter pool
     if (LP_SW .eq. 1) then
       CELL(y_dim,x_dim)%LIT_POOL=CELL(y_dim,x_dim)%LIT_POOL+sum(CELL(y_dim,x_dim)%SPP_DETACH(:,cur_pla))
+
+      if (CELL(y_dim,x_dim)%LIT_POOL .le. 0) then
+        CELL(y_dim,x_dim)%LIT_POOL=0
+      end if
+
+		else
+			CELL(y_dim,x_dim)%LIT_POOL=0
     end if
 
 
@@ -190,16 +234,26 @@ end if ! end checking GR_SW
     if (LA_EF_SW(1) .eq. 1) then
       CELL(y_dim,x_dim)%SPP_PS(cur_pla)=LA_PS_VAR_A(cur_pla)*CELL(y_dim,x_dim)%SPP_LAI(cur_pla)&
                                           /(LA_PS_VAR_B(cur_pla)+CELL(y_dim,x_dim)%SPP_LAI(cur_pla))
+
+      if (CELL(y_dim,x_dim)%SPP_PS(cur_pla) .le. 0) then
+        CELL(y_dim,x_dim)%SPP_PS(cur_pla)=0
+      end if
+
     else
-      CELL(y_dim,x_dim)%SPP_PS(cur_pla)=1
+      CELL(y_dim,x_dim)%SPP_PS(cur_pla)=0
     end if
 
     ! 2) Change in rainfall interception
 
     if (LA_EF_SW(2) .eq. 1) then
       CELL(y_dim,x_dim)%SPP_RI(cur_pla)=1-exp(-LA_RI_VAR_A(cur_pla)*CELL(y_dim,x_dim)%SPP_LAI(cur_pla))
+
+      if (CELL(y_dim,x_dim)%SPP_RI(cur_pla) .le. 0) then
+        CELL(y_dim,x_dim)%SPP_RI(cur_pla)=0
+      end if
+
     else
-      CELL(y_dim,x_dim)%SPP_RI(cur_pla)=1
+      CELL(y_dim,x_dim)%SPP_RI(cur_pla)=0
     end if
 
   end do ! end looping for plant species
@@ -216,8 +270,13 @@ end if ! end checking GR_SW
     ! 3.1) Potential soil evaporation
     if(LA_EF_SW(3) .eq. 1) then
       CELL(y_dim,x_dim)%POT_EVP=CELL(y_dim,x_dim)%POT_ETP*exp(-0.4*sum(CELL(y_dim,x_dim)%SPP_LAI(:)/PLA_SPP_NUM))
+
+      if (CELL(y_dim,x_dim)%POT_EVP .le. 0) then
+        CELL(y_dim,x_dim)%POT_EVP=0
+      end if
+
     else
-      CELL(y_dim,x_dim)%POT_EVP=1
+      CELL(y_dim,x_dim)%POT_EVP=0
     end if
 
   do cur_pla=1,PLA_SPP_NUM
@@ -226,30 +285,45 @@ end if ! end checking GR_SW
     if(LA_EF_SW(4) .eq. 1) then
       if(CELL(y_dim,x_dim)%SPP_LAI(cur_pla) .le. 3) then
         CELL(y_dim,x_dim)%SPP_TRP(cur_pla)=CELL(y_dim,x_dim)%POT_ETP*CELL(y_dim,x_dim)%SPP_LAI(cur_pla)/3
+
+        if (CELL(y_dim,x_dim)%SPP_TRP(cur_pla) .le. 0) then
+          CELL(y_dim,x_dim)%SPP_TRP(cur_pla)=0
+        end if
+
       else
         CELL(y_dim,x_dim)%SPP_TRP(cur_pla)=CELL(y_dim,x_dim)%POT_ETP
       end if
     else
-      CELL(y_dim,x_dim)%SPP_TRP(cur_pla)=1
+      CELL(y_dim,x_dim)%SPP_TRP(cur_pla)=0
     end if
 
     ! 4) Change in available light for other species
-    if(LA_EF_SW(5) .eq. 1) then
-    end if
+    ! if(LA_EF_SW(5) .eq. 1) then
+    ! end if
 
   ! Form available N
     ! 1) Change in N uptake
     if (AN_EF_SW(1) .eq. 1) then
       CELL(y_dim,x_dim)%SPP_NU(cur_pla)=AN_NU_VAR_A(cur_pla)*CELL(y_dim,x_dim)%AN_POOL&
                                         /(AN_NU_VAR_B(cur_pla)+CELL(y_dim,x_dim)%AN_POOL)
+
+      if (CELL(y_dim,x_dim)%SPP_NU(cur_pla) .le. 0) then
+        CELL(y_dim,x_dim)%SPP_NU(cur_pla)=0
+      end if
+
     else
-      CELL(y_dim,x_dim)%SPP_NU(cur_pla)=1
+      CELL(y_dim,x_dim)%SPP_NU(cur_pla)=0
     end if
 
     ! 2) Change in carbon conversion
     if (AN_EF_SW(2) .eq. 1) then
       CELL(y_dim,x_dim)%SPP_CC(cur_pla)=AN_CC_VAR_A(cur_pla)*CELL(y_dim,x_dim)%SPP_N_CON(cur_pla)&
                                         +AN_CC_VAR_B(cur_pla)
+
+      if (CELL(y_dim,x_dim)%SPP_CC(cur_pla) .le. 0) then
+        CELL(y_dim,x_dim)%SPP_CC(cur_pla)=0
+      end if
+
     else
       CELL(y_dim,x_dim)%SPP_CC(cur_pla)=POT_CC(cur_pla)
     end if
@@ -258,8 +332,13 @@ end if ! end checking GR_SW
     if (AN_EF_SW(3) .eq. 1) then
       CELL(y_dim,x_dim)%SPP_RT(cur_pla)=AN_RT_VAR_A(cur_pla)/(1+AN_RT_VAR_B(cur_pla)*(CELL(y_dim,x_dim)%SPP_CC(cur_pla)&
                                                                   /POT_CC(cur_pla)))
+
+      if (CELL(y_dim,x_dim)%SPP_RT(cur_pla) .le. 0) then
+        CELL(y_dim,x_dim)%SPP_RT(cur_pla)=0
+      end if
+
     else
-      CELL(y_dim,x_dim)%SPP_RT(cur_pla)=1
+      CELL(y_dim,x_dim)%SPP_RT(cur_pla)=0
     end if
 
     ! 4) root to shoot ratio with C and N relationship

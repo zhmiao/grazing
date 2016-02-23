@@ -46,7 +46,7 @@ program grazing_model
       call graz_eff_func
 
       ! ### Model output configurations
-      ! call model_output
+      call model_output
 
   ! write(*,*) ' '
   ! do y_dim = 1, MAX_Y_DIM

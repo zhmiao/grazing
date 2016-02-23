@@ -79,7 +79,7 @@ subroutine model_output
 
     TOT_BIOMASS=sum(SPP_BIOMASS(:))
 
-    write(OUTPUT_DIR,'(A18)')'/out/glo_totbio'
+    write(OUTPUT_DIR,'(A15)')'/out/glo_totbio'
 
     inquire(unit=OUTPUT_NUM, opened=isopen)
     if (isopen .eq. .false.) then
@@ -89,6 +89,7 @@ subroutine model_output
         write(*,*) 'Global total plant biomass outputfile can not be opened'
         stop
       end if
+
     end if
 
     write(OUTPUT_NUM,*) TOT_BIOMASS,','
