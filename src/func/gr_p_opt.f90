@@ -124,6 +124,8 @@ subroutine grazing_process_opt
           ! ##### Storage variables
           CELL(y_dim,x_dim)%AV_BIO_SPP_P(cur_pla)=CELL(y_dim,x_dim)%AV_BIO_SPP(cur_pla)
 
+					! write(*,*)CELL(y_dim,x_dim)%AV_BIO_SPP(cur_pla)
+					! write(*,*)CELL(y_dim,x_dim)%TOT_BIO_SPP(cur_pla)
         end do
 
         ! #### Biomass for all plant species, available, unavailable, and total
@@ -133,7 +135,6 @@ subroutine grazing_process_opt
 
         ! #### Storage variables
         CELL(y_dim,x_dim)%AV_BIOMASS_P=CELL(y_dim,x_dim)%AV_BIOMASS
-
 
       ! #### End dimension loop
       end do
@@ -294,6 +295,9 @@ subroutine grazing_process_opt
               do cur_pla=1,PLA_SPP_NUM
                 SITE_PREF(cur_ani)%SPP_AV_BIO(cur_cla,cur_pla)=SITE_PREF(cur_ani)%SPP_AV_BIO(cur_cla,cur_pla)&
                                                       +CELL(y_dim,x_dim)%AV_BIO_SPP(cur_pla)*ANI_COM_FAC(cur_ani)
+								! write(*,*)CELL(y_dim,x_dim)%AV_BIO_SPP(cur_pla)
+								! write(*,*)ANI_COM_FAC(cur_pla)
+								! write(*,*)SITE_PREF(cur_ani)%SPP_AV_BIO(cur_cla,cur_pla)
               end do
 
             end if    ! End current cell preference class check

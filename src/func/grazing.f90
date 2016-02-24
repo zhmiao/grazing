@@ -35,10 +35,11 @@ if (GR_SW .eq. 1) then
         if(CELL(y_dim,x_dim)%SS_PR_CLA(cur_ani) .eq. cur_cla) then
 
           ! @# Dominator check
-          if (SITE_PREF(cur_ani)%SPP_AV_BIO(cur_cla,cur_pla) .ge. 0) then 
+          if (SITE_PREF(cur_ani)%SPP_AV_BIO(cur_cla,cur_pla) .gt. 0) then 
             CELL(y_dim,x_dim)%SPP_GRAZED(cur_ani,cur_pla)=SITE_PREF(cur_ani)%SPP_FORAGE(cur_cla,cur_pla)&
                                *CELL(y_dim,x_dim)%AV_BIO_SPP(cur_pla)/SITE_PREF(cur_ani)%SPP_AV_BIO(cur_cla,cur_pla)&
                                *LAI_FAC
+
           else
             CELL(y_dim,x_dim)%SPP_GRAZED(cur_ani,cur_pla)=0
           end if    ! End dominator check
@@ -52,9 +53,15 @@ if (GR_SW .eq. 1) then
 
         end if ! end cell preference cheking
 
+				! write(*,*) CELL(y_dim,x_dim)%SPP_GRAZED(cur_ani,cur_pla)
+				! write(*,*) SITE_PREF(cur_ani)%SPP_FORAGE(cur_cla,cur_pla)
+				! write(*,*) CELL(y_dim,x_dim)%AV_BIO_SPP(cur_pla)
+				! write(*,*) SITE_PREF(cur_ani)%SPP_AV_BIO(cur_cla,cur_pla)
+
       end do ! end plant looping
     end do ! end site preference class checking
   end do ! end animal species checking
+
 
 ! ------------------------
 ! # First stage
@@ -165,6 +172,8 @@ end if ! end checking GR_SW
       if (any(NR_SW(:) .eq. 1)) then
         N_RET=N_RET_RATE(cur_ani)*CELL(y_dim,x_dim)%SPP_GRAZED(cur_ani,cur_pla)&
                                                    *CELL(y_dim,x_dim)%SPP_N_CON(cur_pla)
+
+				! write(*,*) CELL(y_dim,x_dim)%SPP_N_CON(cur_pla)
       end if
 
       ! ### 1) From urine
@@ -325,7 +334,8 @@ end if ! end checking GR_SW
       end if
 
     else
-      CELL(y_dim,x_dim)%SPP_CC(cur_pla)=POT_CC(cur_pla)
+      ! CELL(y_dim,x_dim)%SPP_CC(cur_pla)=POT_CC(cur_pla)
+      CELL(y_dim,x_dim)%SPP_CC(cur_pla)=0
     end if
 
     ! 3) Change in root to shoot ratio

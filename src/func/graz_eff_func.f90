@@ -31,7 +31,7 @@ subroutine graz_eff_func
 							! write(*,*) CELL(y_dim,x_dim)%AN_POOL
 							! write(*,*) CELL(y_dim,x_dim)%LIT_N
 							! write(*,*) -1/(CELL(y_dim,x_dim)%AN_POOL+CELL(y_dim,x_dim)%LIT_N+1)+1
-							write(*,*) CELL(y_dim,x_dim)%GROW_DAYS_CO(cur_pla)
+							! write(*,*) CELL(y_dim,x_dim)%GROW_DAYS_CO(cur_pla)
 
            	end if
 				  end if

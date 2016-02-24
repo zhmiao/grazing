@@ -7,6 +7,7 @@ input.data <- read.csv('glo_totbio.csv', header=F)
 # input.data <- input.data[,1]
 
 input.data[,2] <- seq(1,365,1)
+input.data[,2] <- seq(1,730,1)
 
 plot(x=input.data[,2], y=input.data[,1], type='l', col='blue', xlab='time', ylab='biomass', lwd=3)
 lines(x=input.data[,2], y=input.data[,1], col='red', lwd=3)
