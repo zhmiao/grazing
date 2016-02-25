@@ -74,12 +74,12 @@ module parameter_var
   integer, dimension(:), allocatable   :: LA_EF_SW                ! Switch for LAI effect
   integer, dimension(:), allocatable   :: AN_EF_SW                ! Switch for available N effects
 
-	! For If Effects
-	integer                              :: IF_EFF_SW               ! Swtich for If Effects
-	integer                              :: IF_EFF_GD               ! Swtich for If Effects Growthdays
-	integer                              :: IF_EFF_K                ! Swtich for If Effects Carrying Capacity
-	integer                              :: IF_EFF_R                ! Swtich for If Effects Grwoth Rate
-	integer                              :: IF_EFF_DR               ! Swtich for If Effects Decrease Rate
+  ! For If Effects
+  integer                              :: IF_EFF_SW               ! Swtich for If Effects
+  integer                              :: IF_EFF_GD               ! Swtich for If Effects Growthdays
+  integer                              :: IF_EFF_K                ! Swtich for If Effects Carrying Capacity
+  integer                              :: IF_EFF_R                ! Swtich for If Effects Grwoth Rate
+  integer                              :: IF_EFF_DR               ! Swtich for If Effects Decrease Rate
 
   !--------- -------- --------- --------- --------- --------- --------- --------- -----
   ! For grazing configuration

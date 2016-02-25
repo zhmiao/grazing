@@ -114,14 +114,14 @@ subroutine model_ini
   allocate(UAV_RATE(PLA_SPP_NUM))
   allocate(RES_RATE(PLA_SPP_NUM))
   allocate(SPP_BIOMASS(PLA_SPP_NUM))
-	allocate(K_CO(PLA_SPP_NUM))
-	allocate(DECREASE_R(PLA_SPP_NUM))
-	allocate(R_MAX(PLA_SPP_NUM))
+  allocate(K_CO(PLA_SPP_NUM))
+  allocate(DECREASE_R(PLA_SPP_NUM))
+  allocate(R_MAX(PLA_SPP_NUM))
 
   do y_dim = 1, MAX_Y_DIM
     do x_dim = 1, MAX_X_DIM
-			allocate(CELL(y_dim,x_dim)%GROW_DAYS(PLA_SPP_NUM))
-			allocate(CELL(y_dim,x_dim)%GROW_DAYS_CO(PLA_SPP_NUM))
+      allocate(CELL(y_dim,x_dim)%GROW_DAYS(PLA_SPP_NUM))
+      allocate(CELL(y_dim,x_dim)%GROW_DAYS_CO(PLA_SPP_NUM))
       allocate(CELL(y_dim,x_dim)%TOT_BIO_SPP(PLA_SPP_NUM))
       allocate(CELL(y_dim,x_dim)%AV_BIO_SPP(PLA_SPP_NUM))
       allocate(CELL(y_dim,x_dim)%AV_BIO_SPP_P(PLA_SPP_NUM))
@@ -129,9 +129,9 @@ subroutine model_ini
       allocate(CELL(y_dim,x_dim)%SPP_K(PLA_SPP_NUM))
       allocate(CELL(y_dim,x_dim)%SPP_K_CO(PLA_SPP_NUM))
       allocate(CELL(y_dim,x_dim)%G_R(PLA_SPP_NUM))
-	    allocate(CELL(y_dim,x_dim)%R_MAX_CO(PLA_SPP_NUM))
+      allocate(CELL(y_dim,x_dim)%R_MAX_CO(PLA_SPP_NUM))
       allocate(CELL(y_dim,x_dim)%D_R(PLA_SPP_NUM))
-			allocate(CELL(y_dim,x_dim)%DECREASE_R_CO(PLA_SPP_NUM))
+      allocate(CELL(y_dim,x_dim)%DECREASE_R_CO(PLA_SPP_NUM))
       allocate(CELL(y_dim,x_dim)%SPP_LAI(PLA_SPP_NUM))
       allocate(CELL(y_dim,x_dim)%SPP_N_CON(PLA_SPP_NUM))
       allocate(CELL(y_dim,x_dim)%SPP_DEN(PLA_SPP_NUM))
@@ -146,11 +146,11 @@ subroutine model_ini
       allocate(CELL(y_dim,x_dim)%SPP_RT(PLA_SPP_NUM))
       allocate(CELL(y_dim,x_dim)%SPP_TRP(PLA_SPP_NUM))
 
-			! Initialized growth variables coefficient
-			CELL(y_dim,x_dim)%GROW_DAYS_CO(:)=1
-			CELL(y_dim,x_dim)%SPP_K_CO(:)=1
-			CELL(y_dim,x_dim)%DECREASE_R_CO(:)=1
-			CELL(y_dim,x_dim)%R_MAX_CO(:)=1
+      ! Initialized growth variables coefficient
+      CELL(y_dim,x_dim)%GROW_DAYS_CO(:)=1
+      CELL(y_dim,x_dim)%SPP_K_CO(:)=1
+      CELL(y_dim,x_dim)%DECREASE_R_CO(:)=1
+      CELL(y_dim,x_dim)%R_MAX_CO(:)=1
     end do
   end do
 
@@ -182,7 +182,7 @@ subroutine model_ini
     write(ECHO_NUM,*) R_MAX
   end if
 
-	close(SIM_CON_NUM)
+  close(SIM_CON_NUM)
 
 
     write(*,*) ' '

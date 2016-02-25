@@ -16,7 +16,7 @@ module structure
     integer                            :: RAIN_SEA                        ! Rain season
     real, dimension(:), allocatable    :: GROW_DAYS                       ! plant growing days each year in each cell
     real, dimension(:), allocatable    :: GROW_DAYS_CO                    ! Growth days coefficient
-    real													     :: DAY_RAIN                        ! Daily rainfall use efficiency
+    real                               :: DAY_RAIN                        ! Daily rainfall use efficiency
     ! real                               :: MAX_DAILY_GROWTH                ! maximum daily grass growth
     real, dimension(:), allocatable    :: TOT_BIO_SPP                     ! total aboveground plant biomass of different species
     real                               :: TOT_BIOMASS                     ! total biomass
@@ -28,7 +28,7 @@ module structure
     real                               :: UAV_BIOMASS                     ! total unavailable biomass
     real, dimension(:), allocatable    :: SPP_K                           ! grass growth carrying capacity for each plant species
     real, dimension(:), allocatable    :: SPP_K_CO                        ! Carrying capacit coefficient
-    real, dimension(:), allocatable    :: G_R			                        ! Actual grwoth rate
+    real, dimension(:), allocatable    :: G_R                              ! Actual grwoth rate
     real, dimension(:), allocatable    :: R_MAX_CO                        ! R_MAX coefficient
     real, dimension(:), allocatable    :: D_R                             ! Actual decrease rate
     real, dimension(:), allocatable    :: DECREASE_R_CO                   ! DECREASE_R coefficient
