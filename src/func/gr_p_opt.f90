@@ -210,7 +210,6 @@ subroutine grazing_process_opt
       end do
     end do
 
-
     ! ### Available biomass for each animal is total available biomass times competition factors
     do cur_ani=1,ANI_SPP_NUM
       ANI_AV_BIO(cur_ani)=AV_BIOMASS*ANI_COM_FAC(cur_ani)
@@ -271,7 +270,7 @@ subroutine grazing_process_opt
   ! ## Selective grazing
   ! ------------------------
 
-  ! ! ### Clear class available biomass in each class everyday
+  ! ### Clear class available biomass in each class everyday
   !   SITE_PREF(:)%SPP_AV_BIO(:,:)=0
 
   ! ### Loop for animal species
@@ -283,32 +282,34 @@ subroutine grazing_process_opt
       ! ### Loop for preference classes
       do cur_cla=1,SITE_PREF(cur_ani)%SS_CLA_NUM
 
-        ! ### Different biomass calculation
-        ! #### First, calculate total available plant biomass for each site selection preference class
-        do y_dim=1,MAX_Y_DIM
-          do x_dim=1,MAX_X_DIM
+    	  ! ### Different biomass calculation
+			  do cur_pla=1,PLA_SPP_NUM
+    	    ! #### First, calculate total available plant biomass for each site selection preference class
+    	    do y_dim=1,MAX_Y_DIM
+    	      do x_dim=1,MAX_X_DIM
 
-            ! ##### Check which class current cell is for each animal species
-            if(CELL(y_dim,x_dim)%SS_PR_CLA(cur_ani) .eq. cur_cla) then
+    	        ! ##### Check which class current cell is for each animal species
+    	        if(CELL(y_dim,x_dim)%SS_PR_CLA(cur_ani) .eq. cur_cla) then
 
-              ! @# Total available plant species biomass for each animal species is total cell available plant biomass time competition factor
-              do cur_pla=1,PLA_SPP_NUM
-                SITE_PREF(cur_ani)%SPP_AV_BIO(cur_cla,cur_pla)=SITE_PREF(cur_ani)%SPP_AV_BIO(cur_cla,cur_pla)&
-                                                      +CELL(y_dim,x_dim)%AV_BIO_SPP(cur_pla)*ANI_COM_FAC(cur_ani)
-								! write(*,*)CELL(y_dim,x_dim)%AV_BIO_SPP(cur_pla)
-								! write(*,*)ANI_COM_FAC(cur_pla)
-								! write(*,*)SITE_PREF(cur_ani)%SPP_AV_BIO(cur_cla,cur_pla)
-              end do
+    	          ! @# Total available plant species biomass for each animal species is total cell available plant biomass time competition factor
+    	            SITE_PREF(cur_ani)%SPP_AV_BIO(cur_cla,cur_pla)=SITE_PREF(cur_ani)%SPP_AV_BIO(cur_cla,cur_pla)&
+    	                                                  +CELL(y_dim,x_dim)%AV_BIO_SPP(cur_pla)*ANI_COM_FAC(cur_ani)
 
-            end if    ! End current cell preference class check
+									! write(*,*)CELL(y_dim,x_dim)%AV_BIO_SPP(cur_pla)
+									! write(*,*)ANI_COM_FAC(cur_pla)
+									! write(*,*)SITE_PREF(cur_ani)%SPP_AV_BIO(cur_cla,cur_pla)
 
-          end do ! end looping x dimension
-        end do ! end looping y dimension
+
+    	        end if    ! End current cell preference class check
+
+    	        end do ! end looping x dimension
+    	      end do ! end looping y dimension
+					end do ! end looping plant species
 
         ! #### Second, total availabe biomass in each site preferece class for each animal species
         SITE_PREF(cur_ani)%TOT_AV_BIO(cur_cla)=sum(SITE_PREF(cur_ani)%SPP_AV_BIO(cur_cla,:))
 
-        ! #### When total available biomass is not zero, do the regular diet selection
+        ! #### When total available biomass is not negative or zero, do the regular diet selection
         if (SITE_PREF(cur_ani)%TOT_AV_BIO(cur_cla) .gt. 0) then
 
           ! ##### When there is plant species preference diet selecion
@@ -361,12 +362,13 @@ subroutine grazing_process_opt
 
           end if ! end checking plant species diet preference
 
-        ! #### In case total biomass is zero, all diet fraction is zero
+        ! #### In case total biomass is negative or zero, all diet fraction is zero
         else
 
-          do cur_pla=1,PLA_SPP_NUM
-              SITE_PREF(cur_ani)%DIET_FRAC(cur_cla,cur_pla)=0
-          end do
+          SITE_PREF(cur_ani)%DIET_FRAC(cur_cla,:)=0
+          ! do cur_pla=1,PLA_SPP_NUM
+          !     SITE_PREF(cur_ani)%DIET_FRAC(cur_cla,cur_pla)=0
+          ! end do
 
         end if    ! End checking total biomass values
 
@@ -374,7 +376,7 @@ subroutine grazing_process_opt
   ! ## Calculate acutal forage amount
   ! ------------------------------
 
-        ! ### For class number one, set class demand equal to total demand
+        ! ### For class number one, set class daily demand equal to total demand
         if (cur_cla .eq. 1) then
           SITE_PREF(cur_ani)%D_DMD(cur_cla)=TOT_DMD(cur_ani)
         end if
@@ -402,13 +404,11 @@ subroutine grazing_process_opt
 
         end if ! end checking whether class total available forage is larger than class demand
 
-
       end do ! end looping for preference class
 
     end do ! End looping animal spcies
 
   end if  ! end if of checking global grazing switch
-
 
   ! write(*,*) ''
   ! write(*,*) 'opt done'

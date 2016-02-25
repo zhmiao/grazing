@@ -39,11 +39,9 @@ if (GR_SW .eq. 1) then
             CELL(y_dim,x_dim)%SPP_GRAZED(cur_ani,cur_pla)=SITE_PREF(cur_ani)%SPP_FORAGE(cur_cla,cur_pla)&
                                *CELL(y_dim,x_dim)%AV_BIO_SPP(cur_pla)/SITE_PREF(cur_ani)%SPP_AV_BIO(cur_cla,cur_pla)&
                                *LAI_FAC
-
           else
             CELL(y_dim,x_dim)%SPP_GRAZED(cur_ani,cur_pla)=0
           end if    ! End dominator check
-
 
           ! ##### Nitrogen concentration modification when the switch is on
           if(DS_SW(3) .eq. 1 .and. CELL(y_dim,x_dim)%SPP_N_CON(cur_pla) .le. 0.0104) then
@@ -54,6 +52,7 @@ if (GR_SW .eq. 1) then
         end if ! end cell preference cheking
 
 				! write(*,*) CELL(y_dim,x_dim)%SPP_GRAZED(cur_ani,cur_pla)
+				! write(*,*) '--^^--'
 				! write(*,*) SITE_PREF(cur_ani)%SPP_FORAGE(cur_cla,cur_pla)
 				! write(*,*) CELL(y_dim,x_dim)%AV_BIO_SPP(cur_pla)
 				! write(*,*) SITE_PREF(cur_ani)%SPP_AV_BIO(cur_cla,cur_pla)
@@ -61,6 +60,7 @@ if (GR_SW .eq. 1) then
       end do ! end plant looping
     end do ! end site preference class checking
   end do ! end animal species checking
+
 
 
 ! ------------------------
