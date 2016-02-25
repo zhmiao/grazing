@@ -124,8 +124,8 @@ subroutine grazing_process_opt
           ! ##### Storage variables
           CELL(y_dim,x_dim)%AV_BIO_SPP_P(cur_pla)=CELL(y_dim,x_dim)%AV_BIO_SPP(cur_pla)
 
-					! write(*,*)CELL(y_dim,x_dim)%AV_BIO_SPP(cur_pla)
-					! write(*,*)CELL(y_dim,x_dim)%TOT_BIO_SPP(cur_pla)
+          ! write(*,*)CELL(y_dim,x_dim)%AV_BIO_SPP(cur_pla)
+          ! write(*,*)CELL(y_dim,x_dim)%TOT_BIO_SPP(cur_pla)
         end do
 
         ! #### Biomass for all plant species, available, unavailable, and total
@@ -282,29 +282,28 @@ subroutine grazing_process_opt
       ! ### Loop for preference classes
       do cur_cla=1,SITE_PREF(cur_ani)%SS_CLA_NUM
 
-    	  ! ### Different biomass calculation
-			  do cur_pla=1,PLA_SPP_NUM
-    	    ! #### First, calculate total available plant biomass for each site selection preference class
-    	    do y_dim=1,MAX_Y_DIM
-    	      do x_dim=1,MAX_X_DIM
+        ! ### Different biomass calculation
+        do cur_pla=1,PLA_SPP_NUM
+          ! #### First, calculate total available plant biomass for each site selection preference class
+          do y_dim=1,MAX_Y_DIM
+            do x_dim=1,MAX_X_DIM
 
-    	        ! ##### Check which class current cell is for each animal species
-    	        if(CELL(y_dim,x_dim)%SS_PR_CLA(cur_ani) .eq. cur_cla) then
+              ! ##### Check which class current cell is for each animal species
+              if(CELL(y_dim,x_dim)%SS_PR_CLA(cur_ani) .eq. cur_cla) then
 
-    	          ! @# Total available plant species biomass for each animal species is total cell available plant biomass time competition factor
-    	            SITE_PREF(cur_ani)%SPP_AV_BIO(cur_cla,cur_pla)=SITE_PREF(cur_ani)%SPP_AV_BIO(cur_cla,cur_pla)&
-    	                                                  +CELL(y_dim,x_dim)%AV_BIO_SPP(cur_pla)*ANI_COM_FAC(cur_ani)
+                ! @# Total available plant species biomass for each animal species is total cell available plant biomass time competition factor
+                  SITE_PREF(cur_ani)%SPP_AV_BIO(cur_cla,cur_pla)=SITE_PREF(cur_ani)%SPP_AV_BIO(cur_cla,cur_pla)&
+                                                        +CELL(y_dim,x_dim)%AV_BIO_SPP(cur_pla)*ANI_COM_FAC(cur_ani)
 
-									! write(*,*)CELL(y_dim,x_dim)%AV_BIO_SPP(cur_pla)
-									! write(*,*)ANI_COM_FAC(cur_pla)
-									! write(*,*)SITE_PREF(cur_ani)%SPP_AV_BIO(cur_cla,cur_pla)
+                  ! write(*,*)CELL(y_dim,x_dim)%AV_BIO_SPP(cur_pla)
+                  ! write(*,*)ANI_COM_FAC(cur_pla)
+                  ! write(*,*)SITE_PREF(cur_ani)%SPP_AV_BIO(cur_cla,cur_pla)
 
+              end if    ! End current cell preference class check
 
-    	        end if    ! End current cell preference class check
-
-    	        end do ! end looping x dimension
-    	      end do ! end looping y dimension
-					end do ! end looping plant species
+              end do ! end looping x dimension
+            end do ! end looping y dimension
+          end do ! end looping plant species
 
         ! #### Second, total availabe biomass in each site preferece class for each animal species
         SITE_PREF(cur_ani)%TOT_AV_BIO(cur_cla)=sum(SITE_PREF(cur_ani)%SPP_AV_BIO(cur_cla,:))
