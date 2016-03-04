@@ -8,11 +8,11 @@ subroutine grazing
 do y_dim=1,MAX_Y_DIM
 do x_dim=1,MAX_X_DIM
 
-! # When global grazing switch is on
+! # Global grazing switch is on 
 if (GR_SW .eq. 1) then
 
 ! ------------------------
-! ## Calculate actual grazed amount in each cell
+! ## Calculate actual grazed amount in each cell {{{
 ! ------------------------
 
   ! ### First, loop for animal species
@@ -59,12 +59,10 @@ if (GR_SW .eq. 1) then
 
       end do ! end plant looping
     end do ! end site preference class checking
-  end do ! end animal species checking
-
-
+  end do ! end animal species checking }}}
 
 ! ------------------------
-! # First stage
+! # First stage {{{
 ! ------------------------
 
   do cur_pla=1,PLA_SPP_NUM
@@ -132,10 +130,10 @@ else  ! When there is no grazing
   CELL(y_dim,x_dim)%SOIL_DCOM=0
   CELL(y_dim,x_dim)%SOIL_COM=0
 
-end if ! end checking GR_SW
+end if ! end checking GR_SW }}}
 
 ! ------------------------
-! # Second stage
+! # Second stage {{{
 ! ------------------------
 
   do cur_pla=1,PLA_SPP_NUM
@@ -173,18 +171,24 @@ end if ! end checking GR_SW
         N_RET=N_RET_RATE(cur_ani)*CELL(y_dim,x_dim)%SPP_GRAZED(cur_ani,cur_pla)&
                                                    *CELL(y_dim,x_dim)%SPP_N_CON(cur_pla)
 
+        ! write(*,*)N_RET
         ! write(*,*) CELL(y_dim,x_dim)%SPP_N_CON(cur_pla)
       end if
 
+      ! write(*,*)CELL(y_dim,x_dim)%AN_POOL
+      ! write(*,*)CELL(y_dim,x_dim)%SPP_CN(cur_pla)
       ! ### 1) From urine
       if (NR_SW(1) .eq. 1) then
         CELL(y_dim,x_dim)%AN_POOL=CELL(y_dim,x_dim)%AN_POOL+N_RET&
                                                 *(0.7*(CELL(y_dim,x_dim)%SPP_N_CON(cur_pla)&
-                                                /cell(y_dim,x_dim)%SPP_C_CON(cur_pla)-12)/13)
+                                                /CELL(y_dim,x_dim)%SPP_CN(cur_pla)-12)/13)
 
+                                              write(*,*) CELL(y_dim,x_dim)%AN_POOL
         if (CELL(y_dim,x_dim)%AN_POOL .le. 0) then
           CELL(y_dim,x_dim)%AN_POOL=0
         end if
+
+        ! write(*,*) CELL(y_dim,x_dim)%AN_POOL
 
       else
 
@@ -196,9 +200,11 @@ end if ! end checking GR_SW
       if (NR_SW(2) .eq. 1) then
         CELL(y_dim,x_dim)%LIT_N=CELL(y_dim,x_dim)%LIT_N+N_RET&
                                                 *(1-0.7*(CELL(y_dim,x_dim)%SPP_N_CON(cur_pla)&
-                                                /cell(y_dim,x_dim)%SPP_C_CON(cur_pla)-12)/13)
+                                                /cell(y_dim,x_dim)%SPP_CN(cur_pla)-12)/13)
 
-        if (CELL(y_dim,x_dim)%LIT_N .le. 0) then
+                                              write(*,*) CELL(y_dim,x_dim)%LIT_N
+
+        if (CELL(y_dim,x_dim)%AN_POOL .le. 0) then
           CELL(y_dim,x_dim)%LIT_N=0
         end if
 
@@ -223,10 +229,10 @@ end if ! end checking GR_SW
     end if
 
 
-  end do ! end looping for plant species
+  end do ! end looping for plant species }}}
 
 ! ------------------------
-! Third stage
+! Third stage {{{
 ! ------------------------
 
   do cur_pla=1,PLA_SPP_NUM
@@ -352,9 +358,9 @@ end if ! end checking GR_SW
     end if
 
     ! 4) root to shoot ratio with C and N relationship
-    end do ! end looping plant species
+    end do ! end looping plant species }}}
 
 end do  ! end looping for x
-end do ! end looping for y
+end do ! end looping for y 
 
 end subroutine grazing

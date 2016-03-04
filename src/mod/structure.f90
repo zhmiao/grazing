@@ -16,23 +16,23 @@ module structure
     integer                            :: RAIN_SEA                        ! Rain season
     real, dimension(:), allocatable    :: GROW_DAYS                       ! plant growing days each year in each cell
     real, dimension(:), allocatable    :: GROW_DAYS_CO                    ! Growth days coefficient
-    real                               :: DAY_RAIN                        ! Daily rainfall use efficiency
+    real                               :: DAY_RAIN                        ! (mm^2) Daily rainfall use efficiency
     ! real                               :: MAX_DAILY_GROWTH                ! maximum daily grass growth
-    real, dimension(:), allocatable    :: TOT_BIO_SPP                     ! total aboveground plant biomass of different species
-    real                               :: TOT_BIOMASS                     ! total biomass
-    real, dimension(:), allocatable    :: AV_BIO_SPP                      ! available aboveground plant biomass of different species
-    real, dimension(:), allocatable    :: AV_BIO_SPP_P                    ! Stores species available biomass for future modifications
-    real                               :: AV_BIOMASS                      ! total available biomass
-    real                               :: AV_BIOMASS_P                    ! Stores cell level total availablr biomass for future modifications
-    real, dimension(:), allocatable    :: UAV_BIO_SPP                     ! unavailable aboveground plant biomass of different species
-    real                               :: UAV_BIOMASS                     ! total unavailable biomass
-    real, dimension(:), allocatable    :: SPP_K                           ! grass growth carrying capacity for each plant species
+    real, dimension(:), allocatable    :: TOT_BIO_SPP                     ! (g) total aboveground plant biomass of different species
+    real                               :: TOT_BIOMASS                     ! (g) total biomass
+    real, dimension(:), allocatable    :: AV_BIO_SPP                      ! (g) available aboveground plant biomass of different species
+    real, dimension(:), allocatable    :: AV_BIO_SPP_P                    ! (g) Stores species available biomass for future modifications
+    real                               :: AV_BIOMASS                      ! (g) total available biomass
+    real                               :: AV_BIOMASS_P                    ! (g) Stores cell level total availablr biomass for future modifications
+    real, dimension(:), allocatable    :: UAV_BIO_SPP                     ! (g) unavailable aboveground plant biomass of different species
+    real                               :: UAV_BIOMASS                     ! (g) total unavailable biomass
+    real, dimension(:), allocatable    :: SPP_K                           ! (g) grass growth carrying capacity for each plant species
     real, dimension(:), allocatable    :: SPP_K_CO                        ! Carrying capacit coefficient
-    real, dimension(:), allocatable    :: G_R                              ! Actual grwoth rate
+    real, dimension(:), allocatable    :: G_R                             ! Actual grwoth rate
     real, dimension(:), allocatable    :: R_MAX_CO                        ! R_MAX coefficient
     real, dimension(:), allocatable    :: D_R                             ! Actual decrease rate
     real, dimension(:), allocatable    :: DECREASE_R_CO                   ! DECREASE_R coefficient
-    real                               :: TOT_K                           ! total carrying capacity
+    real                               :: TOT_K                           ! (g) total carrying capacity
 
     ! variables that's not included in the original plant growth model
     real, dimension(:), allocatable    :: SPP_LAI                         ! LAI for each plant species
@@ -41,7 +41,7 @@ module structure
     real                               :: TOT_N_CON                       ! total Nitrogen concentration
     real, dimension(:), allocatable    :: SPP_DEN                         ! Plant density for each plant species
     real, dimension(:), allocatable    :: SPP_RES                         ! Plant respiration for each plant species
-    real, dimension(:), allocatable    :: SPP_C_CON                       ! Carbon concentration for each plant species
+    real, dimension(:), allocatable    :: SPP_CN                          ! Carbon concentration for each plant species
     real, dimension(:), allocatable    :: SPP_MOR                         ! Mortality rate for each plant species
     real, dimension(:), allocatable    :: SPP_GRO                         ! Growth rate for each plant species
     real, dimension(:), allocatable    :: SPP_PS                          ! Photothesis amount for each plant species
@@ -61,8 +61,8 @@ module structure
 
     ! for grazing
     real                               :: GR_SW                           ! Used to control whether there is grazing
-    real, dimension(:,:), allocatable  :: SPP_GRAZED                      ! daily grazed amount from animal i of plant j
-    real, dimension(:,:), allocatable  :: SPP_DETACH                      ! daily detched amount from animal i of plant j
+    real, dimension(:,:), allocatable  :: SPP_GRAZED                      ! (g) daily grazed amount from animal i of plant j
+    real, dimension(:,:), allocatable  :: SPP_DETACH                      ! (g) daily detched amount from animal i of plant j
     real, dimension(:), allocatable    :: SD                              ! stocking density for each animal species
     real                               :: TOT_SD                          ! total stocking density
     integer, dimension(:), allocatable :: SS_PR_CLA                       ! site preference class for each animal species
@@ -98,12 +98,12 @@ module structure
   real, dimension(:), allocatable :: K_CO                            ! carrying capacity coefficient (default value=80.872)
   real, dimension(:), allocatable :: DECREASE_R                      ! biomass decrese rate during dry season (default value=1.79)
   real, dimension(:), allocatable :: R_MAX                           ! maximum grass growth rate (default value=0.039)
-  real, dimension(:), allocatable :: SPP_BIOMASS                     ! Global total biomass for each plant species
-  real                            :: TOT_BIOMASS                     ! Global total plant biomass
-  real                            :: AV_BIOMASS                      ! Global available plant biomass
-  real                            :: AV_BIOMASS_P                    ! Stores global available biomass for future modifications
-  real                            :: UAV_BIOMASS                     ! Global unavailable plant biomass
-  real                            :: TOT_K                           ! Global total plant carrying capacity
+  real, dimension(:), allocatable :: SPP_BIOMASS                     ! (g) Global total biomass for each plant species
+  real                            :: TOT_BIOMASS                     ! (g) Global total plant biomass
+  real                            :: AV_BIOMASS                      ! (g) Global available plant biomass
+  real                            :: AV_BIOMASS_P                    ! (g) Stores global available biomass for future modifications
+  real                            :: UAV_BIOMASS                     ! (g) Global unavailable plant biomass
+  real                            :: TOT_K                           ! (g) Global total plant carrying capacity
 
   ! Global geographical variables
   real                            :: SOIL_ALB                        ! Soil albedo (0-0.1)

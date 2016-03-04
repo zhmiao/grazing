@@ -136,7 +136,7 @@ subroutine model_ini
       allocate(CELL(y_dim,x_dim)%SPP_N_CON(PLA_SPP_NUM))
       allocate(CELL(y_dim,x_dim)%SPP_DEN(PLA_SPP_NUM))
       allocate(CELL(y_dim,x_dim)%SPP_RES(PLA_SPP_NUM))
-      allocate(CELL(y_dim,x_dim)%SPP_C_CON(PLA_SPP_NUM))
+      allocate(CELL(y_dim,x_dim)%SPP_CN(PLA_SPP_NUM))
       allocate(CELL(y_dim,x_dim)%SPP_MOR(PLA_SPP_NUM))
       allocate(CELL(y_dim,x_dim)%SPP_GRO(PLA_SPP_NUM))
       allocate(CELL(y_dim,x_dim)%SPP_PS(PLA_SPP_NUM))

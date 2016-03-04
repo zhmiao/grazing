@@ -27,12 +27,9 @@ program grazing_model
       end do
     end do
 
-    ! CELL(:,:)%TOT_BIOMASS=0
-
     ! ## Loop for days
     do day=1,365
 
-      ! write(*,*) 'day: ', day
       ! ### Calculate plant growth or decrease for each day
       call plant_growth
 
@@ -47,27 +44,6 @@ program grazing_model
 
       ! ### Model output configurations
       call model_output
-
-  ! write(*,*) ' '
-  ! do y_dim = 1, MAX_Y_DIM
-  !   ! write(*,*) (CELL(y_dim, i)%SPP_GRAZED(:,:), i=1,MAX_X_DIM)
-  !   ! write(*,*) (CELL(y_dim, i)%TOT_BIO_SPP(:), i=1,MAX_X_DIM)
-  !   ! write(*,*) (ANI_AV_BIO(:), i=1,MAX_X_DIM)
-  !   ! write(*,*) (CELL(y_dim, i)%AV_BIO_SPP(:), i=1,MAX_X_DIM)
-  !   ! write(*,*) (CELL(y_dim, i)%AV_BIOMASS_P, i=1,MAX_X_DIM)
-  !   ! write(*,*) (CELL(y_dim, i)%SS_PR_CLA(:), i=1,MAX_X_DIM)
-  ! end do
-  !
-  ! do cur_ani=1,ANI_SPP_NUM
-  ! do cur_cla=1,SITE_PREF(cur_ani)%SS_CLA_NUM
-  ! ! write(*,*) SITE_PREF(cur_ani)%TOT_AV_BIO(cur_cla)
-  ! ! write(*,*) SITE_PREF(cur_ani)%SPP_FORAGE(cur_cla,:)
-  ! ! write(*,*) SITE_PREF(cur_ani)%DIET_FRAC(cur_cla,:)
-  ! ! write(*,*) SITE_PREF(cur_ani)%D_DMD(cur_cla)
-  ! end do
-  ! end do
-  ! ! write(*,*)TOT_DMD(:)
-  ! ! write(*,*) AV_BIOMASS_P
 
     end do  ! End looping for days
 

@@ -8,21 +8,21 @@ subroutine graz_conf_read
   integer :: i, j
   logical :: OK             ! Used to check whether one file has been opened
 
-      ! # First close configuration opened for last season if there is a last season
-      inquire(GR_CON_SEA, opened=OK)
-      if(OK) close(GR_CON_SEA)
+    ! # First close configuration opened for last season if there is a last season
+    inquire(GR_CON_SEA, opened=OK)
+    if(OK) close(GR_CON_SEA)
 
-      ! # Open general grazing configuration file
-      open(GR_CON_SEA, file=CWD(1:len_trim(CWD))//PRE_DIR_GC(1:len_trim(PRE_DIR_GC))//&
+    ! # Open general grazing configuration file
+    open(GR_CON_SEA, file=CWD(1:len_trim(CWD))//PRE_DIR_GC(1:len_trim(PRE_DIR_GC))//&
                 SEASON(1:len_trim(SEASON))//'.gr', action='read', iostat=ioerr)
 
-      if (ioerr .ne. 0) then
-        write(*,*) 'Grazing configuration file not opened'
-        stop
-      end if
+    if (ioerr .ne. 0) then
+      write(*,*) 'Grazing configuration file not opened'
+      stop
+    end if
 
     ! ------------------------
-    ! # Animal species number
+    ! # Animal species number {{{
     ! ------------------------
       read(GR_CON_SEA,*)
       read(GR_CON_SEA,*)
@@ -90,8 +90,10 @@ subroutine graz_conf_read
         end do
       end do
 
+      !}}}
+
     ! ------------------------
-    ! # Animal competition factors
+    ! # Animal competition factors {{{
     ! ------------------------
       read(GR_CON_SEA,*)
       read(GR_CON_SEA,*)
@@ -123,9 +125,10 @@ subroutine graz_conf_read
         read(GR_CON_SEA,*)      ! skip this line
 
       end if
+      !}}}
 
     ! ------------------------
-    ! # Maximum and minimum management grazing amount modification
+    ! # Maximum and minimum management grazing amount modification {{{
     ! ------------------------
 
       read(GR_CON_SEA,*)
@@ -166,10 +169,10 @@ subroutine graz_conf_read
         read(GR_CON_SEA,*)        ! Skip this line
 
       end if
-
+      !}}}
 
     ! ------------------------
-    ! # Fixed rate
+    ! # Fixed rate {{{
     ! ------------------------
       read(GR_CON_SEA,*)
       read(GR_CON_SEA,*)
@@ -190,10 +193,10 @@ subroutine graz_conf_read
       else
         read(GR_CON_SEA,*) ! Skip the line
 
-      end if ! end FR_SW cheking
+      end if ! end FR_SW cheking }}}
 
     ! ------------------------
-    ! # Stocking rate function
+    ! # Stocking rate function {{{
     ! ------------------------
       read(GR_CON_SEA,*)
       read(GR_CON_SEA,*)
@@ -248,10 +251,10 @@ subroutine graz_conf_read
         read(GR_CON_SEA,*) ! Skip the line
         read(GR_CON_SEA,*) ! Skip the line
 
-      end if !end SD_SW checking
+      end if !end SD_SW checking }}}
 
     ! ------------------------
-    ! # Detachment rate
+    ! # Detachment rate {{{
     ! ------------------------
       read(GR_CON_SEA,*)
       read(GR_CON_SEA,*)
@@ -278,10 +281,10 @@ subroutine graz_conf_read
       else
         read(GR_CON_SEA,*) ! Skip the line
 
-      end if ! end DT_SW cheking
+      end if ! end DT_SW cheking }}}
 
     ! ------------------------
-    ! # Soil compactness
+    ! # Soil compactness {{{
     ! ------------------------
       read(GR_CON_SEA,*)
       read(GR_CON_SEA,*)
@@ -330,10 +333,10 @@ subroutine graz_conf_read
         read(GR_CON_SEA,*) ! Skip the line
         read(GR_CON_SEA,*) ! Skip the line
 
-      end if ! end SC_SW cheking
+      end if ! end SC_SW cheking }}}
 
     ! ------------------------
-    ! # Mortality rate
+    ! # Mortality rate {{{
     ! ------------------------
       read(GR_CON_SEA,*)
       read(GR_CON_SEA,*)
@@ -369,10 +372,10 @@ subroutine graz_conf_read
         read(GR_CON_SEA,*) ! Skip the line
         read(GR_CON_SEA,*) ! Skip the line
 
-      end if ! end MR_SW cheking
+      end if ! end MR_SW cheking }}}
 
     ! ------------------------
-    ! # Respiration rate
+    ! # Respiration rate {{{
     ! ------------------------
       read(GR_CON_SEA,*)
       read(GR_CON_SEA,*)
@@ -396,10 +399,10 @@ subroutine graz_conf_read
       else
         read(GR_CON_SEA,*) ! Skip the line
 
-      end if ! end RS_SW cheking
+      end if ! end RS_SW cheking }}}
 
     ! ------------------------
-    ! # Nitrogen return
+    ! # Nitrogen return {{{
     ! ------------------------
       read(GR_CON_SEA,*)
       read(GR_CON_SEA,*)
@@ -429,10 +432,10 @@ subroutine graz_conf_read
       else
         read(GR_CON_SEA,*) ! Skip the line
 
-      end if ! end NR_SW cheking
+      end if ! end NR_SW cheking }}}
 
     ! ------------------------
-    ! # Soil compactness effects on plant growth rate
+    ! # Soil compactness effects on plant growth rate {{{
     ! ------------------------
       read(GR_CON_SEA,*)
       read(GR_CON_SEA,*)
@@ -468,10 +471,10 @@ subroutine graz_conf_read
         read(GR_CON_SEA,*) ! Skip the line
         read(GR_CON_SEA,*) ! Skip the line
 
-      end if ! end SC_EF_SW cheking
+      end if ! end SC_EF_SW cheking }}}
 
     ! ------------------------
-    ! # Effects from LAI on plant photosysthesis
+    ! # Effects from LAI on plant photosysthesis {{{
     ! ------------------------
       read(GR_CON_SEA,*)
       read(GR_CON_SEA,*)
@@ -507,10 +510,10 @@ subroutine graz_conf_read
         read(GR_CON_SEA,*) ! Skip the line
         read(GR_CON_SEA,*) ! Skip the line
 
-      end if ! end LA_EF_SW(1) cheking
+      end if ! end LA_EF_SW(1) cheking }}}
 
     ! ------------------------
-    ! # Effects from LAI on plant rainfall interception
+    ! # Effects from LAI on plant rainfall interception {{{
     ! ------------------------
       read(GR_CON_SEA,*)
       read(GR_CON_SEA,*)
@@ -534,10 +537,10 @@ subroutine graz_conf_read
       else
         read(GR_CON_SEA,*) ! Skip the line
 
-      end if ! end LA_EF_SW(2) cheking
+      end if ! end LA_EF_SW(2) cheking }}}
 
     ! ------------------------
-    ! # Effects from LAI on plant transpiration
+    ! # Effects from LAI on plant transpiration {{{
     ! ------------------------
       read(GR_CON_SEA,*)
       read(GR_CON_SEA,*)
@@ -561,10 +564,10 @@ subroutine graz_conf_read
       else
         read(GR_CON_SEA,*) ! Skip the line
 
-      end if ! end LA_EF_SW(4) cheking
-
+      end if ! end LA_EF_SW(4) cheking }}}
+ 
     ! ------------------------
-    ! # N uptake
+    ! # N uptake {{{
     ! ------------------------
       read(GR_CON_SEA,*)
       read(GR_CON_SEA,*)
@@ -600,10 +603,10 @@ subroutine graz_conf_read
         read(GR_CON_SEA,*) ! Skip the line
         read(GR_CON_SEA,*) ! Skip the line
 
-      end if ! end AN_EF_SW(1) cheking
+      end if ! end AN_EF_SW(1) cheking }}}
 
     ! ------------------------
-    ! # C conversion
+    ! # C conversion {{{
     ! ------------------------
       read(GR_CON_SEA,*)
       read(GR_CON_SEA,*)
@@ -653,9 +656,10 @@ subroutine graz_conf_read
         write(ECHO_NUM,*) 'Potential C conversion rate is: '
         write(ECHO_NUM,*) POT_CC
       end if
+      ! }}}
 
     ! ------------------------
-    ! # Root to shoot ratio
+    ! # Root to shoot ratio {{{
     ! ------------------------
       read(GR_CON_SEA,*)
       read(GR_CON_SEA,*)
@@ -691,7 +695,6 @@ subroutine graz_conf_read
         read(GR_CON_SEA,*) ! Skip the line
         read(GR_CON_SEA,*) ! Skip the line
 
-      end if ! end AN_EF_SW(3) cheking
-
+      end if ! end AN_EF_SW(3) cheking }}}
 
 end subroutine

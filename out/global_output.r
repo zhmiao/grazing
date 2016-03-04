@@ -6,15 +6,17 @@ input.data <- read.csv('glo_totbio.csv', header=F)
 
 # input.data <- input.data[,1]
 
+# For one year
 input.data[,2] <- seq(1,365,1)
+# For two years
 input.data[,2] <- seq(1,730,1)
 
-plot(x=input.data[,2], y=input.data[,1], type='l', col='blue', xlab='time', ylab='biomass', lwd=3)
-lines(x=input.data[,2], y=input.data[,1], col='red', lwd=3)
-lines(x=input.data[,2], y=input.data[,1], col='red', lwd=3, lty=2)
-lines(x=input.data[,2], y=input.data[,1], col=81, lwd=3)
-lines(x=input.data[,2], y=input.data[,1], col=81, lwd=3, lty=2)
+plot(x=input.data[,2], y=input.data[,1], type='l', col='cadetblue', xlab='time', ylab='biomass', lwd=3)
+lines(x=input.data[,2], y=input.data[,1], col='chocolate', lwd=3)
+lines(x=input.data[,2], y=input.data[,1], col='burlywood', lwd=3, lty=2)
 lines(x=input.data[,2], y=input.data[,1], col='coral', lwd=3)
+lines(x=input.data[,2], y=input.data[,1], col='cyan', lwd=3, lty=2)
+lines(x=input.data[,2], y=input.data[,1], col='darkgoldenrod', lwd=3)
 
 # biomass for each species
 

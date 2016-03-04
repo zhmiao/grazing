@@ -103,8 +103,8 @@ module parameter_var
   integer, dimension(:), allocatable   :: RO_CP                   ! Used to store rotation period check points
   integer                              :: RO_NUM                  ! Rotation period number
   integer, dimension(:), allocatable   :: MAN_CP                  ! Used to store management cycle check points
-  real                                 :: MAX_GR_AMT              ! Maximum amount of grazing
-  real                                 :: MIN_GR_AMT              ! Minimum amount of grazing
+  real                                 :: MAX_GR_AMT              ! (g) Maximum amount of grazing
+  real                                 :: MIN_GR_AMT              ! (g) Minimum amount of grazing
 
   ! For diet selection
   real, dimension(:), allocatable      :: UAV_RATE                ! Available biomass rate for each plant species
@@ -154,7 +154,7 @@ module parameter_var
   real, dimension(:), allocatable     :: ANI_AV_BIO               ! Global available plant biomass for each animal species used for stocking density calculation
 
   ! For fixed grazing rate
-  real, dimension(:), allocatable     :: FIX_GR_R                 ! Fixed grazing rate for each animal species
+  real, dimension(:), allocatable     :: FIX_GR_R                 ! (%) Fixed grazing rate for each animal species
 
   ! For stocking density function
   real, dimension(:), allocatable     :: MAX_SD                   ! Maximum stocking density

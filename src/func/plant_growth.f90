@@ -15,11 +15,8 @@ subroutine plant_growth
 
         if (day .le. CELL(y_dim,x_dim)%GROW_DAYS(cur_pla)) then
 
-          CELL(y_dim,x_dim)%G_R(cur_pla)=CELL(y_dim,x_dim)%R_MAX_CO(cur_pla)*R_MAX(cur_pla)
-          CELL(y_dim,x_dim)%D_R(cur_pla)=CELL(y_dim,x_dim)%DECREASE_R_CO(cur_pla)*DECREASE_R(cur_pla)
-          
-          ! ## In growing seasons
-          ! CELL(y_dim, x_dim)%MAX_DAILY_GROWTH     = -1.79+2.11*CELL(y_dim, x_dim)%DAILY_RAIN
+          ! ## In growing seasons {{{
+          CELL(y_dim,x_dim)%G_R(cur_pla)          = CELL(y_dim,x_dim)%R_MAX_CO(cur_pla)*R_MAX(cur_pla)
 
           CELL(y_dim, x_dim)%SPP_K(cur_pla)       = CELL(y_dim,x_dim)%SPP_K_CO(cur_pla)*K_CO(cur_pla)*CELL(y_dim, x_dim)%DAY_RAIN 
 
@@ -30,9 +27,13 @@ subroutine plant_growth
                                                     +CELL(y_dim, x_dim)%SPP_K(cur_pla))&
                                                     /(2*CELL(y_dim, x_dim)%SPP_K(cur_pla)))) 
 
+          ! }}}
+
         else
 
-          ! ## Not in growing season
+          ! ## Not in growing season {{{
+          CELL(y_dim,x_dim)%D_R(cur_pla)=CELL(y_dim,x_dim)%DECREASE_R_CO(cur_pla)*DECREASE_R(cur_pla)
+
           if (CELL(y_dim, x_dim)%TOT_BIO_SPP(cur_pla)-CELL(y_dim,x_dim)%D_R(cur_pla) .ge. 0) then 
 
             ! ### If biomass minus decrease rate is greater than zero
@@ -45,9 +46,10 @@ subroutine plant_growth
 
           end if 
 
-        end if ! end checking plant growing season
+        end if ! end checking plant growing season }}}
 
         CELL(y_dim,x_dim)%SPP_N_CON(cur_pla)=0.00103
+        CELL(y_dim,x_dim)%SPP_CN(cur_pla)=25
 
       end do ! end looping x
     end do ! end looping y

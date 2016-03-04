@@ -5,7 +5,7 @@ subroutine grazing_process_opt
   implicit none
 
 ! ------------------------
-! # Basic settings
+! # Basic settings {{{
 ! ------------------------
 
   integer :: i, j
@@ -19,9 +19,10 @@ subroutine grazing_process_opt
   ! write(ECHO_NUM,*) 'Year: ', year
   ! write(ECHO_NUM,*) 'Day: ', day
 
+  ! }}}
 
 ! ------------------------
-! # Season check
+! # Season check {{{
 ! ------------------------
 
 
@@ -69,9 +70,10 @@ subroutine grazing_process_opt
 
   end if
 
+  ! End seasonal check }}}
 
 ! ------------------------
-! # Grazing cycle check
+! # Grazing cycle check {{{
 ! ------------------------
   ! ## Check rotational management switch
   if (MAN_SW(1) .eq. 1) then                                                                  ! Check whether there is rotational grazing
@@ -93,18 +95,17 @@ subroutine grazing_process_opt
   ! ## Set cell level grazing switches according to global level grazing switch
   CELL(:,:)%GR_SW=GR_SW
 
-! write(*,*) GR_SW
-! write(*,*) SEASON
+! End grazing cycle check }}}
 
 ! ------------------------
-! # Start grazing
+! # Prerequesit calculations {{{
 ! ------------------------
 
   ! ## Check whether there should be grazing. (Global graizng switch)
   if (GR_SW .eq. 1) then                                                                      ! Check global grazing switch
 
   ! ------------------------
-  ! ### Set up cell available and unavailale plant biomass
+  ! ### Set up cell available and unavailale plant biomass {{{
   ! ------------------------
 
     ! #### Spatial dimension loop
@@ -147,10 +148,10 @@ subroutine grazing_process_opt
 
     ! #### Storage vaiables
     AV_BIOMASS_P=AV_BIOMASS
-
+    ! }}}
 
   ! ------------------------
-  ! ### When season has chaned
+  ! ### When season has changed {{{
   ! ------------------------
 
     if (SEA_CH_SW .eq.1) then                                                               ! Check if season is changed
@@ -167,12 +168,12 @@ subroutine grazing_process_opt
       ! ## diet & site selection initialization. [site_conf_sea_*.gr, diet_conf_sea_*.gr]
       call sel_con_read
 
-    end if ! end for SEA_CH_SW
+    end if ! end for SEA_CH_SW  }}}
 
 ! ================================================  NOW, FOR REAL CALCULATION  ================================================
 
   ! ------------------------
-  ! ## Available biomass modifications
+  ! ### Available biomass modifications {{{
   ! ------------------------
 
     ! ### if MAX_GR_AMT is less then AV_BIOMASS, then available biomass is the maximum amount of grazing, if not, nothing changed
@@ -185,8 +186,7 @@ subroutine grazing_process_opt
       AV_BIOMASS=0
     end if
 
-
-    ! ### Cell level modifications
+    ! ### Cell level modifications {{{
     do y_dim=1,MAX_Y_DIM
       do x_dim=1,MAX_X_DIM
 
@@ -208,15 +208,16 @@ subroutine grazing_process_opt
         end do
 
       end do
-    end do
+    end do !}}}
 
     ! ### Available biomass for each animal is total available biomass times competition factors
     do cur_ani=1,ANI_SPP_NUM
       ANI_AV_BIO(cur_ani)=AV_BIOMASS*ANI_COM_FAC(cur_ani)
     end do
+    !}}}
 
   ! ------------------------
-  ! ## Fixed rate
+  ! ### Fixed rate {{{
   ! ------------------------
     if (FR_SW .eq. 1) then
 
@@ -225,10 +226,10 @@ subroutine grazing_process_opt
         TOT_DMD(cur_ani)=ANI_AV_BIO(cur_ani)*FIX_GR_R(cur_ani)
       end do
 
-    end if ! end FR_SW checking
+    end if ! end FR_SW checking }}}
 
   ! ------------------------
-  ! ## Stocking rate function
+  ! ### Stocking rate function {{{
   ! ------------------------
     if (SD_SW .eq. 1) then
 
@@ -246,13 +247,13 @@ subroutine grazing_process_opt
 
       end do
 
-    end if ! end SD_SW checking
+    end if ! end SD_SW checking }}}
 
   ! ------------------------
-  ! ## Total demand modification with minimum management grazing amount
+  ! ### Total demand modification with minimum management grazing amount {{{
   ! ------------------------
 
-    ! ### When total demand is less than minimum management grazing amount
+    ! #### When total demand is less than minimum management grazing amount
     if (AV_BIOMASS .gt. sum(TOT_DMD(:)) .and. sum(TOT_DMD(:)) .lt. MIN_GR_AMT .and. MIN_GR_AMT .lt. AV_BIOMASS) then
       do cur_ani=1,ANI_SPP_NUM
 
@@ -265,26 +266,26 @@ subroutine grazing_process_opt
 
       end do
     end if
+    ! }}}
 
   ! ------------------------
-  ! ## Selective grazing
+  ! ### Selective grazing {{{
   ! ------------------------
 
-  ! ### Clear class available biomass in each class everyday
+  ! #### Clear class available biomass in each class everyday
   !   SITE_PREF(:)%SPP_AV_BIO(:,:)=0
 
-  ! ### Loop for animal species
+  ! #### Loop for animal species
     do cur_ani=1,ANI_SPP_NUM
 
-    ! ### Clear class available biomass in each class everyday
+    ! #### Clear class available biomass in each class everyday
       SITE_PREF(cur_ani)%SPP_AV_BIO(:,:)=0
 
-      ! ### Loop for preference classes
+      ! #### Loop for preference classes
       do cur_cla=1,SITE_PREF(cur_ani)%SS_CLA_NUM
 
-        ! ### Different biomass calculation
+        ! #### First, calculate total available plant biomass for each site selection preference class {{{
         do cur_pla=1,PLA_SPP_NUM
-          ! #### First, calculate total available plant biomass for each site selection preference class
           do y_dim=1,MAX_Y_DIM
             do x_dim=1,MAX_X_DIM
 
@@ -303,7 +304,7 @@ subroutine grazing_process_opt
 
               end do ! end looping x dimension
             end do ! end looping y dimension
-          end do ! end looping plant species
+          end do ! end looping plant species }}}
 
         ! #### Second, total availabe biomass in each site preferece class for each animal species
         SITE_PREF(cur_ani)%TOT_AV_BIO(cur_cla)=sum(SITE_PREF(cur_ani)%SPP_AV_BIO(cur_cla,:))
@@ -311,7 +312,7 @@ subroutine grazing_process_opt
         ! #### When total available biomass is not negative or zero, do the regular diet selection
         if (SITE_PREF(cur_ani)%TOT_AV_BIO(cur_cla) .gt. 0) then
 
-          ! ##### When there is plant species preference diet selecion
+          ! ##### When there is plant species preference diet selecion {{{
           if (DS_SW(1) .eq. 1) then
 
             ! @# Next, demand fraction
@@ -319,7 +320,7 @@ subroutine grazing_process_opt
             SUB_FRAC=0
             TEMP_BIO=0
 
-            ! @# Plant species loop
+            ! @# Plant species loop for diet preference classes {{{
             do cur_pla=1,PLA_SPP_NUM
 
               ! @## Prefered class
@@ -341,7 +342,7 @@ subroutine grazing_process_opt
                 SUB_FRAC=SUB_FRAC+SITE_PREF(cur_ani)%DIET_FRAC(cur_cla,cur_pla)
               end if
 
-            end do ! end looping for plant species
+            end do ! end looping for plant species }}}
 
             ! @# Acutal preference fraction for less preffered plant species
             do cur_pla=1,PLA_SPP_NUM
@@ -359,20 +360,17 @@ subroutine grazing_process_opt
                                                                       /SITE_PREF(cur_ani)%TOT_AV_BIO(cur_cla)
             end do
 
-          end if ! end checking plant species diet preference
+          end if ! end checking plant species diet preference }}}
 
         ! #### In case total biomass is negative or zero, all diet fraction is zero
         else
 
           SITE_PREF(cur_ani)%DIET_FRAC(cur_cla,:)=0
-          ! do cur_pla=1,PLA_SPP_NUM
-          !     SITE_PREF(cur_ani)%DIET_FRAC(cur_cla,cur_pla)=0
-          ! end do
 
-        end if    ! End checking total biomass values
+        end if    ! End checking total biomass values }}}
 
   ! ------------------------------
-  ! ## Calculate acutal forage amount
+  ! ### Calculate acutal forage amount {{{
   ! ------------------------------
 
         ! ### For class number one, set class daily demand equal to total demand
@@ -405,10 +403,8 @@ subroutine grazing_process_opt
 
       end do ! end looping for preference class
 
-    end do ! End looping animal spcies
+    end do ! End looping animal spcies }}}
 
-  end if  ! end if of checking global grazing switch
+  end if  ! end if of checking global grazing switch }}}
 
-  ! write(*,*) ''
-  ! write(*,*) 'opt done'
 end subroutine grazing_process_opt

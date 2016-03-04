@@ -9,12 +9,12 @@
 =====================================================================================================
 = For maximum and minimum management grazing amount
 =====================================================================================================
-0.8                                                  ! Maximum amount of grazing (kg/day)
-0.1                                                  ! Minimum amount of grazing (kg/day)
+0.8                                                  ! (g) Maximum amount of grazing ***(kg/day)
+0.1                                                  ! (g) Minimum amount of grazing ***(kg/day)
 =====================================================================================================
 = For fixed grazing rate
 =====================================================================================================
-0.02,0.04                                            ! Fixed daily grazing rate in percentage, if FR_SW is on, or just leave this line open
+0.02,0.04                                            ! (%) Fixed daily grazing rate in percentage, if FR_SW is on, or just leave this line open
 =====================================================================================================
 = For stocking density calculation
 =====================================================================================================

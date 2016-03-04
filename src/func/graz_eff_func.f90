@@ -10,19 +10,17 @@ subroutine graz_eff_func
   ! If there should be grazing effects
   if (IF_EFF_SW .eq. 1) then
 
-    do y_dim=1, MAX_Y_DIM
+     do y_dim=1, MAX_Y_DIM
       do x_dim=1, MAX_X_DIM
         do cur_pla=1, PLA_SPP_NUM
   
-          if (IF_EFF_GD .eq. 1) then
+           if (IF_EFF_GD .eq. 1) then
             ! # First, GROW_DAYS modifications (Only do this at the end of the year)
             if (day .eq. 365) then
               gx = 2/(EXP((0.8*CELL(y_dim,x_dim)%SOIL_COM-1.5)**2))-1&
                           + (2*EXP(1.)-2)/((EXP(1.)-2)+EXP((2*CELL(y_dim,x_dim)%LIT_POOL-1)**2))-1&
                           - 1/(CELL(y_dim,x_dim)%AN_POOL+CELL(y_dim,x_dim)%LIT_N+1)+1
   
-              CELL(y_dim,x_dim)%GROW_DAYS_CO(cur_pla)=0.4/(1+EXP(-gx*1.5))+0.8
-
               ! write(*,*) gx
               ! write(*,*) CELL(y_dim,x_dim)%SOIL_COM
               ! write(*,*) 2/(EXP((0.8*CELL(y_dim,x_dim)%SOIL_COM-1.5)**2))-1
@@ -41,7 +39,7 @@ subroutine graz_eff_func
             gx = 2/(EXP((0.8*CELL(y_dim,x_dim)%SOIL_COM-1.5)**2))-1&
                           + (2*EXP(1.)-2)/((EXP(1.)-2)+EXP((2*CELL(y_dim,x_dim)%LIT_POOL-1)**2))-1&
                           - 1/(CELL(y_dim,x_dim)%AN_POOL+CELL(y_dim,x_dim)%LIT_N+1)+1
-  
+
             CELL(y_dim,x_dim)%SPP_K_CO(cur_pla)=3/(2+EXP(-0.7*gx))
 
               ! write(*,*) gx
