@@ -18,9 +18,9 @@
 =====================================================================================================
 = For stocking density calculation
 =====================================================================================================
-0.05,0.08                                            ! Maximum stocking density for each species (number of animal per m^2), if SR_SW is on, or just leave this line open
-0.02,0.04                                            ! Minimum stocking density for each species (number of animal per m^2), if SR_SW is on, or just leave this line open
-1,2                                                  ! Maximum intake per animal for each animal species (kg per animas)
+0.05,0.08                                            ! (head/m^2) Maximum stocking density for each species (number of animal per m^2), if SR_SW is on, or just leave this line open
+0.02,0.04                                            ! (head/m^2) Minimum stocking density for each species (number of animal per m^2), if SR_SW is on, or just leave this line open
+1,2                                                  ! (g/ani*day) {Should be multiplied with 1000} Maximum intake per animal for each animal species ***(kg per animas per day)
 =====================================================================================================
 = For Detachment
 =====================================================================================================
@@ -28,9 +28,8 @@
 =====================================================================================================
 = For soil compactness calculation
 =====================================================================================================
-0.33,0.33                                            ! SC_VAR_A for each animal species
-0.33,0.33                                            ! SC_VAR_B for each animal species
-1                                                    ! Soil compactness when stocking density is 0 (bulk density (0-0.15m))
+0.125,0.125                                          ! The slope of the change of soil compactness to stocking density
+1.6                                                  ! Soil compactness when stocking density is 0 (bulk density (0-0.15m))
 =====================================================================================================
 = For effects on plant mortality rate
 =====================================================================================================
@@ -39,11 +38,13 @@
 =====================================================================================================
 = Plant respiration rate
 =====================================================================================================
-0.01,0.01                                            ! Respiration rate for each species
+0.04,0.04                                            ! Respiration rate for each species
 =====================================================================================================
 = Nitrogen return rate
 =====================================================================================================
 0.99,0.99                                            ! Nitrogen return rate of each animal species
+0.02,0.02                                            ! (gN/gPlant) Nitrogen concentration for each plant 
+25,25                                                ! Plant C to N ratio
 =====================================================================================================
 = For soil compactness effects on plant growth rate calculation
 =====================================================================================================

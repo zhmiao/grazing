@@ -117,6 +117,9 @@ subroutine model_ini
   allocate(K_CO(PLA_SPP_NUM))
   allocate(DECREASE_R(PLA_SPP_NUM))
   allocate(R_MAX(PLA_SPP_NUM))
+  allocate(SPP_N_CON(PLA_SPP_NUM))
+  allocate(TOT_N_CON(PLA_SPP_NUM))
+  allocate(SPP_CN(PLA_SPP_NUM))
 
   do y_dim = 1, MAX_Y_DIM
     do x_dim = 1, MAX_X_DIM
@@ -133,10 +136,8 @@ subroutine model_ini
       allocate(CELL(y_dim,x_dim)%D_R(PLA_SPP_NUM))
       allocate(CELL(y_dim,x_dim)%DECREASE_R_CO(PLA_SPP_NUM))
       allocate(CELL(y_dim,x_dim)%SPP_LAI(PLA_SPP_NUM))
-      allocate(CELL(y_dim,x_dim)%SPP_N_CON(PLA_SPP_NUM))
       allocate(CELL(y_dim,x_dim)%SPP_DEN(PLA_SPP_NUM))
       allocate(CELL(y_dim,x_dim)%SPP_RES(PLA_SPP_NUM))
-      allocate(CELL(y_dim,x_dim)%SPP_CN(PLA_SPP_NUM))
       allocate(CELL(y_dim,x_dim)%SPP_MOR(PLA_SPP_NUM))
       allocate(CELL(y_dim,x_dim)%SPP_GRO(PLA_SPP_NUM))
       allocate(CELL(y_dim,x_dim)%SPP_PS(PLA_SPP_NUM))

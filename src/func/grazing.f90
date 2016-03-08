@@ -51,12 +51,6 @@ if (GR_SW .eq. 1) then
 
         end if ! end cell preference cheking
 
-        ! write(*,*) CELL(y_dim,x_dim)%SPP_GRAZED(cur_ani,cur_pla)
-        ! write(*,*) '--^^--'
-        ! write(*,*) SITE_PREF(cur_ani)%SPP_FORAGE(cur_cla,cur_pla)
-        ! write(*,*) CELL(y_dim,x_dim)%AV_BIO_SPP(cur_pla)
-        ! write(*,*) SITE_PREF(cur_ani)%SPP_AV_BIO(cur_cla,cur_pla)
-
       end do ! end plant looping
     end do ! end site preference class checking
   end do ! end animal species checking }}}
@@ -67,7 +61,7 @@ if (GR_SW .eq. 1) then
 
   do cur_pla=1,PLA_SPP_NUM
 
-  ! ## Defoliation effect
+  ! ## Defoliation effect {{{
     if (DF_SW .eq. 1) then
 
       CELL(y_dim,x_dim)%TOT_BIO_SPP(cur_pla)=CELL(y_dim,x_dim)%TOT_BIO_SPP(cur_pla)&
@@ -77,9 +71,9 @@ if (GR_SW .eq. 1) then
         CELL(y_dim,x_dim)%TOT_BIO_SPP(cur_pla)=0
       end if
 
-    end if
+    end if !}}}
 
-  ! ## Detachment
+  ! ## Detachment {{{
     if (DT_SW .eq. 1) then
       do cur_ani=1,ANI_SPP_NUM
         CELL(y_dim,x_dim)%SPP_DETACH(cur_ani,cur_pla)=CELL(y_dim,x_dim)%SPP_GRAZED(cur_ani,cur_pla)&
@@ -93,44 +87,38 @@ if (GR_SW .eq. 1) then
         CELL(y_dim,x_dim)%TOT_BIO_SPP(cur_pla)=0
       end if
 
-    end if
+    end if !}}}
 
-  ! ## Mortality rate
-    if (MR_SW .eq. 1) then
-      CELL(y_dim,x_dim)%SPP_MOR(cur_pla)=CELL(y_dim,x_dim)%SPP_MOR(cur_pla)&
-                                    *MR_VAR_A(cur_pla)*sum(CELL(y_dim,x_dim)%SPP_GRAZED(:,cur_pla))&
-                                    +MR_VAR_B(cur_pla)*sum(CELL(y_dim,x_dim)%SPP_GRAZED(:,cur_pla))&
-                                    *CELL(y_dim,x_dim)%TOT_BIO_SPP(cur_pla)/CELLAREA
-    end if
+  ! ## Mortality rate {{{
+    ! if (MR_SW .eq. 1) then
+    !   CELL(y_dim,x_dim)%SPP_MOR(cur_pla)=CELL(y_dim,x_dim)%SPP_MOR(cur_pla)&
+    !                                 *MR_VAR_A(cur_pla)*sum(CELL(y_dim,x_dim)%SPP_GRAZED(:,cur_pla))&
+    !                                 +MR_VAR_B(cur_pla)*sum(CELL(y_dim,x_dim)%SPP_GRAZED(:,cur_pla))&
+    !                                 *CELL(y_dim,x_dim)%TOT_BIO_SPP(cur_pla)/CELLAREA
+    ! end if !}}}
 
   end do ! Stop looping for plant species
 
-
-  ! ## Soil compactness
+  ! ## Soil compactness {{{
   CELL(y_dim,x_dim)%SOIL_DCOM=0
   if (SC_SW .eq. 1) then
     do cur_ani=1,ANI_SPP_NUM
-      CELL(y_dim,x_dim)%SOIL_DCOM=CELL(y_dim,x_dim)%SOIL_DCOM+(SC_VAR_A(cur_ani)*CELL(y_dim,x_dim)%SD(cur_ani)&
-                                                           /(SC_VAR_B(cur_ani)+CELL(y_dim,x_dim)%SD(cur_ani)))
-    end do
 
-    if (CELL(y_dim,x_dim)%SOIL_DCOM .le. 0) then
-      CELL(y_dim,x_dim)%SOIL_DCOM=0
-    end if
+      ! CELL(y_dim,x_dim)%SOIL_DCOM=CELL(y_dim,x_dim)%SOIL_DCOM+(SC_VAR_A(cur_ani)*CELL(y_dim,x_dim)%SD(cur_ani)&
+      !                                                      /(SC_VAR_B(cur_ani)+CELL(y_dim,x_dim)%SD(cur_ani)))
+      CELL(y_dim,x_dim)%SOIL_DCOM = SC_VAR_A(cur_ani) * CELL(y_dim,x_dim)%SD(cur_ani)
+
+    end do
 
   else
     CELL(y_dim,x_dim)%SOIL_DCOM=0
-    CELL(y_dim,x_dim)%SOIL_COM=0
   end if
 
-  CELL(y_dim,x_dim)%SOIL_COM=SC_FREE+CELL(y_dim,x_dim)%SOIL_DCOM
+  CELL(y_dim,x_dim)%SOIL_COM=SC_FREE+CELL(y_dim,x_dim)%SOIL_DCOM ! }}}
 
-else  ! When there is no grazing
+! }}}
 
-  CELL(y_dim,x_dim)%SOIL_DCOM=0
-  CELL(y_dim,x_dim)%SOIL_COM=0
-
-end if ! end checking GR_SW }}}
+end if ! end checking GR_SW 
 
 ! ------------------------
 ! # Second stage {{{
@@ -138,10 +126,9 @@ end if ! end checking GR_SW }}}
 
   do cur_pla=1,PLA_SPP_NUM
 
-  ! ## LAI
+  ! ## LAI {{{
     if (LA_SW .eq. 1) then
-      CELL(y_dim,x_dim)%SPP_LAI(cur_pla)=10*(128-62*exp(-10.2*CELL(y_dim,x_dim)%TOT_BIO_SPP(cur_pla)))&
-                                                      *CELL(y_dim,x_dim)%TOT_BIO_SPP(cur_pla)/CELLAREA
+      CELL(y_dim,x_dim)%SPP_LAI(cur_pla)=128-62*(1-exp(-0.0102*(CELL(y_dim,x_dim)%TOT_BIO_SPP(cur_pla)/CELLAREA)))
 
       if (CELL(y_dim,x_dim)%SPP_LAI(cur_pla) .le. 0) then
         CELL(y_dim,x_dim)%SPP_LAI(cur_pla)=0
@@ -149,9 +136,9 @@ end if ! end checking GR_SW }}}
 
     else
       CELL(y_dim,x_dim)%SPP_LAI(cur_pla)=0 ! Default values
-    end if
+    end if !}}}
 
-  ! ## Respiration rate
+  ! ## Respiration rate {{{
     if (RS_SW .eq. 1) then
        CELL(y_dim,x_dim)%SPP_RES(cur_pla)=RES_RATE(cur_pla)*CELL(y_dim,x_dim)%TOT_BIO_SPP(cur_pla)
 
@@ -161,48 +148,36 @@ end if ! end checking GR_SW }}}
 
      else
        CELL(y_dim,x_dim)%SPP_RES(cur_pla)=0
-    end if
+     end if !}}}
 
-  ! ## Available N
+  ! ## Available N {{{
     do cur_ani=1,ANI_SPP_NUM
 
-      ! ### 0) Total N output from animal
+      ! ### 0) Total N output from animal {{{
       if (any(NR_SW(:) .eq. 1)) then
         N_RET=N_RET_RATE(cur_ani)*CELL(y_dim,x_dim)%SPP_GRAZED(cur_ani,cur_pla)&
                                                    *CELL(y_dim,x_dim)%SPP_N_CON(cur_pla)
+      end if ! }}}
 
-        ! write(*,*)N_RET
-        ! write(*,*) CELL(y_dim,x_dim)%SPP_N_CON(cur_pla)
-      end if
-
-      ! write(*,*)CELL(y_dim,x_dim)%AN_POOL
-      ! write(*,*)CELL(y_dim,x_dim)%SPP_CN(cur_pla)
-      ! ### 1) From urine
+      ! ### 1) From urine {{{
       if (NR_SW(1) .eq. 1) then
         CELL(y_dim,x_dim)%AN_POOL=CELL(y_dim,x_dim)%AN_POOL+N_RET&
-                                                *(0.7*(CELL(y_dim,x_dim)%SPP_N_CON(cur_pla)&
-                                                /CELL(y_dim,x_dim)%SPP_CN(cur_pla)-12)/13)
+                                       *(0.7*(SPP_N_CON(cur_pla)/SPP_CN(cur_pla)-12)/13)
 
-                                              write(*,*) CELL(y_dim,x_dim)%AN_POOL
         if (CELL(y_dim,x_dim)%AN_POOL .le. 0) then
           CELL(y_dim,x_dim)%AN_POOL=0
         end if
-
-        ! write(*,*) CELL(y_dim,x_dim)%AN_POOL
 
       else
 
         CELL(y_dim,x_dim)%AN_POOL=0
 
-      end if
+      end if !}}}
 
-      ! ###  2) From feces
+      ! ### 2) From feces {{{
       if (NR_SW(2) .eq. 1) then
         CELL(y_dim,x_dim)%LIT_N=CELL(y_dim,x_dim)%LIT_N+N_RET&
-                                                *(1-0.7*(CELL(y_dim,x_dim)%SPP_N_CON(cur_pla)&
-                                                /cell(y_dim,x_dim)%SPP_CN(cur_pla)-12)/13)
-
-                                              write(*,*) CELL(y_dim,x_dim)%LIT_N
+                                        *(1-0.7*(SPP_N_CON(cur_pla)/SPP_CN(cur_pla)-12)/13)
 
         if (CELL(y_dim,x_dim)%AN_POOL .le. 0) then
           CELL(y_dim,x_dim)%LIT_N=0
@@ -212,40 +187,41 @@ end if ! end checking GR_SW }}}
 
         CELL(y_dim,x_dim)%LIT_N=0
 
-      end if
+      end if !}}}
 
-    end do ! end looping of animal species
+    end do ! end looping of animal species }}}
 
-  ! Litter pool
+  ! ## Litter pool {{{
     if (LP_SW .eq. 1) then
-      CELL(y_dim,x_dim)%LIT_POOL=CELL(y_dim,x_dim)%LIT_POOL+sum(CELL(y_dim,x_dim)%SPP_DETACH(:,cur_pla))
+      CELL(y_dim,x_dim)%LIT_POOL_D=CELL(y_dim,x_dim)%LIT_POOL_D+sum(CELL(y_dim,x_dim)%SPP_DETACH(:,cur_pla))
 
-      if (CELL(y_dim,x_dim)%LIT_POOL .le. 0) then
-        CELL(y_dim,x_dim)%LIT_POOL=0
+      if (CELL(y_dim,x_dim)%LIT_POOL_D .le. 0) then
+        CELL(y_dim,x_dim)%LIT_POOL_D=0
       end if
 
     else
-      CELL(y_dim,x_dim)%LIT_POOL=0
-    end if
-
+      CELL(y_dim,x_dim)%LIT_POOL_D=0
+    end if !}}}
 
   end do ! end looping for plant species }}}
 
 ! ------------------------
-! Third stage {{{
+! # Third stage {{{
 ! ------------------------
 
   do cur_pla=1,PLA_SPP_NUM
-  ! From Soil compactness
 
-    if (SC_EF_SW .eq. 1) then
-      CELL(y_dim,x_dim)%SPP_GRO(cur_pla)=CELL(y_dim,x_dim)%SPP_GRO(cur_pla)*(1+SC_EF_VAR_A(cur_pla)&
-                                                  *CELL(y_dim,x_dim)%SOIL_DCOM/0.15)!&
-                                                  ! -SC_EF_VAR_B(cur_ani)
-    end if
+  ! ## From Soil compactness {{{
 
-  ! From LAI
-    ! 1) Change in photosysthesis
+    ! if (SC_EF_SW .eq. 1) then
+    !   CELL(y_dim,x_dim)%SPP_GRO(cur_pla)=CELL(y_dim,x_dim)%SPP_GRO(cur_pla)*(1+SC_EF_VAR_A(cur_pla)&
+    !                                               *CELL(y_dim,x_dim)%SOIL_DCOM/0.15)!&
+    !                                               ! -SC_EF_VAR_B(cur_ani)
+    ! end if ! }}}
+
+  ! ## From LAI {{{
+
+    ! ### 1) Change in photosysthesis {{{
     if (LA_EF_SW(1) .eq. 1) then
       CELL(y_dim,x_dim)%SPP_PS(cur_pla)=LA_PS_VAR_A(cur_pla)*CELL(y_dim,x_dim)%SPP_LAI(cur_pla)&
                                           /(LA_PS_VAR_B(cur_pla)+CELL(y_dim,x_dim)%SPP_LAI(cur_pla))
@@ -256,10 +232,9 @@ end if ! end checking GR_SW }}}
 
     else
       CELL(y_dim,x_dim)%SPP_PS(cur_pla)=0
-    end if
+    end if !}}}
 
-    ! 2) Change in rainfall interception
-
+    ! ### 2) Change in rainfall interception {{{
     if (LA_EF_SW(2) .eq. 1) then
       CELL(y_dim,x_dim)%SPP_RI(cur_pla)=1-exp(-LA_RI_VAR_A(cur_pla)*CELL(y_dim,x_dim)%SPP_LAI(cur_pla))
 
@@ -269,20 +244,20 @@ end if ! end checking GR_SW }}}
 
     else
       CELL(y_dim,x_dim)%SPP_RI(cur_pla)=0
-    end if
+    end if !}}}
 
   end do ! end looping for plant species
 
-    ! 3) Chang in evapotranspiration
-    ! 3.0) Potential evapotranspiration
+    ! ### 3) Chang in evapotranspiration {{{
+    ! #### 3.0) Potential evapotranspiration {{{
     if(LA_EF_SW(3) .eq. 1 .or. LA_EF_SW(4) .eq. 1) then
       CELL(y_dim,x_dim)%POT_ETP=0.128*(SOLA_RAD*(1-(0.23*(1-exp(-0.000029&
-                                        *(CELL(y_dim,x_dim)%TOT_BIOMASS+CELL(y_dim,x_dim)%LIT_POOL))&
+                                        *(CELL(y_dim,x_dim)%TOT_BIOMASS+CELL(y_dim,x_dim)%LIT_POOL_D))&
                                         +SOIL_ALB*0.24))/58.3))*((5304/(AVG_TEMP**2))*exp(21.25-(5304/AVG_TEMP))&
                                         /((5304/(AVG_TEMP**2))*exp(21.25-(5304/AVG_TEMP))+0.68))
-    end if
+    end if !}}}
 
-    ! 3.1) Potential soil evaporation
+    ! #### 3.1) Potential soil evaporation {{{
     if(LA_EF_SW(3) .eq. 1) then
       CELL(y_dim,x_dim)%POT_EVP=CELL(y_dim,x_dim)%POT_ETP*exp(-0.4*sum(CELL(y_dim,x_dim)%SPP_LAI(:)/PLA_SPP_NUM))
 
@@ -292,11 +267,11 @@ end if ! end checking GR_SW }}}
 
     else
       CELL(y_dim,x_dim)%POT_EVP=0
-    end if
+    end if ! }}}
 
   do cur_pla=1,PLA_SPP_NUM
 
-    ! 3.2) Potential transpiration
+    ! #### 3.2) Potential transpiration {{{
     if(LA_EF_SW(4) .eq. 1) then
       if(CELL(y_dim,x_dim)%SPP_LAI(cur_pla) .le. 3) then
         CELL(y_dim,x_dim)%SPP_TRP(cur_pla)=CELL(y_dim,x_dim)%POT_ETP*CELL(y_dim,x_dim)%SPP_LAI(cur_pla)/3
@@ -310,14 +285,18 @@ end if ! end checking GR_SW }}}
       end if
     else
       CELL(y_dim,x_dim)%SPP_TRP(cur_pla)=0
-    end if
+    end if !}}}
 
     ! 4) Change in available light for other species
     ! if(LA_EF_SW(5) .eq. 1) then
     ! end if
 
-  ! Form available N
-    ! 1) Change in N uptake
+  !}}}
+
+  !}}}
+
+  ! ## Form available N {{{
+    ! ### 1) Change in N uptake {{{
     if (AN_EF_SW(1) .eq. 1) then
       CELL(y_dim,x_dim)%SPP_NU(cur_pla)=AN_NU_VAR_A(cur_pla)*CELL(y_dim,x_dim)%AN_POOL&
                                         /(AN_NU_VAR_B(cur_pla)+CELL(y_dim,x_dim)%AN_POOL)
@@ -328,9 +307,9 @@ end if ! end checking GR_SW }}}
 
     else
       CELL(y_dim,x_dim)%SPP_NU(cur_pla)=0
-    end if
+    end if !}}}
 
-    ! 2) Change in carbon conversion
+    ! ### 2) Change in carbon conversion {{{
     if (AN_EF_SW(2) .eq. 1) then
       CELL(y_dim,x_dim)%SPP_CC(cur_pla)=AN_CC_VAR_A(cur_pla)*CELL(y_dim,x_dim)%SPP_N_CON(cur_pla)&
                                         +AN_CC_VAR_B(cur_pla)
@@ -342,9 +321,9 @@ end if ! end checking GR_SW }}}
     else
       ! CELL(y_dim,x_dim)%SPP_CC(cur_pla)=POT_CC(cur_pla)
       CELL(y_dim,x_dim)%SPP_CC(cur_pla)=0
-    end if
+    end if !}}}
 
-    ! 3) Change in root to shoot ratio
+    ! ### 3) Change in root to shoot ratio {{{
     if (AN_EF_SW(3) .eq. 1) then
       CELL(y_dim,x_dim)%SPP_RT(cur_pla)=AN_RT_VAR_A(cur_pla)/(1+AN_RT_VAR_B(cur_pla)*(CELL(y_dim,x_dim)%SPP_CC(cur_pla)&
                                                                   /POT_CC(cur_pla)))
@@ -355,10 +334,12 @@ end if ! end checking GR_SW }}}
 
     else
       CELL(y_dim,x_dim)%SPP_RT(cur_pla)=0
-    end if
+    end if !}}}
 
-    ! 4) root to shoot ratio with C and N relationship
-    end do ! end looping plant species }}}
+    ! ### 4) root to shoot ratio with C and N relationship
+    !}}}
+
+  end do ! end looping plant species }}}
 
 end do  ! end looping for x
 end do ! end looping for y 

@@ -296,10 +296,6 @@ subroutine grazing_process_opt
                   SITE_PREF(cur_ani)%SPP_AV_BIO(cur_cla,cur_pla)=SITE_PREF(cur_ani)%SPP_AV_BIO(cur_cla,cur_pla)&
                                                         +CELL(y_dim,x_dim)%AV_BIO_SPP(cur_pla)*ANI_COM_FAC(cur_ani)
 
-                  ! write(*,*)CELL(y_dim,x_dim)%AV_BIO_SPP(cur_pla)
-                  ! write(*,*)ANI_COM_FAC(cur_pla)
-                  ! write(*,*)SITE_PREF(cur_ani)%SPP_AV_BIO(cur_cla,cur_pla)
-
               end if    ! End current cell preference class check
 
               end do ! end looping x dimension

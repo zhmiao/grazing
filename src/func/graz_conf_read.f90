@@ -1,12 +1,30 @@
 ! This subroutine runs when season has changed or on day one
 subroutine graz_conf_read
-  
+
   use parameter_var
   use structure
+  use misc
   implicit none
 
   integer :: i, j
   logical :: OK             ! Used to check whether one file has been opened
+
+  ! ! Loading misc functions {{{
+  ! interface
+  !
+  !   ! Subroutine for Check and reallocate dimensional variables {{{
+  !   subroutine check_and_reallocate(DVAR,D)
+  !       implicit none
+  !       real, dimension(:), allocatable, intent(out):: DVAR
+  !       integer, intent(in) :: D
+  !   end subroutine check_and_reallocate 
+  !   subroutine check_and_reallocate_two(DVAR,D1,D2)
+  !       implicit none
+  !       real, dimension(:,:), allocatable, intent(out):: DVAR
+  !       integer, intent(in) :: D1,D2
+  !   end subroutine check_and_reallocate_two !}}}
+  !
+  ! end interface !}}}
 
     ! # First close configuration opened for last season if there is a last season
     inquire(GR_CON_SEA, opened=OK)
@@ -47,48 +65,28 @@ subroutine graz_conf_read
 
       end if
 
-      ! ## Allocate species different variables
-      ! ### Deallocate variables first if it is not the first season
-      if(allocated(FIX_GR_R))     deallocate(FIX_GR_R)
-      if(allocated(MAX_SD))       deallocate(MAX_SD)
-      if(allocated(MIN_SD))       deallocate(MIN_SD)
-      if(allocated(ANI_NUM_SPP))  deallocate(ANI_NUM_SPP)
-      if(allocated(MAX_INT))      deallocate(MAX_INT)
-      if(allocated(TOT_DMD))      deallocate(TOT_DMD)
-      if(allocated(ANI_COM_FAC))  deallocate(ANI_COM_FAC)
-      if(allocated(ANI_AV_BIO))   deallocate(ANI_AV_BIO)
-      if(allocated(DET_RATE))     deallocate(DET_RATE)
-      if(allocated(SC_VAR_A))     deallocate(SC_VAR_A)
-      if(allocated(SC_VAR_B))     deallocate(SC_VAR_B)
-      if(allocated(N_RET_RATE))   deallocate(N_RET_RATE)
+      ! ## Allocate species different variables {{{
+      call check_and_reallocate(FIX_GR_R,ANI_SPP_NUM)
+      call check_and_reallocate(MAX_SD,ANI_SPP_NUM)
+      call check_and_reallocate(MIN_SD,ANI_SPP_NUM)
+      call check_and_reallocate_int(ANI_NUM_SPP,ANI_SPP_NUM)
+      call check_and_reallocate(MAX_INT,ANI_SPP_NUM)
+      call check_and_reallocate(TOT_DMD,ANI_SPP_NUM)
+      call check_and_reallocate(ANI_COM_FAC,ANI_SPP_NUM)
+      call check_and_reallocate(ANI_AV_BIO,ANI_SPP_NUM)
+      call check_and_reallocate(DET_RATE,ANI_SPP_NUM)
+      call check_and_reallocate(SC_VAR_A,ANI_SPP_NUM)
+      call check_and_reallocate(SC_VAR_B,ANI_SPP_NUM)
+      call check_and_reallocate(N_RET_RATE,ANI_SPP_NUM)
+      write(*,*) size(N_RET_RATE)
       do y_dim=1,MAX_Y_DIM
         do x_dim=1,MAX_X_DIM
-          if(allocated(CELL(y_dim,x_dim)%SPP_GRAZED))  deallocate(CELL(y_dim,x_dim)%SPP_GRAZED)
-          if(allocated(CELL(y_dim,x_dim)%SPP_DETACH))  deallocate(CELL(y_dim,x_dim)%SPP_DETACH)
-          if(allocated(CELL(y_dim,x_dim)%SS_PR_CLA))   deallocate(CELL(y_dim,x_dim)%SS_PR_CLA)
+          call check_and_reallocate_two(CELL(y_dim,x_dim)%SPP_GRAZED,ANI_SPP_NUM,PLA_SPP_NUM)
+          call check_and_reallocate_two(CELL(y_dim,x_dim)%SPP_DETACH,ANI_SPP_NUM,PLA_SPP_NUM)
+          call check_and_reallocate_int(CELL(y_dim,x_dim)%SS_PR_CLA,ANI_SPP_NUM)
         end do
       end do
-
-      ! ### Allocate dimensions to variables that uses animal specise number
-      allocate(FIX_GR_R(ANI_SPP_NUM))
-      allocate(MAX_SD(ANI_SPP_NUM))
-      allocate(MIN_SD(ANI_SPP_NUM))
-      allocate(ANI_NUM_SPP(ANI_SPP_NUM))
-      allocate(MAX_INT(ANI_SPP_NUM))
-      allocate(TOT_DMD(ANI_SPP_NUM))
-      allocate(ANI_COM_FAC(ANI_SPP_NUM))
-      allocate(ANI_AV_BIO(ANI_SPP_NUM))
-      allocate(DET_RATE(ANI_SPP_NUM))
-      allocate(SC_VAR_A(ANI_SPP_NUM))
-      allocate(SC_VAR_B(ANI_SPP_NUM))
-      allocate(N_RET_RATE(ANI_SPP_NUM))
-      do y_dim=1,MAX_Y_DIM
-        do x_dim=1,MAX_X_DIM
-          allocate(CELL(y_dim,x_dim)%SPP_GRAZED(ANI_SPP_NUM,PLA_SPP_NUM))
-          allocate(CELL(y_dim,x_dim)%SPP_DETACH(ANI_SPP_NUM,PLA_SPP_NUM))
-          allocate(CELL(y_dim,x_dim)%SS_PR_CLA(ANI_SPP_NUM))
-        end do
-      end do
+      write(*,*) size(CELL(1,1)%SPP_DETACH)!}}}
 
       !}}}
 
@@ -308,16 +306,6 @@ subroutine graz_conf_read
           write(ECHO_NUM,*) SC_VAR_A
         end if
 
-        ! ## Read in variable B
-        read(GR_CON_SEA,*,iostat=ioerr)(SC_VAR_B(cur_ani), cur_ani=1,ANI_SPP_NUM)
-        if (ioerr .ne. 0 ) then 
-          write(*,*) 'Soil compactness variables reading error'
-          stop
-        else
-          write(ECHO_NUM,*) 'Soil compactness variables B for each animal species are: '
-          write(ECHO_NUM,*) SC_VAR_B
-        end if
-
         ! ## Read in free soil compactness
         read(GR_CON_SEA,*,iostat=ioerr) SC_FREE
         if (ioerr .ne. 0 ) then 
@@ -426,6 +414,30 @@ subroutine graz_conf_read
           write(ECHO_NUM,*) 'Nitrogen return rate for each plant species are: '
           do cur_ani=1,ANI_SPP_NUM
             write(ECHO_NUM,*) N_RET_RATE(cur_ani)
+          end do
+        end if
+
+      ! ## Read in nitrogen concentration
+        read(GR_CON_SEA,*,iostat=ioerr)(SPP_N_CON(cur_pla), cur_pla=1,PLA_SPP_NUM)
+        if (ioerr .ne. 0 ) then 
+          write(*,*) 'Nitrogen concentration reading error'
+          stop
+        else
+          write(ECHO_NUM,*) 'Nitrogen concentration for each plant species are: '
+          do cur_pla=1,PLA_SPP_NUM
+            write(ECHO_NUM,*) SPP_N_CON(cur_pla)
+          end do
+        end if
+
+      ! ## Read in plant C to N ratio
+        read(GR_CON_SEA,*,iostat=ioerr)(SPP_CN(cur_pla), cur_pla=1,PLA_SPP_NUM)
+        if (ioerr .ne. 0 ) then 
+          write(*,*) 'Plant C to N ratio reading error'
+          stop
+        else
+          write(ECHO_NUM,*) 'Plant C to N ratio for each plant species are: '
+          do cur_pla=1,PLA_SPP_NUM
+            write(ECHO_NUM,*) SPP_CN(cur_pla)
           end do
         end if
 

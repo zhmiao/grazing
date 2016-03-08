@@ -48,8 +48,8 @@ subroutine plant_growth
 
         end if ! end checking plant growing season }}}
 
-        CELL(y_dim,x_dim)%SPP_N_CON(cur_pla)=0.00103
-        CELL(y_dim,x_dim)%SPP_CN(cur_pla)=25
+        ! CELL(y_dim,x_dim)%SPP_N_CON(cur_pla)=0.00103
+        ! CELL(y_dim,x_dim)%SPP_CN(cur_pla)=25
 
       end do ! end looping x
     end do ! end looping y
