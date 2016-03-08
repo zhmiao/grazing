@@ -39,10 +39,10 @@ module structure
     real                               :: TOT_LAI                         ! total LAI
     real, dimension(:), allocatable    :: SPP_DEN                         ! Plant density for each plant species
     real, dimension(:), allocatable    :: SPP_RES                         ! Plant respiration for each plant species
-    real, dimension(:), allocatable    :: SPP_MOR                         ! Mortality rate for each plant species
-    real, dimension(:), allocatable    :: SPP_GRO                         ! Growth rate for each plant species
-    real, dimension(:), allocatable    :: SPP_PS                          ! Photothesis amount for each plant species
-    real, dimension(:), allocatable    :: SPP_RI                          ! Rainfall interception fraction for each plant species
+    ! real, dimension(:), allocatable    :: SPP_MOR                       ! Mortality rate for each plant species
+    real, dimension(:), allocatable    :: SPP_RDP                         ! (%) Percent growth rate change
+    real, dimension(:), allocatable    :: SPP_PS                          ! (gC/m^2 day) Photothesis amount for each plant species
+    real, dimension(:), allocatable    :: SPP_RI                          ! (%) Rainfall interception fraction for each plant species
     real, dimension(:), allocatable    :: SPP_CC                          ! Carbon conversion rate from photosynthesis for each plant species
     real, dimension(:), allocatable    :: SPP_NU                          ! N uptake for each plant species
     real, dimension(:), allocatable    :: SPP_RT                          ! Root to shoot ratio for each plant species
@@ -51,9 +51,9 @@ module structure
     real                               :: LIT_POOL_D                      ! (g) Litter pool change caused by grazing animal
     real                               :: LIT_N                           ! Organic N in litter
 
-    real                               :: POT_ETP                         ! Potential evapotransipration
-    real                               :: POT_EVP                         ! Potential soil evaporation
-    real, dimension(:), allocatable    :: SPP_TRP                         ! Potential transpiration for each plant species }}}
+    real                               :: POT_ETP                         ! (cm) Potential evapotransipration
+    real                               :: POT_EVP                         ! (cm) Potential soil evaporation
+    real, dimension(:), allocatable    :: SPP_TRP                         ! (cm) Potential transpiration for each plant species }}}
 
     ! for grazing !{{{
     real                               :: GR_SW                           ! Used to control whether there is grazing
@@ -105,9 +105,9 @@ module structure
   real, dimension(:), allocatable :: SPP_CN                          ! Plant C to N ratio
 
   ! Global geographical variables !{{{
-  real                            :: SOIL_ALB                        ! Soil albedo (0-0.1)
-  real                            :: SOLA_RAD                        ! Solar radiation (Langleys)
-  real                            :: AVG_TEMP                        ! Average temperature (K) }}}
+  real, dimension(:), allocatable :: SOIL_ALB                        ! Soil albedo (0-0.1)
+  real, dimension(:), allocatable :: SOLA_RAD                        ! Solar radiation (Langleys)
+  real, dimension(:), allocatable :: AVG_TEMP                        ! Average temperature (K) }}}
 
   ! Effects functions !{{{
   real, dimension(:), allocatable :: RES_RATE                        ! Respiration rate for each plant species }}}

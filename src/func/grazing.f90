@@ -104,8 +104,6 @@ if (GR_SW .eq. 1) then
   if (SC_SW .eq. 1) then
     do cur_ani=1,ANI_SPP_NUM
 
-      ! CELL(y_dim,x_dim)%SOIL_DCOM=CELL(y_dim,x_dim)%SOIL_DCOM+(SC_VAR_A(cur_ani)*CELL(y_dim,x_dim)%SD(cur_ani)&
-      !                                                      /(SC_VAR_B(cur_ani)+CELL(y_dim,x_dim)%SD(cur_ani)))
       CELL(y_dim,x_dim)%SOIL_DCOM = SC_VAR_A(cur_ani) * CELL(y_dim,x_dim)%SD(cur_ani)
 
     end do
@@ -213,11 +211,9 @@ end if ! end checking GR_SW
 
   ! ## From Soil compactness {{{
 
-    ! if (SC_EF_SW .eq. 1) then
-    !   CELL(y_dim,x_dim)%SPP_GRO(cur_pla)=CELL(y_dim,x_dim)%SPP_GRO(cur_pla)*(1+SC_EF_VAR_A(cur_pla)&
-    !                                               *CELL(y_dim,x_dim)%SOIL_DCOM/0.15)!&
-    !                                               ! -SC_EF_VAR_B(cur_ani)
-    ! end if ! }}}
+    if (SC_EF_SW .eq. 1) then
+      CELL(y_dim,x_dim)%SPP_RDP(cur_pla) = -SC_EF_VAR_A*CELL(y_dim,x_dim)%SOIL_DCOM-SC_EF_VAR_B
+    end if ! }}}
 
   ! ## From LAI {{{
 
@@ -251,7 +247,7 @@ end if ! end checking GR_SW
     ! ### 3) Chang in evapotranspiration {{{
     ! #### 3.0) Potential evapotranspiration {{{
     if(LA_EF_SW(3) .eq. 1 .or. LA_EF_SW(4) .eq. 1) then
-      CELL(y_dim,x_dim)%POT_ETP=0.128*(SOLA_RAD*(1-(0.23*(1-exp(-0.000029&
+      CELL(y_dim,x_dim)%POT_ETP=0.128*(SOLA_RAD*(1-(0.23*(1-exp(-0.0000029&
                                         *(CELL(y_dim,x_dim)%TOT_BIOMASS+CELL(y_dim,x_dim)%LIT_POOL_D))&
                                         +SOIL_ALB*0.24))/58.3))*((5304/(AVG_TEMP**2))*exp(21.25-(5304/AVG_TEMP))&
                                         /((5304/(AVG_TEMP**2))*exp(21.25-(5304/AVG_TEMP))+0.68))

@@ -562,6 +562,55 @@ subroutine grazing_ini
       UAV_RATE(:)=0
     end if
 
+    ! ## For solar radiation
+    read(AY_CON,*)
+    read(AY_CON,*)
+    read(AY_CON,*)
+
+    ! ### Read in evapotranspiration variables
+    if(LA_EF_SW(3) .eq. 1 .or. LA_EF_SW(4) .eq. 1) then
+
+      ! #### Solar radiation
+      allocate(SOLA_RAD(SEA_NUM))
+      read(AY_CON,*,iostat=ioerr)(SOLA_RAD(i), i=1,SEA_NUM)
+      if (ioerr .ne. 0 ) then 
+        write(*,*) 'Solar radiation reading error'
+        stop
+      else
+        write(*,*) 'Solar radiation for each season are: '
+        do i=1,SEA_NUM
+          write(*,*) SOLA_RAD(i)
+        end do
+      end if
+
+      ! Soil albedo
+      allocate(SOIL_ALB(SEA_NUM))
+      read(AY_CON,*,iostat=ioerr)(SOIL_ALB(i), i=1,SEA_NUM)
+      if (ioerr .ne. 0 ) then 
+        write(*,*) 'Soil albedo reading error'
+        stop
+      else
+        write(*,*) 'Soil albedo for each season are: '
+        do i=1,SEA_NUM
+          write(*,*) SOIL_ALB(i)
+        end do
+
+      ! Average temperature
+      allocate(AVG_TEMP(SEA_NUM))
+      read(AY_CON,*,iostat=ioerr)(AVG_TEMP(i), i=1,SEA_NUM)
+      if (ioerr .ne. 0 ) then 
+        write(*,*) 'Average temperature reading error'
+        stop
+      else
+        write(*,*) 'Average temperature for each season are: '
+        do i=1,SEA_NUM
+          write(*,*) AVG_TEMP(i)
+        end do
+
+    else
+      read(AY_CON,*)        ! Skip this line
+    end if
+
   end if                    ! Total switch config file
 
   close(AY_CON)

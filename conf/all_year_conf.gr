@@ -13,3 +13,9 @@
 = For unavailable biomass rate
 =====================================================================================================
 0.3,0.1                                         ! Unavailable biomass rate for each plant species, when DE_SW(3) is on. if not leave it open
+=====================================================================================================
+= Variables for evapotranspiration calculations
+=====================================================================================================
+12,8                                         ! (Langleys) Average daily solar radiations based on seasons
+0.08,0.02                                    ! Soil albedo (0-0.1) based on seasons
+298.15,288.15                                ! (K) Average temperature based on seasons
