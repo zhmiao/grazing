@@ -90,7 +90,8 @@ module parameter_var
   integer                              :: ANI_SPP_NUM             ! Number of animal species
   integer                              :: PLA_SPP_NUM             ! Number of plant species
   integer                              :: cur_ani                 ! Current animal species, used for looping
-  integer                              :: cur_pla                 ! Current plant species, used for looping }}}
+  integer                              :: cur_pla                 ! Current plant species, used for looping 
+  integer                              :: cur_sea                 ! Current season, used for looping }}}
 
   ! For seasonal difference {{{
   integer                              :: SEA_NUM                 ! Number of seasons
@@ -179,8 +180,8 @@ module parameter_var
   real, dimension(:), allocatable     :: MR_VAR_B                 ! }}}
 
   ! For nitrogen return {{{
-  real, dimension(:), allocatable     :: N_RET_RATE               ! Nitrogen return rate of each animal species
-  real                                :: N_RET                    ! Nitrogen return from each animal species, temporary variable }}}
+  real, dimension(:), allocatable     :: N_RET_RATE               ! (%)  Nitrogen return rate of each animal species
+  real                                :: N_RET                    ! (gN) Nitrogen return from each animal species, temporary variable }}}
 
   ! For soil compactness effects on plant growth rate {{{
   real, dimension(:), allocatable     :: SC_EF_VAR_A              ! First variable used for calculating soil compactness effects on plant growth rate for each plant species
@@ -194,7 +195,7 @@ module parameter_var
   real, dimension(:), allocatable     :: LA_RI_VAR_A              ! First variable used for calculating LAI effects on rainfall interception for each plant species }}}
 
   ! For LAI effects on plant transpiration {{{
-  real, dimension(:), allocatable     :: LA_TP_VAR_A              ! First variable used for calculating LAI effects on plant transpiration for each plant species }}}
+  ! real, dimension(:), allocatable     :: LA_TP_VAR_A            ! First variable used for calculating LAI effects on plant transpiration for each plant species }}}
 
   ! For available nitrogen effects on N uptakeA {{{
   real, dimension(:), allocatable     :: AN_NU_VAR_A              ! First variable used for calculating available N effects on photosynthesis for each plant species

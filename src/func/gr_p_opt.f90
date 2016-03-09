@@ -168,6 +168,12 @@ subroutine grazing_process_opt
       ! ## diet & site selection initialization. [site_conf_sea_*.gr, diet_conf_sea_*.gr]
       call sel_con_read
 
+      do y_dim=1,MAX_Y_DIM
+        do x_dim=1,MAX_X_DIM
+          do cur_pla=1,PLA_SPP_NUM
+          end do
+        end do
+      end do
     end if ! end for SEA_CH_SW  }}}
 
 ! ================================================  NOW, FOR REAL CALCULATION  ================================================
@@ -186,7 +192,7 @@ subroutine grazing_process_opt
       AV_BIOMASS=0
     end if
 
-    ! ### Cell level modifications {{{
+    ! ### Cell level modifications (and, read in cell level N concentration) {{{
     do y_dim=1,MAX_Y_DIM
       do x_dim=1,MAX_X_DIM
 
@@ -199,12 +205,18 @@ subroutine grazing_process_opt
 
         ! ### Available biomass for each plant species modifications
         do cur_pla=1,PLA_SPP_NUM
+
           if (CELL(y_dim,x_dim)%AV_BIOMASS .le. 0) then
             CELL(y_dim,x_dim)%AV_BIO_SPP(cur_pla)=0
           else
             CELL(y_dim,x_dim)%AV_BIO_SPP(cur_pla)=CELL(y_dim,x_dim)%AV_BIOMASS&
                                                  *(CELL(y_dim,x_dim)%AV_BIO_SPP_P(cur_pla)/CELL(y_dim,x_dim)%AV_BIOMASS_P)
           end if
+
+          if (any(NR_SW(:) .eq. 1) .or. AN_EF_SW(2) .eq. 1) then
+            CELL(y_dim,x_dim)%SPP_N_CON(cur_pla)=SPP_N_CON(cur_pla)
+          end if
+
         end do
 
       end do

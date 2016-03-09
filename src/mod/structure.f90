@@ -38,18 +38,19 @@ module structure
     real, dimension(:), allocatable    :: SPP_LAI                         ! LAI for each plant species
     real                               :: TOT_LAI                         ! total LAI
     real, dimension(:), allocatable    :: SPP_DEN                         ! Plant density for each plant species
-    real, dimension(:), allocatable    :: SPP_RES                         ! Plant respiration for each plant species
+    real, dimension(:), allocatable    :: SPP_RES                         ! (gC) Plant respiration for each plant species
     ! real, dimension(:), allocatable    :: SPP_MOR                       ! Mortality rate for each plant species
     real, dimension(:), allocatable    :: SPP_RDP                         ! (%) Percent growth rate change
     real, dimension(:), allocatable    :: SPP_PS                          ! (gC/m^2 day) Photothesis amount for each plant species
     real, dimension(:), allocatable    :: SPP_RI                          ! (%) Rainfall interception fraction for each plant species
-    real, dimension(:), allocatable    :: SPP_CC                          ! Carbon conversion rate from photosynthesis for each plant species
-    real, dimension(:), allocatable    :: SPP_NU                          ! N uptake for each plant species
-    real, dimension(:), allocatable    :: SPP_RT                          ! Root to shoot ratio for each plant species
+    real, dimension(:), allocatable    :: SPP_N_CON                       ! (gN/gPlant) Cell level nitrogen concentration for each plant species
+    real, dimension(:), allocatable    :: SPP_CC                          ! (g/MJ) Carbon conversion efficiency from photosynthesis for each plant species
+    real, dimension(:), allocatable    :: SPP_NU_D                        ! (gN/m^2 day) N uptake for each plant species
+    ! real, dimension(:), allocatable    :: SPP_RT                          ! Root to shoot ratio for each plant species
 
-    real                               :: AN_POOL                         ! Available N pool
+    real                               :: AN_POOL_D                       ! (gN) Available N pool change
     real                               :: LIT_POOL_D                      ! (g) Litter pool change caused by grazing animal
-    real                               :: LIT_N                           ! Organic N in litter
+    real                               :: LIT_N_D                           ! Organic N in litter
 
     real                               :: POT_ETP                         ! (cm) Potential evapotransipration
     real                               :: POT_EVP                         ! (cm) Potential soil evaporation
@@ -101,7 +102,7 @@ module structure
   real                            :: UAV_BIOMASS                     ! (g) Global unavailable plant biomass
   real                            :: TOT_K                           ! (g) Global total plant carrying capacity }}}
   real, dimension(:), allocatable :: SPP_N_CON                       ! (gN/gPlant) Nitrogen concentration for each plant species
-  real                            :: TOT_N_CON                       ! (gN/gPlant) Total Nitrogen concentration
+  ! real                            :: TOT_N_CON                       ! (gN/gPlant) Total Nitrogen concentration
   real, dimension(:), allocatable :: SPP_CN                          ! Plant C to N ratio
 
   ! Global geographical variables !{{{

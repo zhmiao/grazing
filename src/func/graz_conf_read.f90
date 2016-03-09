@@ -76,7 +76,6 @@ subroutine graz_conf_read
       call check_and_reallocate(ANI_AV_BIO,ANI_SPP_NUM)
       call check_and_reallocate(DET_RATE,ANI_SPP_NUM)
       call check_and_reallocate(SC_VAR_A,ANI_SPP_NUM)
-      call check_and_reallocate(SC_VAR_B,ANI_SPP_NUM)
       call check_and_reallocate(N_RET_RATE,ANI_SPP_NUM)
       write(*,*) size(N_RET_RATE)
       do y_dim=1,MAX_Y_DIM
@@ -396,6 +395,22 @@ subroutine graz_conf_read
       read(GR_CON_SEA,*)
       read(GR_CON_SEA,*)
 
+      ! ## Read in nitrogen concentration
+      if (any(NR_SW(:) .eq. 1) .or. AN_EF_SW(2) .eq. 1) then
+        read(GR_CON_SEA,*,iostat=ioerr)(SPP_N_CON(cur_pla), cur_pla=1,PLA_SPP_NUM)
+        if (ioerr .ne. 0 ) then 
+          write(*,*) 'Nitrogen concentration reading error'
+          stop
+        else
+          write(ECHO_NUM,*) 'Nitrogen concentration for each plant species are: '
+          do cur_pla=1,PLA_SPP_NUM
+            write(ECHO_NUM,*) SPP_N_CON(cur_pla)
+          end do
+        end if
+      else
+        read(GR_CON_SEA,*) ! Skip the line
+      end if
+
       ! ## Any Nitrogen return switch would turn this on. Either from urine or feces or both.
       if (any(NR_SW(:) .eq. 1)) then
 
@@ -417,18 +432,6 @@ subroutine graz_conf_read
           end do
         end if
 
-      ! ## Read in nitrogen concentration
-        read(GR_CON_SEA,*,iostat=ioerr)(SPP_N_CON(cur_pla), cur_pla=1,PLA_SPP_NUM)
-        if (ioerr .ne. 0 ) then 
-          write(*,*) 'Nitrogen concentration reading error'
-          stop
-        else
-          write(ECHO_NUM,*) 'Nitrogen concentration for each plant species are: '
-          do cur_pla=1,PLA_SPP_NUM
-            write(ECHO_NUM,*) SPP_N_CON(cur_pla)
-          end do
-        end if
-
       ! ## Read in plant C to N ratio
         read(GR_CON_SEA,*,iostat=ioerr)(SPP_CN(cur_pla), cur_pla=1,PLA_SPP_NUM)
         if (ioerr .ne. 0 ) then 
@@ -442,6 +445,7 @@ subroutine graz_conf_read
         end if
 
       else
+        read(GR_CON_SEA,*) ! Skip the line
         read(GR_CON_SEA,*) ! Skip the line
 
       end if ! end NR_SW cheking }}}
@@ -551,32 +555,32 @@ subroutine graz_conf_read
 
       end if ! end LA_EF_SW(2) cheking }}}
 
-    ! ------------------------
-    ! # Effects from LAI on plant transpiration {{{
-    ! ------------------------
-      read(GR_CON_SEA,*)
-      read(GR_CON_SEA,*)
-      read(GR_CON_SEA,*)
-
-      if (LA_EF_SW(4) .eq. 1) then
-
-        ! ## Allocate variables
-        if(.not. allocated(LA_TP_VAR_A))allocate(LA_TP_VAR_A(PLA_SPP_NUM))
-
-        ! ## Read in variable A
-        read(GR_CON_SEA,*,iostat=ioerr)(LA_TP_VAR_A(cur_pla), cur_pla=1,PLA_SPP_NUM)
-        if (ioerr .ne. 0 ) then 
-          write(*,*) 'LAI-transpiration effect variables reading error'
-          stop
-        else
-          write(ECHO_NUM,*) 'LAI-transpiration effect variables A for each plant species are: '
-          write(ECHO_NUM,*) LA_TP_VAR_A
-        end if
-
-      else
-        read(GR_CON_SEA,*) ! Skip the line
-
-      end if ! end LA_EF_SW(4) cheking }}}
+    ! ! ------------------------
+    ! ! # Effects from LAI on plant transpiration {{{
+    ! ! ------------------------
+    !   read(GR_CON_SEA,*)
+    !   read(GR_CON_SEA,*)
+    !   read(GR_CON_SEA,*)
+    !
+    !   if (LA_EF_SW(4) .eq. 1) then
+    !
+    !     ! ## Allocate variables
+    !     if(.not. allocated(LA_TP_VAR_A))allocate(LA_TP_VAR_A(PLA_SPP_NUM))
+    !
+    !     ! ## Read in variable A
+    !     read(GR_CON_SEA,*,iostat=ioerr)(LA_TP_VAR_A(cur_pla), cur_pla=1,PLA_SPP_NUM)
+    !     if (ioerr .ne. 0 ) then 
+    !       write(*,*) 'LAI-transpiration effect variables reading error'
+    !       stop
+    !     else
+    !       write(ECHO_NUM,*) 'LAI-transpiration effect variables A for each plant species are: '
+    !       write(ECHO_NUM,*) LA_TP_VAR_A
+    !     end if
+    !
+    !   else
+    !     read(GR_CON_SEA,*) ! Skip the line
+    !
+    !   end if ! end LA_EF_SW(4) cheking }}}
  
     ! ------------------------
     ! # N uptake {{{

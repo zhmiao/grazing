@@ -14,7 +14,7 @@
 =====================================================================================================
 = For fixed grazing rate
 =====================================================================================================
-0.01,0.2                                             ! (%) Fixed daily grazing rate in percentage, if FR_SW is on, or just leave this line open
+0.01,0.02                                             ! (%) Fixed daily grazing rate in percentage, if FR_SW is on, or just leave this line open
 =====================================================================================================
 = For stocking density calculation
 =====================================================================================================
@@ -42,8 +42,8 @@
 =====================================================================================================
 = Nitrogen return rate
 =====================================================================================================
-0.99,0.99                                            ! Nitrogen return rate of each animal species
 0.02,0.02                                            ! (gN/gPlant) Nitrogen concentration for each plant 
+0.99,0.99                                            ! Nitrogen return rate of each animal species
 25,25                                                ! Plant C to N ratio
 =====================================================================================================
 = For soil compactness effects on plant growth rate calculation
@@ -53,26 +53,22 @@
 =====================================================================================================
 = For LAI effect on photosynthesis
 =====================================================================================================
-10,10                                                ! SC_EF_VAR_A for each plant species
-2,2                                                  ! SC_EF_VAR_B for each plant species
+10,10                                                ! (gC/m^2 day) Maximum photosynthesis rate
+2,2                                                  ! Half saturation constant
 =====================================================================================================
 = For LAI effect on rainfall interception
 =====================================================================================================
 0.5,0.5                                              ! (m^2Ground/m^2Leaf)Canopy extinction / rainfall interception coefficient
 =====================================================================================================
-= For LAI effect on plant transpiration
-=====================================================================================================
-3,3                                                  ! LA_TP_VAR_A for each plant species
-=====================================================================================================
 = For N uptake
 =====================================================================================================
-1,1                                                  ! AN_NU_VAR_A for each plant species
-1,1                                                  ! AN_NU_VAR_B for each plant species
+1,1                                                  ! (gN/m^2 day) Maximum uptake
+1,1                                                  ! Half saturation constant
 =====================================================================================================
 = For C conversion
 =====================================================================================================
-0.44,0.44                                            ! AN_CC_VAR_A for each plant species
-0.35,0.35                                            ! AN_CC_VAR_B for each plant species
+0.44,0.44                                            ! (g/MJ %N) AN_CC_VAR_A for each plant species [Slope]
+0.92,0.92                                            ! (g/MJ) AN_CC_VAR_B for each plant species [Intercept]
 3.31,3.31                                            ! Potential C conversion rate for each species
 =====================================================================================================
 = For root to shoot ratio

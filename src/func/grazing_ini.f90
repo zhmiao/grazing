@@ -594,6 +594,7 @@ subroutine grazing_ini
         do i=1,SEA_NUM
           write(*,*) SOIL_ALB(i)
         end do
+      end if
 
       ! Average temperature
       allocate(AVG_TEMP(SEA_NUM))
@@ -606,8 +607,11 @@ subroutine grazing_ini
         do i=1,SEA_NUM
           write(*,*) AVG_TEMP(i)
         end do
+      end if
 
     else
+      read(AY_CON,*)        ! Skip this line
+      read(AY_CON,*)        ! Skip this line
       read(AY_CON,*)        ! Skip this line
     end if
 

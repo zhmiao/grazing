@@ -159,31 +159,31 @@ end if ! end checking GR_SW
 
       ! ### 1) From urine {{{
       if (NR_SW(1) .eq. 1) then
-        CELL(y_dim,x_dim)%AN_POOL=CELL(y_dim,x_dim)%AN_POOL+N_RET&
-                                       *(0.7*(SPP_N_CON(cur_pla)/SPP_CN(cur_pla)-12)/13)
+        CELL(y_dim,x_dim)%AN_POOL_D=CELL(y_dim,x_dim)%AN_POOL_D+N_RET&
+                                       *(0.7*(CELL(y_dim,x_dim)%SPP_N_CON(cur_pla)/SPP_CN(cur_pla)-12)/13)
 
-        if (CELL(y_dim,x_dim)%AN_POOL .le. 0) then
-          CELL(y_dim,x_dim)%AN_POOL=0
+        if (CELL(y_dim,x_dim)%AN_POOL_D .le. 0) then
+          CELL(y_dim,x_dim)%AN_POOL_D=0
         end if
 
       else
 
-        CELL(y_dim,x_dim)%AN_POOL=0
+        CELL(y_dim,x_dim)%AN_POOL_D=0
 
       end if !}}}
 
       ! ### 2) From feces {{{
       if (NR_SW(2) .eq. 1) then
-        CELL(y_dim,x_dim)%LIT_N=CELL(y_dim,x_dim)%LIT_N+N_RET&
-                                        *(1-0.7*(SPP_N_CON(cur_pla)/SPP_CN(cur_pla)-12)/13)
+        CELL(y_dim,x_dim)%LIT_N_D=CELL(y_dim,x_dim)%LIT_N_D+N_RET&
+                                        *(1-0.7*(CELL(y_dim,x_dim)%SPP_N_CON(cur_pla)/SPP_CN(cur_pla)-12)/13)
 
-        if (CELL(y_dim,x_dim)%AN_POOL .le. 0) then
-          CELL(y_dim,x_dim)%LIT_N=0
+        if (CELL(y_dim,x_dim)%AN_POOL_D .le. 0) then
+          CELL(y_dim,x_dim)%LIT_N_D=0
         end if
 
       else
 
-        CELL(y_dim,x_dim)%LIT_N=0
+        CELL(y_dim,x_dim)%LIT_N_D=0
 
       end if !}}}
 
@@ -212,7 +212,8 @@ end if ! end checking GR_SW
   ! ## From Soil compactness {{{
 
     if (SC_EF_SW .eq. 1) then
-      CELL(y_dim,x_dim)%SPP_RDP(cur_pla) = -SC_EF_VAR_A*CELL(y_dim,x_dim)%SOIL_DCOM-SC_EF_VAR_B
+      CELL(y_dim,x_dim)%SPP_RDP(cur_pla) = (-1.)*SC_EF_VAR_A(cur_pla)*CELL(y_dim,x_dim)%SOIL_DCOM-SC_EF_VAR_B(cur_pla)
+      ! CELL(y_dim,x_dim)%SPP_RDP(cur_pla) = (-1.)*CELL(y_dim,x_dim)%SOIL_DCOM-SC_EF_VAR_B
     end if ! }}}
 
   ! ## From LAI {{{
@@ -247,10 +248,12 @@ end if ! end checking GR_SW
     ! ### 3) Chang in evapotranspiration {{{
     ! #### 3.0) Potential evapotranspiration {{{
     if(LA_EF_SW(3) .eq. 1 .or. LA_EF_SW(4) .eq. 1) then
-      CELL(y_dim,x_dim)%POT_ETP=0.128*(SOLA_RAD*(1-(0.23*(1-exp(-0.0000029&
+      do cur_sea=1,SEA_NUM
+        CELL(y_dim,x_dim)%POT_ETP=0.128*(SOLA_RAD(cur_sea)*(1-(0.23*(1-exp(-0.0000029&
                                         *(CELL(y_dim,x_dim)%TOT_BIOMASS+CELL(y_dim,x_dim)%LIT_POOL_D))&
-                                        +SOIL_ALB*0.24))/58.3))*((5304/(AVG_TEMP**2))*exp(21.25-(5304/AVG_TEMP))&
-                                        /((5304/(AVG_TEMP**2))*exp(21.25-(5304/AVG_TEMP))+0.68))
+                                        +SOIL_ALB(cur_sea)*0.24))/58.3))*((5304/(AVG_TEMP(cur_sea)**2))*exp(21.25-(5304/AVG_TEMP(cur_sea)))&
+                                        /((5304/(AVG_TEMP(cur_sea)**2))*exp(21.25-(5304/AVG_TEMP(cur_sea)))+0.68))
+      end do
     end if !}}}
 
     ! #### 3.1) Potential soil evaporation {{{
@@ -269,7 +272,9 @@ end if ! end checking GR_SW
 
     ! #### 3.2) Potential transpiration {{{
     if(LA_EF_SW(4) .eq. 1) then
+
       if(CELL(y_dim,x_dim)%SPP_LAI(cur_pla) .le. 3) then
+
         CELL(y_dim,x_dim)%SPP_TRP(cur_pla)=CELL(y_dim,x_dim)%POT_ETP*CELL(y_dim,x_dim)%SPP_LAI(cur_pla)/3
 
         if (CELL(y_dim,x_dim)%SPP_TRP(cur_pla) .le. 0) then
@@ -277,10 +282,15 @@ end if ! end checking GR_SW
         end if
 
       else
+
         CELL(y_dim,x_dim)%SPP_TRP(cur_pla)=CELL(y_dim,x_dim)%POT_ETP
+
       end if
+
     else
+
       CELL(y_dim,x_dim)%SPP_TRP(cur_pla)=0
+
     end if !}}}
 
     ! 4) Change in available light for other species
@@ -294,16 +304,19 @@ end if ! end checking GR_SW
   ! ## Form available N {{{
     ! ### 1) Change in N uptake {{{
     if (AN_EF_SW(1) .eq. 1) then
-      CELL(y_dim,x_dim)%SPP_NU(cur_pla)=AN_NU_VAR_A(cur_pla)*CELL(y_dim,x_dim)%AN_POOL&
-                                        /(AN_NU_VAR_B(cur_pla)+CELL(y_dim,x_dim)%AN_POOL)
+      CELL(y_dim,x_dim)%SPP_NU_D(cur_pla)=AN_NU_VAR_A(cur_pla)*CELL(y_dim,x_dim)%AN_POOL_D&
+                                        /(AN_NU_VAR_B(cur_pla)+CELL(y_dim,x_dim)%AN_POOL_D)
 
-      if (CELL(y_dim,x_dim)%SPP_NU(cur_pla) .le. 0) then
-        CELL(y_dim,x_dim)%SPP_NU(cur_pla)=0
+      if (CELL(y_dim,x_dim)%SPP_NU_D(cur_pla) .le. 0) then
+        CELL(y_dim,x_dim)%SPP_NU_D(cur_pla)=0
       end if
 
     else
-      CELL(y_dim,x_dim)%SPP_NU(cur_pla)=0
+      CELL(y_dim,x_dim)%SPP_NU_D(cur_pla)=0
     end if !}}}
+
+    ! #### 1.1) Change in Plant N concentration
+    CELL(y_dim,x_dim)%SPP_N_CON(cur_pla)=SPP_N_CON(cur_pla)+0.5*CELL(y_dim,x_dim)%SPP_NU_D(cur_pla)
 
     ! ### 2) Change in carbon conversion {{{
     if (AN_EF_SW(2) .eq. 1) then
@@ -320,17 +333,17 @@ end if ! end checking GR_SW
     end if !}}}
 
     ! ### 3) Change in root to shoot ratio {{{
-    if (AN_EF_SW(3) .eq. 1) then
-      CELL(y_dim,x_dim)%SPP_RT(cur_pla)=AN_RT_VAR_A(cur_pla)/(1+AN_RT_VAR_B(cur_pla)*(CELL(y_dim,x_dim)%SPP_CC(cur_pla)&
-                                                                  /POT_CC(cur_pla)))
-
-      if (CELL(y_dim,x_dim)%SPP_RT(cur_pla) .le. 0) then
-        CELL(y_dim,x_dim)%SPP_RT(cur_pla)=0
-      end if
-
-    else
-      CELL(y_dim,x_dim)%SPP_RT(cur_pla)=0
-    end if !}}}
+    ! if (AN_EF_SW(3) .eq. 1) then
+    !   CELL(y_dim,x_dim)%SPP_RT(cur_pla)=AN_RT_VAR_A(cur_pla)/(1+AN_RT_VAR_B(cur_pla)*(CELL(y_dim,x_dim)%SPP_CC(cur_pla)&
+    !                                                               /POT_CC(cur_pla)))
+    !
+    !   if (CELL(y_dim,x_dim)%SPP_RT(cur_pla) .le. 0) then
+    !     CELL(y_dim,x_dim)%SPP_RT(cur_pla)=0
+    !   end if
+    !
+    ! else
+    !   CELL(y_dim,x_dim)%SPP_RT(cur_pla)=0
+    ! end if !}}}
 
     ! ### 4) root to shoot ratio with C and N relationship
     !}}}
@@ -339,5 +352,6 @@ end if ! end checking GR_SW
 
 end do  ! end looping for x
 end do ! end looping for y 
+
 
 end subroutine grazing

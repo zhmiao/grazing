@@ -118,7 +118,7 @@ subroutine model_ini
   allocate(DECREASE_R(PLA_SPP_NUM))
   allocate(R_MAX(PLA_SPP_NUM))
   allocate(SPP_N_CON(PLA_SPP_NUM))
-  allocate(TOT_N_CON(PLA_SPP_NUM))
+  ! allocate(TOT_N_CON(PLA_SPP_NUM))
   allocate(SPP_CN(PLA_SPP_NUM))
 
   do y_dim = 1, MAX_Y_DIM
@@ -142,9 +142,10 @@ subroutine model_ini
       allocate(CELL(y_dim,x_dim)%SPP_RDP(PLA_SPP_NUM))
       allocate(CELL(y_dim,x_dim)%SPP_PS(PLA_SPP_NUM))
       allocate(CELL(y_dim,x_dim)%SPP_RI(PLA_SPP_NUM))
+      allocate(CELL(y_dim,x_dim)%SPP_N_CON(PLA_SPP_NUM))
       allocate(CELL(y_dim,x_dim)%SPP_CC(PLA_SPP_NUM))
-      allocate(CELL(y_dim,x_dim)%SPP_NU(PLA_SPP_NUM))
-      allocate(CELL(y_dim,x_dim)%SPP_RT(PLA_SPP_NUM))
+      allocate(CELL(y_dim,x_dim)%SPP_NU_D(PLA_SPP_NUM))
+      ! allocate(CELL(y_dim,x_dim)%SPP_RT(PLA_SPP_NUM))
       allocate(CELL(y_dim,x_dim)%SPP_TRP(PLA_SPP_NUM))
 
       ! Initialized growth variables coefficient
@@ -153,6 +154,9 @@ subroutine model_ini
       CELL(y_dim,x_dim)%DECREASE_R_CO(:)=1
       CELL(y_dim,x_dim)%R_MAX_CO(:)=1
       CELL(y_dim,x_dim)%SPP_RDP(:)=0
+      CELL(y_dim,x_dim)%AN_POOL_D=0
+      CELL(y_dim,x_dim)%LIT_POOL_D=0
+      CELL(y_dim,x_dim)%SPP_NU_D(:)=0
     end do
   end do
 

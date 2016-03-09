@@ -18,7 +18,7 @@ subroutine graz_eff_func
             ! # First, GROW_DAYS modifications (Only do this at the end of the year)
             if (day .eq. 365) then
             gx = (2*EXP(1.)-2)/((EXP(1.)-2)+EXP((2*CELL(y_dim,x_dim)%LIT_POOL_D-1)**2))-1&
-                          -1/(CELL(y_dim,x_dim)%AN_POOL+CELL(y_dim,x_dim)%LIT_N+1)+1
+                          -1/(CELL(y_dim,x_dim)%AN_POOL_D+CELL(y_dim,x_dim)%LIT_N_D+1)+1
   
             ! This is for soil compactness effects
             if (SC_SW .eq. 1) gx=gx+2/(EXP((0.8*CELL(y_dim,x_dim)%SOIL_COM-1.5)**2))-1
@@ -32,7 +32,7 @@ subroutine graz_eff_func
           if (IF_EFF_K .eq. 1) then
             ! # Second, Carrying capacity modifications.
             gx = (2*EXP(1.)-2)/((EXP(1.)-2)+EXP((2*CELL(y_dim,x_dim)%LIT_POOL_D-1)**2))-1&
-                          -1/(CELL(y_dim,x_dim)%AN_POOL+CELL(y_dim,x_dim)%LIT_N+1)+1
+                          -1/(CELL(y_dim,x_dim)%AN_POOL_D+CELL(y_dim,x_dim)%LIT_N_D+1)+1
 
             ! This is for soil compactness effects
             if (SC_SW .eq. 1) gx=gx+2/(EXP((0.8*CELL(y_dim,x_dim)%SOIL_COM-1.5)**2))-1
@@ -45,7 +45,7 @@ subroutine graz_eff_func
           if (IF_EFF_R .eq. 1) then
             ! # Third, R_MAX modifications.
             gx = -1/(CELL(y_dim,x_dim)%SPP_RES(cur_pla)+1)+1&
-                          -1/(CELL(y_dim,x_dim)%AN_POOL+CELL(y_dim,x_dim)%LIT_N+1)+1&
+                          -1/(CELL(y_dim,x_dim)%AN_POOL_D+CELL(y_dim,x_dim)%LIT_N_D+1)+1&
                           +(2*EXP(1.)-2)/((EXP(1.)-2)+EXP((2*CELL(y_dim,x_dim)%LIT_POOL_D-1)**2))-1&
                           -1/(CELL(y_dim,x_dim)%SPP_PS(cur_pla)+1)+1&
                           +1/(CELL(y_dim,x_dim)%SPP_RI(cur_pla)+1)-1&
@@ -57,13 +57,13 @@ subroutine graz_eff_func
           if (IF_EFF_DR .eq. 1) then
             ! # Fourth, DECREASE_R modifications
             gx = -1/(CELL(y_dim,x_dim)%SPP_RES(cur_pla)+1)+1&
-                          +1/(CELL(y_dim,x_dim)%AN_POOL+CELL(y_dim,x_dim)%LIT_N+1)-1&
+                          +1/(CELL(y_dim,x_dim)%AN_POOL_D+CELL(y_dim,x_dim)%LIT_N_D+1)-1&
                           -1/(CELL(y_dim,x_dim)%LIT_POOL_D+1)+1&
                           +1/(CELL(y_dim,x_dim)%SPP_PS(cur_pla)+1)-1&
                           -1/(CELL(y_dim,x_dim)%SPP_RI(cur_pla)+1)+1&
                           -1/(CELL(y_dim,x_dim)%POT_EVP+1)+1&
                           -1/(CELL(y_dim,x_dim)%SPP_TRP(cur_pla)+1)+1&
-                          +1/(CELL(y_dim,x_dim)%SPP_NU(cur_pla)+1)-1&
+                          +1/(CELL(y_dim,x_dim)%SPP_NU_D(cur_pla)+1)-1&
                           +1/(CELL(y_dim,x_dim)%SPP_CC(cur_pla)+1)-1
 
             ! This is for soil compactness effects
