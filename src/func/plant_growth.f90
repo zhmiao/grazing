@@ -5,13 +5,12 @@ subroutine plant_growth
 
   implicit none
   
+  ! # Loop according to spatial demensions
+  do y_dim=1,MAX_Y_DIM
+    do x_dim=1,MAX_X_DIM
 
-  ! # Loop according to plant species
-  do cur_pla=1,PLA_SPP_NUM
-
-    ! # Loop according to spatial demensions
-    do y_dim=1,MAX_Y_DIM
-      do x_dim=1,MAX_X_DIM
+      ! # Loop according to plant species
+      do cur_pla=1,PLA_SPP_NUM
 
         if (day .le. CELL(y_dim,x_dim)%GROW_DAYS(cur_pla)) then
 
@@ -49,10 +48,14 @@ subroutine plant_growth
 
         end if ! end checking plant growing season }}}
 
-      end do ! end looping x
-    end do ! end looping y
+      end do ! end looping plant species
 
-  end do ! end looping plant species
+      CELL(y_dim,x_dim)%TOT_K=sum(CELL(y_dim,x_dim)%SPP_K(:))
+
+    end do ! end looping x
+  end do ! end looping y
+
+  TOT_K=sum(CELL(:,:)%TOT_K)
 
   ! write(*,*) ' '
   ! write(*,*) 'plant growth done'

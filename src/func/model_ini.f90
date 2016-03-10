@@ -157,6 +157,7 @@ subroutine model_ini
       CELL(y_dim,x_dim)%AN_POOL_D=0
       CELL(y_dim,x_dim)%LIT_POOL_D=0
       CELL(y_dim,x_dim)%SPP_NU_D(:)=0
+      CELL(y_dim,x_dim)%SOIL_DCOM=0
     end do
   end do
 

@@ -12,7 +12,7 @@
 =====================================================================================================
 = For unavailable biomass rate
 =====================================================================================================
-0.3,0.1                                         ! Unavailable biomass rate for each plant species, when DE_SW(3) is on. if not leave it open
+0.03,0.01                                         ! Unavailable biomass rate for each plant species, when DE_SW(3) is on. if not leave it open
 =====================================================================================================
 = Variables for evapotranspiration calculations
 =====================================================================================================

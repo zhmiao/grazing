@@ -93,6 +93,7 @@ subroutine model_output
     end if
 
     write(OUTPUT_NUM,*) TOT_BIOMASS,','
+    write(*,*) TOT_BIOMASS,','
 
     ! close(OUTPUT_NUM)
 

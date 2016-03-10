@@ -60,7 +60,7 @@ module structure
     real                               :: GR_SW                           ! Used to control whether there is grazing
     real, dimension(:,:), allocatable  :: SPP_GRAZED                      ! (g) daily grazed amount from animal i of plant j
     real, dimension(:,:), allocatable  :: SPP_DETACH                      ! (g) daily detched amount from animal i of plant j
-    real, dimension(:), allocatable    :: SD                              ! stocking density for each animal species
+    ! real, dimension(:), allocatable    :: SD                              ! stocking density for each animal species
     real                               :: TOT_SD                          ! total stocking density
     integer, dimension(:), allocatable :: SS_PR_CLA                       ! site preference class for each animal species
     integer                            :: SS_PR_SCR                       ! site preference score }}}
@@ -100,10 +100,11 @@ module structure
   real                            :: AV_BIOMASS                      ! (g) Global available plant biomass
   real                            :: AV_BIOMASS_P                    ! (g) Stores global available biomass for future modifications
   real                            :: UAV_BIOMASS                     ! (g) Global unavailable plant biomass
-  real                            :: TOT_K                           ! (g) Global total plant carrying capacity }}}
+  real                            :: TOT_K                           ! (g) Global total plant carrying capacity 
+  real                            :: TOT_GRAZED_DA                   ! (g) daily grazed 
   real, dimension(:), allocatable :: SPP_N_CON                       ! (gN/gPlant) Nitrogen concentration for each plant species
   ! real                            :: TOT_N_CON                       ! (gN/gPlant) Total Nitrogen concentration
-  real, dimension(:), allocatable :: SPP_CN                          ! Plant C to N ratio
+  real, dimension(:), allocatable :: SPP_CN                          ! Plant C to N ratio }}}
 
   ! Global geographical variables !{{{
   real, dimension(:), allocatable :: SOIL_ALB                        ! Soil albedo (0-0.1)

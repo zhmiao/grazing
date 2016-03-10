@@ -49,10 +49,11 @@ subroutine graz_eff_func
                           +(2*EXP(1.)-2)/((EXP(1.)-2)+EXP((2*CELL(y_dim,x_dim)%LIT_POOL_D-1)**2))-1&
                           -1/(CELL(y_dim,x_dim)%SPP_PS(cur_pla)+1)+1&
                           +1/(CELL(y_dim,x_dim)%SPP_RI(cur_pla)+1)-1&
-                          +1/(CELL(y_dim,x_dim)%POT_EVP+1)-1&
+                          +1/(CELL(y_dim,x_dim)%POT_EVP+1)-1
 
             ! Coefficient calculation
             CELL(y_dim,x_dim)%R_MAX_CO(cur_pla)=2/(1+EXP(-gx))
+          end if
 
           if (IF_EFF_DR .eq. 1) then
             ! # Fourth, DECREASE_R modifications
@@ -70,7 +71,7 @@ subroutine graz_eff_func
             if (SC_SW .eq. 1) gx=gx+2/(EXP((0.8*CELL(y_dim,x_dim)%SOIL_COM-1.5)**2))-1
 
             ! This is used for mortality rate and grazing pressure
-            if (MR_SW .eq. 1) gx=gx+1/(CELL(y_dim,x_dim)%SPP_GRAZED(:,cur_pla)+1)-1 
+            if (MR_SW .eq. 1) gx=gx+1/(sum(CELL(y_dim,x_dim)%SPP_GRAZED(:,cur_pla))+1)-1 
     
             ! Coefficient calculations
             CELL(y_dim,x_dim)%DECREASE_R_CO(cur_pla)=2/(1+EXP(-0.5*gx))

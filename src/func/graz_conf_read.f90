@@ -48,6 +48,7 @@ subroutine graz_conf_read
 
       ! ## If species difference switch is on
       if (SPP_SW .eq. 1) then
+
         read(GR_CON_SEA,*,iostat=ioerr) ANI_SPP_NUM
         if (ioerr .ne. 0 ) then 
           write(*,*) 'Animal species number reading error'
@@ -67,9 +68,10 @@ subroutine graz_conf_read
 
       ! ## Allocate species different variables {{{
       call check_and_reallocate(FIX_GR_R,ANI_SPP_NUM)
+      call check_and_reallocate(SPP_SD,ANI_SPP_NUM)
       call check_and_reallocate(MAX_SD,ANI_SPP_NUM)
       call check_and_reallocate(MIN_SD,ANI_SPP_NUM)
-      call check_and_reallocate_int(ANI_NUM_SPP,ANI_SPP_NUM)
+      call check_and_reallocate(ANI_NUM_SPP,ANI_SPP_NUM)
       call check_and_reallocate(MAX_INT,ANI_SPP_NUM)
       call check_and_reallocate(TOT_DMD,ANI_SPP_NUM)
       call check_and_reallocate(ANI_COM_FAC,ANI_SPP_NUM)
@@ -77,7 +79,6 @@ subroutine graz_conf_read
       call check_and_reallocate(DET_RATE,ANI_SPP_NUM)
       call check_and_reallocate(SC_VAR_A,ANI_SPP_NUM)
       call check_and_reallocate(N_RET_RATE,ANI_SPP_NUM)
-      write(*,*) size(N_RET_RATE)
       do y_dim=1,MAX_Y_DIM
         do x_dim=1,MAX_X_DIM
           call check_and_reallocate_two(CELL(y_dim,x_dim)%SPP_GRAZED,ANI_SPP_NUM,PLA_SPP_NUM)
@@ -85,7 +86,7 @@ subroutine graz_conf_read
           call check_and_reallocate_int(CELL(y_dim,x_dim)%SS_PR_CLA,ANI_SPP_NUM)
         end do
       end do
-      write(*,*) size(CELL(1,1)%SPP_DETACH)!}}}
+      !}}}
 
       !}}}
 
@@ -318,7 +319,6 @@ subroutine graz_conf_read
       else
         read(GR_CON_SEA,*) ! Skip the line
         read(GR_CON_SEA,*) ! Skip the line
-        read(GR_CON_SEA,*) ! Skip the line
 
       end if ! end SC_SW cheking }}}
 
@@ -457,7 +457,7 @@ subroutine graz_conf_read
       read(GR_CON_SEA,*)
       read(GR_CON_SEA,*)
 
-      if (SC_EF_SW .eq. 1) then
+      if (SC_EF_SW .eq. 1 .and. SC_SW .eq. 1) then
 
         ! ## Allocate variables
         if(.not. allocated(SC_EF_VAR_A))allocate(SC_EF_VAR_A(PLA_SPP_NUM))
@@ -482,6 +482,10 @@ subroutine graz_conf_read
           write(ECHO_NUM,*) 'Soil compactness - plant growth effect variables B for each plant species are: '
           write(ECHO_NUM,*) SC_EF_VAR_B
         end if
+
+      else if (SC_EF_SW .eq. 1 .and. SC_SW .eq. 0) then
+        write(*,*) 'SC_SW should be turned on when using Soil compactness effects on plant growth rate'
+        stop
 
       else
         read(GR_CON_SEA,*) ! Skip the line

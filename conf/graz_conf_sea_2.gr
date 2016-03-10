@@ -18,8 +18,8 @@
 =====================================================================================================
 = For stocking density calculation
 =====================================================================================================
-0.05,0.08                                            ! (head/m^2) Maximum stocking density for each animal species (number of animal per m^2), if SR_SW is on, or just leave this line open
-0.02,0.04                                            ! (head/m^2) Minimum stocking density for each animal species (number of animal per m^2), if SR_SW is on, or just leave this line open
+0.5,0.8                                            ! (head/m^2) Maximum stocking density for each animal species (number of animal per m^2), if SR_SW is on, or just leave this line open
+0.2,0.4                                            ! (head/m^2) Minimum stocking density for each animal species (number of animal per m^2), if SR_SW is on, or just leave this line open
 1,2                                                  ! (g/ani*day) {Should be multiplied with 1000} Maximum intake per animal for each animal species ***(kg per animas)
 =====================================================================================================
 = For Detachment

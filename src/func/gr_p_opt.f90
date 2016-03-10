@@ -119,8 +119,12 @@ subroutine grazing_process_opt
           CELL(y_dim,x_dim)%UAV_BIO_SPP(cur_pla)=CELL(y_dim,x_dim)%SPP_K(cur_pla)*UAV_RATE(cur_pla)
 
           ! ##### Available biomass is total biomass minus unavailable biomass
-          CELL(y_dim,x_dim)%AV_BIO_SPP(cur_pla)=CELL(y_dim,x_dim)%TOT_BIO_SPP(cur_pla)&
+          if (CELL(y_dim,x_dim)%TOT_BIO_SPP(cur_pla)-CELL(y_dim,x_dim)%UAV_BIO_SPP(cur_pla) .ge. 0) then
+            CELL(y_dim,x_dim)%AV_BIO_SPP(cur_pla)=CELL(y_dim,x_dim)%TOT_BIO_SPP(cur_pla)&
                                                   -CELL(y_dim,x_dim)%UAV_BIO_SPP(cur_pla)
+          else
+            CELL(y_dim,x_dim)%AV_BIO_SPP(cur_pla)=0
+          end if
 
           ! ##### Storage variables
           CELL(y_dim,x_dim)%AV_BIO_SPP_P(cur_pla)=CELL(y_dim,x_dim)%AV_BIO_SPP(cur_pla)

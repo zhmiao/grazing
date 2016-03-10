@@ -56,7 +56,6 @@ module parameter_var
   integer, dimension(:), allocatable   :: DS_SW                   ! Switches for diet selection, 3 dimensions
   integer, dimension(:), allocatable   :: SS_SW                   ! Switches for site selection, 6 demensions }}}
 
-
   ! For first stage effects {{{
   integer                              :: DF_SW                   ! Switch for defoliation
   integer                              :: DT_SW                   ! Switch for detachment
@@ -163,8 +162,8 @@ module parameter_var
   real, dimension(:), allocatable     :: MIN_SD                   ! (head/m^2) Minimum stocking density
   real, dimension(:), allocatable     :: SPP_SD                   ! (head/m^2) Global stoking density for each animal species
   real                                :: TOT_SD                   ! (head/m^2) Global total stocking density
-  integer, dimension(:), allocatable  :: ANI_NUM_SPP              ! Global animal number for each species
-  integer                             :: TOT_ANI_NUM              ! Global total animal number
+  real, dimension(:), allocatable     :: ANI_NUM_SPP              ! Global animal number for each species
+  real                                :: TOT_ANI_NUM              ! Global total animal number
   real, dimension(:), allocatable     :: MAX_INT                  ! Maximum intake per animal for each animal species
   real, dimension(:), allocatable     :: TOT_DMD                  ! Global total intake from each animal species }}}
 
