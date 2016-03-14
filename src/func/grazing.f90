@@ -154,15 +154,26 @@ do x_dim=1,MAX_X_DIM
 ! # Second stage {{{
 ! ------------------------
 
+  ! ### Initialize variables
+  CELL(y_dim,x_dim)%AN_POOL_D=0
+  CELL(y_dim,x_dim)%LIT_N_D=0
+
   do cur_pla=1,PLA_SPP_NUM
 
   ! ## LAI {{{
-    if (LA_SW .eq. 1) then
-      CELL(y_dim,x_dim)%SPP_LAI(cur_pla)=128-62*(1-exp(-0.0102*(CELL(y_dim,x_dim)%TOT_BIO_SPP(cur_pla)/CELLAREA)))
 
+    if (LA_SW .eq. 1) then
+      ! CELL(y_dim,x_dim)%SPP_LAI(cur_pla)=0.01*(128-62*(1-exp(-0.0102*(CELL(y_dim,x_dim)%TOT_BIO_SPP(cur_pla)/CELLAREA))))&
+      !                                        *CELL(y_dim,x_dim)%TOT_BIO_SPP(cur_pla)/CELLAREA
+
+      CELL(y_dim,x_dim)%SPP_LAI(cur_pla)=0.01*(90-82*(1-exp(-0.0102*(CELL(y_dim,x_dim)%TOT_BIO_SPP(cur_pla)/CELLAREA))))&
+                                             *CELL(y_dim,x_dim)%TOT_BIO_SPP(cur_pla)/CELLAREA
       if (CELL(y_dim,x_dim)%SPP_LAI(cur_pla) .le. 0) then
         CELL(y_dim,x_dim)%SPP_LAI(cur_pla)=0
       end if
+      ! write(*,*) CELL(y_dim,x_dim)%SPP_LAI(cur_pla)
+
+      ! write(*,*) CELL(y_dim,x_dim)%TOT_BIO_SPP(cur_pla)
 
     else
       CELL(y_dim,x_dim)%SPP_LAI(cur_pla)=0 ! Default values
@@ -170,70 +181,80 @@ do x_dim=1,MAX_X_DIM
 
   ! ## Respiration rate {{{
     if (RS_SW .eq. 1) then
-       CELL(y_dim,x_dim)%SPP_RES(cur_pla)=RES_RATE(cur_pla)*CELL(y_dim,x_dim)%TOT_BIO_SPP(cur_pla)
 
-       if (CELL(y_dim,x_dim)%SPP_RES(cur_pla) .le. 0) then
-         CELL(y_dim,x_dim)%SPP_RES(cur_pla)=0
-       end if
+      CELL(y_dim,x_dim)%SPP_RES(cur_pla)=RES_RATE(cur_pla)*CELL(y_dim,x_dim)%TOT_BIO_SPP(cur_pla)
 
-     else
-       CELL(y_dim,x_dim)%SPP_RES(cur_pla)=0
-     end if !}}}
-
-  ! ## Available N {{{
-    do cur_ani=1,ANI_SPP_NUM
-
-      ! ### 0) Total N output from animal {{{
-      if (any(NR_SW(:) .eq. 1)) then
-        N_RET=N_RET_RATE(cur_ani)*CELL(y_dim,x_dim)%SPP_GRAZED(cur_ani,cur_pla)&
-                                                   *CELL(y_dim,x_dim)%SPP_N_CON(cur_pla)
-      end if ! }}}
-
-      ! ### 1) From urine {{{
-      if (NR_SW(1) .eq. 1) then
-        CELL(y_dim,x_dim)%AN_POOL_D=CELL(y_dim,x_dim)%AN_POOL_D+N_RET&
-                                       *(0.7*(CELL(y_dim,x_dim)%SPP_N_CON(cur_pla)/SPP_CN(cur_pla)-12)/13)
-
-        if (CELL(y_dim,x_dim)%AN_POOL_D .le. 0) then
-          CELL(y_dim,x_dim)%AN_POOL_D=0
-        end if
-
-      else
-
-        CELL(y_dim,x_dim)%AN_POOL_D=0
-
-      end if !}}}
-
-      ! ### 2) From feces {{{
-      if (NR_SW(2) .eq. 1) then
-        CELL(y_dim,x_dim)%LIT_N_D=CELL(y_dim,x_dim)%LIT_N_D+N_RET&
-                                        *(1-0.7*(CELL(y_dim,x_dim)%SPP_N_CON(cur_pla)/SPP_CN(cur_pla)-12)/13)
-
-        if (CELL(y_dim,x_dim)%AN_POOL_D .le. 0) then
-          CELL(y_dim,x_dim)%LIT_N_D=0
-        end if
-
-      else
-
-        CELL(y_dim,x_dim)%LIT_N_D=0
-
-      end if !}}}
-
-    end do ! end looping of animal species }}}
-
-  ! ## Litter pool {{{
-    if (LP_SW .eq. 1 .and. DT_SW .eq. 1) then
-      CELL(y_dim,x_dim)%LIT_POOL_D=CELL(y_dim,x_dim)%LIT_POOL_D+sum(CELL(y_dim,x_dim)%SPP_DETACH(:,cur_pla))
-
-      if (CELL(y_dim,x_dim)%LIT_POOL_D .le. 0) then
-        CELL(y_dim,x_dim)%LIT_POOL_D=0
+      if (CELL(y_dim,x_dim)%SPP_RES(cur_pla) .le. 0) then
+        CELL(y_dim,x_dim)%SPP_RES(cur_pla)=0
       end if
 
     else
-      CELL(y_dim,x_dim)%LIT_POOL_D=0
+      CELL(y_dim,x_dim)%SPP_RES(cur_pla)=0
     end if !}}}
 
-  end do ! end looping for plant species }}}
+  ! ## Available N {{{
+    if (any(NR_SW(:) .eq. 1)) then
+
+      do cur_ani=1,ANI_SPP_NUM
+
+        N_RET=N_RET_RATE(cur_ani)*CELL(y_dim,x_dim)%SPP_GRAZED(cur_ani,cur_pla)&
+                                                   *CELL(y_dim,x_dim)%SPP_N_CON(cur_pla)
+
+        ! ### 1) From urine {{{
+        if (NR_SW(1) .eq. 1) then
+  
+          CELL(y_dim,x_dim)%AN_POOL_D=CELL(y_dim,x_dim)%AN_POOL_D+N_RET&
+                                         *(0.8-(0.1*(SPP_CN(cur_pla)-12)/13))&
+                                         *1000 ! convert to mgN
+
+          if (CELL(y_dim,x_dim)%AN_POOL_D .le. 0) then
+            CELL(y_dim,x_dim)%AN_POOL_D=0
+          end if
+  
+        else
+  
+          CELL(y_dim,x_dim)%AN_POOL_D=0
+  
+        end if !}}}
+  
+        ! ### 2) From feces {{{
+        if (NR_SW(2) .eq. 1) then
+
+          CELL(y_dim,x_dim)%LIT_N_D=CELL(y_dim,x_dim)%LIT_N_D+N_RET&
+                                         *(1-(0.8-(0.1*(SPP_CN(cur_pla)-12)/13)))&
+                                         *1000 ! convert to mgN
+  
+          if (CELL(y_dim,x_dim)%LIT_N_D .le. 0) then
+            CELL(y_dim,x_dim)%LIT_N_D=0
+          end if
+  
+        else
+  
+          CELL(y_dim,x_dim)%LIT_N_D=0
+  
+        end if !}}}
+
+      end do ! end looping of animal species
+
+    end if ! end NR_SW check }}}
+
+  end do ! end looping for plant species
+
+  ! ## Litter pool {{{
+  if (LP_SW .eq. 1 .and. DT_SW .eq. 1) then
+    CELL(y_dim,x_dim)%LIT_POOL_D=0
+
+    CELL(y_dim,x_dim)%LIT_POOL_D=CELL(y_dim,x_dim)%LIT_POOL_D+sum(CELL(y_dim,x_dim)%SPP_DETACH(:,:))
+
+    if (CELL(y_dim,x_dim)%LIT_POOL_D .le. 0) then
+      CELL(y_dim,x_dim)%LIT_POOL_D=0
+    end if
+
+  else
+    CELL(y_dim,x_dim)%LIT_POOL_D=0
+  end if !}}}
+
+  !}}}
 
 ! ------------------------
 ! # Third stage {{{
@@ -347,6 +368,7 @@ do x_dim=1,MAX_X_DIM
     end if !}}}
 
     ! #### 1.1) Change in Plant N concentration
+    ! write(*,*) CELL(y_dim,x_dim)%SPP_N_CON(cur_pla)
     CELL(y_dim,x_dim)%SPP_N_CON(cur_pla)=SPP_N_CON(cur_pla)+0.5*CELL(y_dim,x_dim)%SPP_NU_D(cur_pla)
 
     ! ### 2) Change in carbon conversion {{{
@@ -354,7 +376,7 @@ do x_dim=1,MAX_X_DIM
       CELL(y_dim,x_dim)%SPP_CC(cur_pla)=AN_CC_VAR_A(cur_pla)*CELL(y_dim,x_dim)%SPP_N_CON(cur_pla)&
                                         +AN_CC_VAR_B(cur_pla)
 
-      if (CELL(y_dim,x_dim)%SPP_CC(cur_pla) .le. 0) then
+      if (CELL(y_dim,x_dim)%SPP_CC(cur_pla) .le. 0 .or. CELL(y_dim,x_dim)%TOT_BIO_SPP(cur_pla) .le. 0) then
         CELL(y_dim,x_dim)%SPP_CC(cur_pla)=0
       end if
 

@@ -16,7 +16,7 @@ subroutine plant_growth
 
           ! ## In growing seasons {{{
           CELL(y_dim,x_dim)%G_R(cur_pla)          = CELL(y_dim,x_dim)%R_MAX_CO(cur_pla)&
-                                                    *R_MAX(cur_pla)*(1-CELL(y_dim,x_dim)%SPP_RDP(cur_pla))
+                                                    *R_MAX(cur_pla)*(1+0.01*(CELL(y_dim,x_dim)%SPP_RDP(cur_pla)))
 
           CELL(y_dim, x_dim)%SPP_K(cur_pla)       = CELL(y_dim,x_dim)%SPP_K_CO(cur_pla)*K_CO(cur_pla)*CELL(y_dim, x_dim)%DAY_RAIN 
 

@@ -49,5 +49,22 @@ module misc
   ! end subroutine check_and_reallocate_two_int !}}}
   ! }}}
 
+  ! ! Subroutine for calculating average values {{{
+  !
+  !  subroutine cell_avg_1(dir, input)
+  !    implicit none
+  !    
+  !  end subroutine avg_output
+  !
+  ! ! }}}
+  !
+  ! ! Subroutine for variable average value output {{{
+  !
+  !  subroutine avg_output(dir, input)
+  !    implicit none
+  !    
+  !  end subroutine avg_output
+  !
+  ! !}}}
 
 end module misc

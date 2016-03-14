@@ -48,7 +48,7 @@ module structure
     real, dimension(:), allocatable    :: SPP_NU_D                        ! (gN/m^2 day) N uptake for each plant species
     ! real, dimension(:), allocatable    :: SPP_RT                          ! Root to shoot ratio for each plant species
 
-    real                               :: AN_POOL_D                       ! (gN) Available N pool change
+    real                               :: AN_POOL_D                       ! (mgN) Available N pool change
     real                               :: LIT_POOL_D                      ! (g) Litter pool change caused by grazing animal
     real                               :: LIT_N_D                           ! Organic N in litter
 
@@ -69,8 +69,11 @@ module structure
     real                               :: SLOPE                           ! slope
     real                               :: WATER_DIST                      ! distance to water resource
     real                               :: SNOW_COV                        ! snow cover
-    real                               :: SOIL_COM                        ! soil compactness
-    real                               :: SOIL_DCOM                       ! change in soil compactness }}}
+    real                               :: SOIL_COM                        ! (bulk density) soil compactness
+    real                               :: SOIL_DCOM                       ! (bulk density) change in soil compactness }}}
+
+    ! For general calculations
+    real                               :: VAR_AVG                         ! Variable sumation
 
   end type LANDCELL
   ! define the LAND vairable

@@ -136,6 +136,8 @@ module parameter_var
 
     real, dimension(:,:), allocatable   :: SPP_FORAGE               ! (g) Amount of forage each plant species in each class
 
+    real                                :: VAR_AVG                  ! Variable sumation
+  
   end type SITE_SELECTION
   type(SITE_SELECTION), dimension(:), allocatable  ::  SITE_PREF  ! Site preference for each animal species }}}
 

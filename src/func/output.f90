@@ -93,8 +93,32 @@ subroutine model_output
     end if
 
     write(OUTPUT_NUM,*) TOT_BIOMASS,','
-    write(*,*) TOT_BIOMASS,','
+    ! write(*,*) TOT_BIOMASS,','
 
-    ! close(OUTPUT_NUM)
+    close(OUTPUT_NUM)
+    
+! Average variable output globally
+! do y_dim=1,MAX_Y_DIM
+!   do x_dim=1,MAX_X_DIM
+!     CELL(y_dim,x_dim)%VAR_AVG=sum(CELL(y_dim,x_dim)%SPP_GRAZED(:,:))&
+!                               /(ANI_SPP_NUM*PLA_SPP_NUM)
+!   end do
+! end do
+!
+! write(*,*) sum(CELL(:,:)%VAR_AVG)/(MAX_Y_DIM*MAX_X_DIM)
+
+
+! Average variable output globally
+do y_dim=1,MAX_Y_DIM
+  do x_dim=1,MAX_X_DIM
+    CELL(y_dim,x_dim)%VAR_AVG=sum(CELL(y_dim,x_dim)%SPP_CC(:))&
+                              /(PLA_SPP_NUM)
+  end do
+end do
+
+write(*,*) sum(CELL(:,:)%VAR_AVG)/(MAX_Y_DIM*MAX_X_DIM)
+
+! write(*,*) sum(CELL(:,:)%POT_EVP)/(MAX_Y_DIM*MAX_X_DIM)
+! write(*,*) DET_RATE(:)
 
 end subroutine model_output

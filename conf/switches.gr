@@ -14,7 +14,7 @@
 =====================================================================================================
 0                                               ! Switch for fixed grazing rate
 -----------------------------------------------------------------------------------------------------
-0                                               ! Switch for grazing as a function of stocking density
+1                                               ! Switch for grazing as a function of stocking density
 -----------------------------------------------------------------------------------------------------
 0                                               ! Switch for grazing limited by unavailable biomass
 =====================================================================================================
@@ -38,12 +38,12 @@
 =====================================================================================================
 = Second stage effects
 =====================================================================================================
-0                                               ! Switch for LAI calculation
+1                                               ! Switch for LAI calculation
 -----------------------------------------------------------------------------------------------------
 0                                               ! Switch for respiration rate calculation
 -----------------------------------------------------------------------------------------------------
 2                                               ! Switch for available N, switch number
-0,0                                             ! 1) Return from urine; 2) Return from feces
+1,1                                             ! 1) Return from urine; 2) Return from feces
 -----------------------------------------------------------------------------------------------------
 0                                               ! Switch for litter pool
 =====================================================================================================
@@ -55,7 +55,7 @@
 0,0,0,0,0                                       ! 1) On plant photosynthesis; 2) On rainfall interception; 3) On evaporation; 4) On transpiration; 5) On available light
 -----------------------------------------------------------------------------------------------------
 3                                               ! Switch for effects from available N, switch number
-0,0,0                                           ! 1) On plant Nitrogen uptake; 2) On plant photosynthesis; 3) On plant root to shoot ratio
+1,1,0                                           ! 1) On plant Nitrogen uptake; 2) On plant photosynthesis; 3) On plant root to shoot ratio
 =====================================================================================================
 = If Effects
 =====================================================================================================
