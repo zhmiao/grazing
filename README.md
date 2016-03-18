@@ -1,1 +1,1 @@
-# GRAZING ---- A generic grazing mode
+# GRAZING ---- A generic grazing mode structure
