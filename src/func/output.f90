@@ -6,7 +6,7 @@ subroutine model_output
   implicit none
 
 !==============================
-! Cell level output
+! Cell level output {{{
 !==============================
 
 
@@ -39,7 +39,7 @@ subroutine model_output
   !   ! end do ! end looping for y
   !
   !   close(OUTPUT_NUM+cur_pla)
-  ! end do ! end looping for plant species
+  ! end do ! end looping for plant species }}}
 
 
 !==============================
@@ -95,7 +95,7 @@ subroutine model_output
     write(OUTPUT_NUM,*) TOT_BIOMASS,','
     ! write(*,*) TOT_BIOMASS,','
 
-    close(OUTPUT_NUM)
+    ! close(OUTPUT_NUM)
     
 ! Average variable output globally
 ! do y_dim=1,MAX_Y_DIM
@@ -109,14 +109,17 @@ subroutine model_output
 
 
 ! Average variable output globally
-do y_dim=1,MAX_Y_DIM
-  do x_dim=1,MAX_X_DIM
-    CELL(y_dim,x_dim)%VAR_AVG=sum(CELL(y_dim,x_dim)%SPP_CC(:))&
-                              /(PLA_SPP_NUM)
-  end do
-end do
+! do y_dim=1,MAX_Y_DIM
+!   do x_dim=1,MAX_X_DIM
+!     CELL(y_dim,x_dim)%VAR_AVG=sum(CELL(y_dim,x_dim)%SPP_CC(:))&
+!                               /(PLA_SPP_NUM)
+!   end do
+! end do
+!
+! write(*,*) sum(CELL(:,:)%VAR_AVG)/(MAX_Y_DIM*MAX_X_DIM)
 
-write(*,*) sum(CELL(:,:)%VAR_AVG)/(MAX_Y_DIM*MAX_X_DIM)
+
+    write(*,*) TOT_BIOMASS,','
 
 ! write(*,*) sum(CELL(:,:)%POT_EVP)/(MAX_Y_DIM*MAX_X_DIM)
 ! write(*,*) DET_RATE(:)

@@ -16,3 +16,5 @@ out/*.csv
 .DS_Store
 .Rapp.history
 .echo.gr
+.RData
+.Rhistory
