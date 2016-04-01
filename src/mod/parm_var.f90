@@ -177,8 +177,8 @@ module parameter_var
   real                                :: SC_FREE                  ! (Bulk Density,0-0.15m) Soil compactness when there is no grazing animals}}}
 
   ! For plant mortality effect calculation {{{
-  real, dimension(:), allocatable     :: MR_VAR_A
-  real, dimension(:), allocatable     :: MR_VAR_B                 ! }}}
+  real, dimension(:), allocatable     :: ASLA
+  real, dimension(:), allocatable     :: F_LA                 ! }}}
 
   ! For nitrogen return {{{
   real, dimension(:), allocatable     :: N_RET_RATE               ! (%)  Nitrogen return rate of each animal species

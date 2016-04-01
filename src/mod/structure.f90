@@ -36,6 +36,8 @@ module structure
 
     ! variables that's not included in the original plant growth model {{{
     real, dimension(:), allocatable    :: SPP_LAI                         ! LAI for each plant species
+    ! real, dimension(:), allocatable    :: SPP_ASLA                        ! Average specif leaf area for each plant species
+    ! real, dimension(:), allocatable    :: F_LA                            ! Fraction of growth to lamina
     real                               :: TOT_LAI                         ! total LAI
     real, dimension(:), allocatable    :: SPP_DEN                         ! Plant density for each plant species
     real, dimension(:), allocatable    :: SPP_RES                         ! (gC) Plant respiration for each plant species

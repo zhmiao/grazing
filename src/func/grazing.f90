@@ -166,8 +166,11 @@ do x_dim=1,MAX_X_DIM
       ! CELL(y_dim,x_dim)%SPP_LAI(cur_pla)=0.01*(128-62*(1-exp(-0.0102*(CELL(y_dim,x_dim)%TOT_BIO_SPP(cur_pla)/CELLAREA))))&
       !                                        *CELL(y_dim,x_dim)%TOT_BIO_SPP(cur_pla)/CELLAREA
 
-      CELL(y_dim,x_dim)%SPP_LAI(cur_pla)=0.01*(90-82*(1-exp(-0.0102*(CELL(y_dim,x_dim)%TOT_BIO_SPP(cur_pla)/CELLAREA))))&
-                                             *CELL(y_dim,x_dim)%TOT_BIO_SPP(cur_pla)/CELLAREA
+      ! CELL(y_dim,x_dim)%SPP_LAI(cur_pla)=0.01*(90-82*(1-exp(-0.0102*(CELL(y_dim,x_dim)%TOT_BIO_SPP(cur_pla)/CELLAREA))))&
+      !                                        *CELL(y_dim,x_dim)%TOT_BIO_SPP(cur_pla)/CELLAREA
+
+      CELL(y_dim,x_dim)%SPP_LAI(cur_pla) = F_LA(cur_pla) * CELL(y_dim,x_dim)%TOT_BIO_SPP(cur_pla) * ASLA(cur_pla) / CELLAREA
+
       if (CELL(y_dim,x_dim)%SPP_LAI(cur_pla) .le. 0) then
         CELL(y_dim,x_dim)%SPP_LAI(cur_pla)=0
       end if
@@ -305,6 +308,11 @@ do x_dim=1,MAX_X_DIM
                                         *(CELL(y_dim,x_dim)%TOT_BIOMASS+CELL(y_dim,x_dim)%LIT_POOL_D))&
                                         +SOIL_ALB(cur_sea)*0.24))/58.3))*((5304/(AVG_TEMP(cur_sea)**2))*exp(21.25-(5304/AVG_TEMP(cur_sea)))&
                                         /((5304/(AVG_TEMP(cur_sea)**2))*exp(21.25-(5304/AVG_TEMP(cur_sea)))+0.68))
+
+        if (CELL(y_dim,x_dim)%POT_ETP.le. 0) then
+          CELL(y_dim,x_dim)%POT_ETP=0
+        end if
+
       end do
     end if !}}}
 
@@ -335,7 +343,7 @@ do x_dim=1,MAX_X_DIM
 
       else
 
-        CELL(y_dim,x_dim)%SPP_TRP(cur_pla)=CELL(y_dim,x_dim)%POT_ETP
+        CELL(y_dim,x_dim)%SPP_TRP(cur_pla)=CELL(y_dim,x_dim)%POT_ETP * CELL(y_dim,x_dim)%SPP_LAI(cur_pla) / sum(CELL(y_dim,x_dim)%SPP_LAI(:))
 
       end if
 

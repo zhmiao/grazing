@@ -215,16 +215,16 @@ subroutine grazing_ini
       read(SWITCH,*)
     end if
 
-    ! ### Mortality rate
-    read(SWITCH,*,iostat=ioerr) MR_SW
-    if (ioerr .ne. 0 ) then 
-      write(*,*) 'Mortality rate effect switch reading error'
-      stop
-    else
-      write(*,*) 'Mortality rate effect swith is: '
-      write(*,*) MR_SW
-      read(SWITCH,*)
-    end if
+    ! ! ### Mortality rate
+    ! read(SWITCH,*,iostat=ioerr) MR_SW
+    ! if (ioerr .ne. 0 ) then 
+    !   write(*,*) 'Mortality rate effect switch reading error'
+    !   stop
+    ! else
+    !   write(*,*) 'Mortality rate effect swith is: '
+    !   write(*,*) MR_SW
+    !   read(SWITCH,*)
+    ! end if
 
     ! ### Soil compactness
     read(SWITCH,*,iostat=ioerr) SC_SW

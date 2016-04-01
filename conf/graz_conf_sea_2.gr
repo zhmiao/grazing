@@ -1,11 +1,11 @@
 =====================================================================================================
-= For species differences
+= For species differences 
 =====================================================================================================
-2                                                    ! Number of animal species
+2                                                    ! Number of animal species 
 =====================================================================================================
 = For species competition
 =====================================================================================================
-0.5,0.5                                              ! Animal competition factors, determines how many percentage of resource they can get
+0.7,0.3                                              ! Animal competition factors, determines how many percentage of resource they can get
 =====================================================================================================
 = For maximum and minimum management grazing amount
 =====================================================================================================
@@ -14,27 +14,27 @@
 =====================================================================================================
 = For fixed grazing rate
 =====================================================================================================
-0.02,0.04                                            ! (%) Fixed daily grazing rate in percentage, if FR_SW is on, or just leave this line open
+0.01,0.02                                             ! (%) Fixed daily grazing rate in percentage, if FR_SW is on, or just leave this line open
 =====================================================================================================
 = For stocking density calculation
 =====================================================================================================
-0.5,0.8                                            ! (head/m^2) Maximum stocking density for each animal species (number of animal per m^2), if SR_SW is on, or just leave this line open
-0.2,0.4                                            ! (head/m^2) Minimum stocking density for each animal species (number of animal per m^2), if SR_SW is on, or just leave this line open
-1,2                                                  ! (g/ani*day) {Should be multiplied with 1000} Maximum intake per animal for each animal species ***(kg per animas)
+0.5,0.8                                              ! (head/m^2) Maximum stocking density for each species (number of animal per m^2), if SR_SW is on, or just leave this line open
+0.2,0.4                                              ! (head/m^2) Minimum stocking density for each species (number of animal per m^2), if SR_SW is on, or just leave this line open
+1,2                                                  ! (g/ani*day) {Should be multiplied with 1000} Maximum intake per animal for each animal species ***(kg per animas per day)
 =====================================================================================================
 = For Detachment
 =====================================================================================================
 0.33,0.33                                            ! Detachment rate for each animal species
 =====================================================================================================
-= For soil compactness change calculation
+= For soil compactness calculation
 =====================================================================================================
 0.125,0.125                                          ! The slope of the change of soil compactness to stocking density
 1.6                                                  ! Soil compactness when stocking density is 0 (bulk density (0-0.15m))
 =====================================================================================================
-= For effects on plant mortality rate
+= LAI calculation
 =====================================================================================================
-0.33,0.33                                            ! MR_VAR_A for each plant species
-0.33,0.33                                            ! MR_VAR_B for each plant species
+0.35,0.35                                            ! (m^2/g) Average specific leaf area
+0.7,0.7                                              ! Growth fraction to lamina
 =====================================================================================================
 = Plant respiration rate
 =====================================================================================================

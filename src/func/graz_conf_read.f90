@@ -323,36 +323,36 @@ subroutine graz_conf_read
       end if ! end SC_SW cheking }}}
 
     ! ------------------------
-    ! # Mortality rate {{{
+    ! # LAI {{{
     ! ------------------------
       read(GR_CON_SEA,*)
       read(GR_CON_SEA,*)
       read(GR_CON_SEA,*)
 
-      if (MR_SW .eq. 1) then
+      if (LA_SW .eq. 1) then
 
-        ! ## Allocate variables used in mortality effect calculation for each plant species. Do this only on day one.
-        if(.not. allocated(MR_VAR_A))allocate(MR_VAR_A(PLA_SPP_NUM))
-        if(.not. allocated(MR_VAR_B))allocate(MR_VAR_B(PLA_SPP_NUM))
+        ! ## Allocate variables used in LAI calculation
+        if(.not. allocated(ASLA))allocate(ASLA(PLA_SPP_NUM))
+        if(.not. allocated(F_LA))allocate(F_LA(PLA_SPP_NUM))
 
-        ! ## Read in variable A
-        read(GR_CON_SEA,*,iostat=ioerr)(MR_VAR_A(cur_pla), cur_pla=1,PLA_SPP_NUM)
+        ! ## Read in average specific leaf area
+        read(GR_CON_SEA,*,iostat=ioerr)(ASLA(cur_pla), cur_pla=1,PLA_SPP_NUM)
         if (ioerr .ne. 0 ) then 
-          write(*,*) 'Mortality effect variables reading error'
+          write(*,*) 'Average specific leaf area reading error'
           stop
         else
-          write(ECHO_NUM,*) 'Mortality effect variables A for each plant species are: '
-          write(ECHO_NUM,*) MR_VAR_A
+          write(ECHO_NUM,*) 'Average specific leaf area for each plant species are: '
+          write(ECHO_NUM,*) ASLA
         end if
 
-        ! ## Read in variable B
-        read(GR_CON_SEA,*,iostat=ioerr)(MR_VAR_B(cur_pla), cur_pla=1,PLA_SPP_NUM)
+        ! ## Read in Fraction to lamina
+        read(GR_CON_SEA,*,iostat=ioerr)(F_LA(cur_pla), cur_pla=1,PLA_SPP_NUM)
         if (ioerr .ne. 0 ) then 
-          write(*,*) 'Mortality effect variables reading error'
+          write(*,*) 'Growth fraction to lamina reading error'
           stop
         else
-          write(ECHO_NUM,*) 'Mortality effect variables B for each plant species are: '
-          write(ECHO_NUM,*) MR_VAR_B
+          write(ECHO_NUM,*) 'Growth fraction to lamina for each plant species are: '
+          write(ECHO_NUM,*) F_LA
         end if
 
       else

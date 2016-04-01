@@ -109,17 +109,18 @@ subroutine model_output
 
 
 ! Average variable output globally
-! do y_dim=1,MAX_Y_DIM
-!   do x_dim=1,MAX_X_DIM
-!     CELL(y_dim,x_dim)%VAR_AVG=sum(CELL(y_dim,x_dim)%SPP_CC(:))&
-!                               /(PLA_SPP_NUM)
-!   end do
-! end do
+do y_dim=1,MAX_Y_DIM
+  do x_dim=1,MAX_X_DIM
+    CELL(y_dim,x_dim)%VAR_AVG=sum(CELL(y_dim,x_dim)%SPP_LAI(:))&
+                              /(PLA_SPP_NUM)
+  end do
+end do
+
+write(*,*) sum(CELL(:,:)%VAR_AVG)/(MAX_Y_DIM*MAX_X_DIM)
 !
-! write(*,*) sum(CELL(:,:)%VAR_AVG)/(MAX_Y_DIM*MAX_X_DIM)
-
-
-    write(*,*) TOT_BIOMASS,','
+!
+!     write(*,*) TOT_BIOMASS,','
+!     write()
 
 ! write(*,*) sum(CELL(:,:)%POT_EVP)/(MAX_Y_DIM*MAX_X_DIM)
 ! write(*,*) DET_RATE(:)

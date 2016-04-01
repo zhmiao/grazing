@@ -71,7 +71,7 @@ subroutine graz_eff_func
             if (SC_SW .eq. 1) gx=gx+2/(EXP((0.8*CELL(y_dim,x_dim)%SOIL_COM-1.5)**2))-1
 
             ! This is used for mortality rate and grazing pressure
-            if (MR_SW .eq. 1) gx=gx+1/(sum(CELL(y_dim,x_dim)%SPP_GRAZED(:,cur_pla))+1)-1 
+            ! if (MR_SW .eq. 1) gx=gx+1/(sum(CELL(y_dim,x_dim)%SPP_GRAZED(:,cur_pla))+1)-1 
     
             ! Coefficient calculations
             CELL(y_dim,x_dim)%DECREASE_R_CO(cur_pla)=2/(1+EXP(-0.5*gx))
