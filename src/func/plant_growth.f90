@@ -12,7 +12,7 @@ subroutine plant_growth
       ! # Loop according to plant species
       do cur_pla=1,PLA_SPP_NUM
 
-        if (day .le. CELL(y_dim,x_dim)%GROW_DAYS(cur_pla)) then
+        if (day .le. 121+CELL(y_dim,x_dim)%GROW_DAYS(cur_pla) .and. day .ge. 121) then
 
           ! ## In growing seasons {{{
           CELL(y_dim,x_dim)%G_R(cur_pla)          = CELL(y_dim,x_dim)%R_MAX_CO(cur_pla)&
@@ -20,24 +20,57 @@ subroutine plant_growth
 
           CELL(y_dim, x_dim)%SPP_K(cur_pla)       = CELL(y_dim,x_dim)%SPP_K_CO(cur_pla)*K_CO(cur_pla)*CELL(y_dim, x_dim)%DAY_RAIN 
 
-          CELL(y_dim, x_dim)%TOT_BIO_SPP(cur_pla) = CELL(y_dim, x_dim)%TOT_BIO_SPP(cur_pla)&
-                                                    +(CELL(y_dim,x_dim)%G_R(cur_pla)*(CELL(y_dim, x_dim)%TOT_BIO_SPP(cur_pla)&
-                                                    +CELL(y_dim,x_dim)%SPP_K(cur_pla))&
-                                                    *(1-(CELL(y_dim, x_dim)%TOT_BIO_SPP(cur_pla)&
-                                                    +CELL(y_dim, x_dim)%SPP_K(cur_pla))&
-                                                    /(2*CELL(y_dim, x_dim)%SPP_K(cur_pla)))) 
+            ! CELL(y_dim, x_dim)%DEL_BIO_SPP(cur_pla) = (CELL(y_dim,x_dim)%G_R(cur_pla)*(CELL(y_dim, x_dim)%TOT_BIO_SPP(cur_pla)&
+            !                                           +CELL(y_dim,x_dim)%SPP_K(cur_pla))&
+            !                                           *(1-(CELL(y_dim, x_dim)%TOT_BIO_SPP(cur_pla)&
+            !                                           +CELL(y_dim, x_dim)%SPP_K(cur_pla))&
+            !                                           /(2*CELL(y_dim, x_dim)%SPP_K(cur_pla)))) 
+            !
+            ! CELL(y_dim, x_dim)%TOT_BIO_SPP(cur_pla) = CELL(y_dim, x_dim)%TOT_BIO_SPP(cur_pla) + CELL(y_dim,x_dim)%DEL_BIO_SPP(cur_pla)
+
+          if (CELL(y_dim,x_dim)%TOT_BIO_SPP(cur_pla) .le. CELL(y_dim,x_dim)%SPP_K(cur_pla)) then
+
+            CELL(y_dim, x_dim)%DEL_BIO_SPP(cur_pla) = (CELL(y_dim,x_dim)%G_R(cur_pla)*(CELL(y_dim, x_dim)%TOT_BIO_SPP(cur_pla)&
+                                                      +CELL(y_dim,x_dim)%SPP_K(cur_pla))&
+                                                      *(1-(CELL(y_dim, x_dim)%TOT_BIO_SPP(cur_pla)&
+                                                      +CELL(y_dim, x_dim)%SPP_K(cur_pla))&
+                                                      /(2*CELL(y_dim, x_dim)%SPP_K(cur_pla)))) 
+
+            CELL(y_dim, x_dim)%TOT_BIO_SPP(cur_pla) = CELL(y_dim, x_dim)%TOT_BIO_SPP(cur_pla) + CELL(y_dim,x_dim)%DEL_BIO_SPP(cur_pla)
+
+            CELL(y_dim, x_dim)%SPP_K_LY(cur_pla)    = CELL(y_dim,x_dim)%SPP_K(cur_pla) 
+
+          else
+
+            ! ## Not in growing season {{{
+            CELL(y_dim,x_dim)%D_R(cur_pla)=CELL(y_dim,x_dim)%DECREASE_R_CO(cur_pla)*DECREASE_R(cur_pla)/(MAX_Y_DIM*MAX_X_DIM)
+
+            if (CELL(y_dim, x_dim)%TOT_BIO_SPP(cur_pla)-CELL(y_dim,x_dim)%D_R(cur_pla) .ge. 0) then 
+
+              ! ### If biomass minus decrease rate is greater than zero
+              CELL(y_dim, x_dim)%TOT_BIO_SPP(cur_pla)=CELL(y_dim, x_dim)%TOT_BIO_SPP(cur_pla)-CELL(y_dim,x_dim)%D_R(cur_pla)
+
+            else 
+
+              ! ### If biomass is minus decrease rate is smaller or equal to zero
+              CELL(y_dim, x_dim)%TOT_BIO_SPP(cur_pla)=0
+
+            end if 
+
+          end if
 
           ! }}}
 
         else
 
           ! ## Not in growing season {{{
-          CELL(y_dim,x_dim)%D_R(cur_pla)=CELL(y_dim,x_dim)%DECREASE_R_CO(cur_pla)*DECREASE_R(cur_pla)
+          CELL(y_dim,x_dim)%D_R(cur_pla)=CELL(y_dim,x_dim)%DECREASE_R_CO(cur_pla)*DECREASE_R(cur_pla)/(MAX_Y_DIM*MAX_X_DIM)
 
           if (CELL(y_dim, x_dim)%TOT_BIO_SPP(cur_pla)-CELL(y_dim,x_dim)%D_R(cur_pla) .ge. 0) then 
 
             ! ### If biomass minus decrease rate is greater than zero
             CELL(y_dim, x_dim)%TOT_BIO_SPP(cur_pla)=CELL(y_dim, x_dim)%TOT_BIO_SPP(cur_pla)-CELL(y_dim,x_dim)%D_R(cur_pla)
+            ! CELL(y_dim, x_dim)%TOT_BIO_SPP(cur_pla)=CELL(y_dim, x_dim)%TOT_BIO_SPP(cur_pla)
 
           else 
 

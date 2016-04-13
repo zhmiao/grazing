@@ -18,14 +18,8 @@ program grazing_model
     ! ## calculate grwoing days using annual rainfall for each cell
     call growth_days
  
-    ! ## Set cell initial biomass for each plant species to zero in the begining of each year
-    do y_dim = 1, MAX_Y_DIM
-      do x_dim = 1, MAX_X_DIM
-
-        CELL(y_dim,x_dim)%TOT_BIO_SPP(:)=0
-
-      end do
-    end do
+    ! ## Yearly biomass initialization
+    TOT_BIOMASS_Y=0
 
     ! ## Loop for days
     do day=1,365

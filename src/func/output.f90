@@ -93,6 +93,32 @@ subroutine model_output
     end if
 
     write(OUTPUT_NUM,*) TOT_BIOMASS,','
+
+
+    TOT_BIOMASS_Y=TOT_BIOMASS_Y+TOT_BIOMASS
+
+    if (day .eq. 365) then
+
+      write(OUTPUT_DIR,'(A15)')'/out/yearly_glo'
+  
+      inquire(unit=OUTPUT_NUM_Y, opened=isopen)
+      if (isopen .eq. .false.) then
+      open(OUTPUT_NUM_Y, FILE=CWD(1:len_trim(CWD))//OUTPUT_DIR(1:len_trim(OUTPUT_DIR))//'.csv',STATUS='REPLACE'&
+                                                                        ,ACTION='WRITE',IOSTAT=ioerr)
+        if (ioerr .ne. 0) then
+          write(*,*) 'Yearly global total plant biomass outputfile can not be opened'
+          stop
+        end if
+  
+      end if
+  
+      write(OUTPUT_NUM_Y,*) TOT_BIOMASS_Y,','
+
+      ! close(OUTPUT_NUM_Y)
+
+    endif
+
+    
     ! write(*,*) TOT_BIOMASS,','
 
     ! close(OUTPUT_NUM)
@@ -109,14 +135,14 @@ subroutine model_output
 
 
 ! Average variable output globally
-do y_dim=1,MAX_Y_DIM
-  do x_dim=1,MAX_X_DIM
-    CELL(y_dim,x_dim)%VAR_AVG=sum(CELL(y_dim,x_dim)%SPP_LAI(:))&
-                              /(PLA_SPP_NUM)
-  end do
-end do
-
-write(*,*) sum(CELL(:,:)%VAR_AVG)/(MAX_Y_DIM*MAX_X_DIM)
+! do y_dim=1,MAX_Y_DIM
+!   do x_dim=1,MAX_X_DIM
+!     CELL(y_dim,x_dim)%VAR_AVG=sum(CELL(y_dim,x_dim)%SPP_LAI(:))&
+!                               /(PLA_SPP_NUM)
+!   end do
+! end do
+!
+! write(*,*) sum(CELL(:,:)%VAR_AVG)/(MAX_Y_DIM*MAX_X_DIM)
 !
 !
 !     write(*,*) TOT_BIOMASS,','

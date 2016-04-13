@@ -125,10 +125,12 @@ subroutine model_ini
     do x_dim = 1, MAX_X_DIM
       allocate(CELL(y_dim,x_dim)%GROW_DAYS(PLA_SPP_NUM))
       allocate(CELL(y_dim,x_dim)%GROW_DAYS_CO(PLA_SPP_NUM))
+      allocate(CELL(y_dim,x_dim)%DEL_BIO_SPP(PLA_SPP_NUM))
       allocate(CELL(y_dim,x_dim)%TOT_BIO_SPP(PLA_SPP_NUM))
       allocate(CELL(y_dim,x_dim)%AV_BIO_SPP(PLA_SPP_NUM))
       allocate(CELL(y_dim,x_dim)%AV_BIO_SPP_P(PLA_SPP_NUM))
       allocate(CELL(y_dim,x_dim)%UAV_BIO_SPP(PLA_SPP_NUM))
+      allocate(CELL(y_dim,x_dim)%SPP_K_LY(PLA_SPP_NUM))
       allocate(CELL(y_dim,x_dim)%SPP_K(PLA_SPP_NUM))
       allocate(CELL(y_dim,x_dim)%SPP_K_CO(PLA_SPP_NUM))
       allocate(CELL(y_dim,x_dim)%G_R(PLA_SPP_NUM))
@@ -150,6 +152,8 @@ subroutine model_ini
 
       ! Initialized growth variables coefficient
       CELL(y_dim,x_dim)%GROW_DAYS_CO(:)=1
+      CELL(y_dim,x_dim)%SPP_K(:)=0
+      CELL(y_dim,x_dim)%SPP_K_LY(:)=0
       CELL(y_dim,x_dim)%SPP_K_CO(:)=1
       CELL(y_dim,x_dim)%DECREASE_R_CO(:)=1
       CELL(y_dim,x_dim)%R_MAX_CO(:)=1
@@ -158,6 +162,8 @@ subroutine model_ini
       CELL(y_dim,x_dim)%LIT_POOL_D=0
       CELL(y_dim,x_dim)%SPP_NU_D(:)=0
       CELL(y_dim,x_dim)%SOIL_DCOM=0
+      CELL(y_dim,x_dim)%DEL_BIO_SPP(:)=0
+      CELL(y_dim,x_dim)%TOT_BIO_SPP(:)=0
     end do
   end do
 

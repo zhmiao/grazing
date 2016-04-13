@@ -18,6 +18,7 @@ module structure
     real, dimension(:), allocatable    :: GROW_DAYS_CO                    ! Growth days coefficient
     real                               :: DAY_RAIN                        ! (mm^2) Daily rainfall use efficiency
     ! real                               :: MAX_DAILY_GROWTH                ! maximum daily grass growth
+    real, dimension(:), allocatable    :: DEL_BIO_SPP                     ! (g) the change of aboveground plant biomass of different species
     real, dimension(:), allocatable    :: TOT_BIO_SPP                     ! (g) total aboveground plant biomass of different species
     real                               :: TOT_BIOMASS                     ! (g) total biomass
     real, dimension(:), allocatable    :: AV_BIO_SPP                      ! (g) available aboveground plant biomass of different species
@@ -26,6 +27,7 @@ module structure
     real                               :: AV_BIOMASS_P                    ! (g) Stores cell level total availablr biomass for future modifications
     real, dimension(:), allocatable    :: UAV_BIO_SPP                     ! (g) unavailable aboveground plant biomass of different species
     real                               :: UAV_BIOMASS                     ! (g) total unavailable biomass
+    real, dimension(:), allocatable    :: SPP_K_LY                        ! (g) grass growth carrying capacity for each plant species for last year
     real, dimension(:), allocatable    :: SPP_K                           ! (g) grass growth carrying capacity for each plant species
     real, dimension(:), allocatable    :: SPP_K_CO                        ! Carrying capacit coefficient
     real, dimension(:), allocatable    :: G_R                             ! Actual grwoth rate
@@ -102,13 +104,14 @@ module structure
   real, dimension(:), allocatable :: R_MAX                           ! maximum grass growth rate (default value=0.039)
   real, dimension(:), allocatable :: SPP_BIOMASS                     ! (g) Global total biomass for each plant species
   real                            :: TOT_BIOMASS                     ! (g) Global total plant biomass
+  real                            :: TOT_BIOMASS_Y                   ! (g) Global total plant biomass of one year
   real                            :: AV_BIOMASS                      ! (g) Global available plant biomass
   real                            :: AV_BIOMASS_P                    ! (g) Stores global available biomass for future modifications
   real                            :: UAV_BIOMASS                     ! (g) Global unavailable plant biomass
   real                            :: TOT_K                           ! (g) Global total plant carrying capacity 
   real                            :: TOT_GRAZED_DA                   ! (g) daily grazed 
   real, dimension(:), allocatable :: SPP_N_CON                       ! (gN/gPlant) Nitrogen concentration for each plant species
-  ! real                            :: TOT_N_CON                       ! (gN/gPlant) Total Nitrogen concentration
+  ! real                            :: TOT_N_CON                     ! (gN/gPlant) Total Nitrogen concentration
   real, dimension(:), allocatable :: SPP_CN                          ! Plant C to N ratio }}}
 
   ! Global geographical variables !{{{
