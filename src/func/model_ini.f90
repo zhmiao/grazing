@@ -163,7 +163,7 @@ subroutine model_ini
       CELL(y_dim,x_dim)%SPP_NU_D(:)=0
       CELL(y_dim,x_dim)%SOIL_DCOM=0
       CELL(y_dim,x_dim)%DEL_BIO_SPP(:)=0
-      CELL(y_dim,x_dim)%TOT_BIO_SPP(:)=0
+      CELL(y_dim,x_dim)%TOT_BIO_SPP(:)=1
     end do
   end do
 

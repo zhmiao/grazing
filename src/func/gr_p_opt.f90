@@ -79,22 +79,23 @@ subroutine grazing_process_opt
   if (MAN_SW(1) .eq. 1) then                                                                  ! Check whether there is rotational grazing
     ! ### On day one, set grazing switch on
     if (day .eq. 1) then
-      GR_SW=1
+      GR_SW=0
     end if
     ! ### On normal days, set grazing switch by mod() function
     do i=1,RO_NUM
       if (day .gt. RO_CP(i) .and. day .le. RO_CP(i+1)) then                                   ! Rotation period check
-        GR_SW=mod(i,2)
+        GR_SW=1-mod(i,2)
       end if
     end do
   else
     ! ## If rotational switch is off, graizing switch is always on
-    GR_SW=1
+    GR_SW=0
   end if
 
   ! ## Set cell level grazing switches according to global level grazing switch
-  CELL(:,:)%GR_SW=GR_SW
+  ! CELL(:,:)%GR_SW=GR_SW
 
+  ! write(*,*) day,' ', GR_SW
 ! End grazing cycle check }}}
 
 ! ------------------------
@@ -102,7 +103,7 @@ subroutine grazing_process_opt
 ! ------------------------
 
   ! ## Check whether there should be grazing. (Global graizng switch)
-  if (GR_SW .eq. 1) then                                                                      ! Check global grazing switch
+  if (GR_SW .eq. 1 .or. day .eq. 1) then                                                                      ! Check global grazing switch
 
   ! ------------------------
   ! ### Set up cell available and unavailale plant biomass {{{

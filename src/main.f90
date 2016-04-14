@@ -14,7 +14,7 @@ program grazing_model
   do year=start_yr, end_yr
 
     ! ## setup annual rainfall for each cell
-    call annual_rainfall
+    ! call annual_rainfall
     ! ## calculate grwoing days using annual rainfall for each cell
     call growth_days
  

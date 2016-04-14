@@ -624,4 +624,5 @@ subroutine grazing_ini
   write(*,*) '=============================='
   write(*,*) ' Grazing initialization done!!'
   write(*,*) '=============================='
+
 end subroutine grazing_ini

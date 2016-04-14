@@ -214,6 +214,7 @@ module parameter_var
 
   !}}}
 
+  real :: temp_a, temp_b
 end module parameter_var
 
 

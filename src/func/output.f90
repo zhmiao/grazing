@@ -5,6 +5,8 @@ subroutine model_output
 
   implicit none
 
+  ! real temp_a, temp_b
+
 !==============================
 ! Cell level output {{{
 !==============================
@@ -94,6 +96,9 @@ subroutine model_output
 
     write(OUTPUT_NUM,*) TOT_BIOMASS,','
 
+    ! if (day .eq. 206 .or. day .eq. 258) then
+    !   write(*,*) (TOT_BIOMASS/CELLAREA)*0.01
+    ! end if
 
     TOT_BIOMASS_Y=TOT_BIOMASS_Y+TOT_BIOMASS
 
@@ -123,15 +128,24 @@ subroutine model_output
 
     ! close(OUTPUT_NUM)
     
-! Average variable output globally
-! do y_dim=1,MAX_Y_DIM
-!   do x_dim=1,MAX_X_DIM
-!     CELL(y_dim,x_dim)%VAR_AVG=sum(CELL(y_dim,x_dim)%SPP_GRAZED(:,:))&
-!                               /(ANI_SPP_NUM*PLA_SPP_NUM)
-!   end do
-! end do
-!
-! write(*,*) sum(CELL(:,:)%VAR_AVG)/(MAX_Y_DIM*MAX_X_DIM)
+
+if (day .eq. 211 .or. day .eq. 236 .or. day .eq. 261) temp_b=TOT_BIOMASS
+
+! if (day .eq. 211 .or. day .eq. 236 .or. day .eq. 261) write(*,*) day, ' ', TOT_BIOMASS, ' ', temp_b
+
+if (GR_SW .eq. 1) then
+
+  if (day .eq. 212 .or. day .eq. 237 .or. day .eq. 262) temp_a=0 
+
+  do y_dim=1,MAX_Y_DIM
+    do x_dim=1,MAX_X_DIM
+      temp_a=temp_a+sum(CELL(y_dim,x_dim)%SPP_GRAZED(:,:))
+    end do
+  end do
+
+  if (day .eq. 216 .or. day .eq. 241 .or. day .eq. 266) write(*,*) temp_a/temp_b
+
+end if
 
 
 ! Average variable output globally

@@ -14,27 +14,43 @@ subroutine plant_growth
 
         if (day .le. 121+CELL(y_dim,x_dim)%GROW_DAYS(cur_pla) .and. day .ge. 121) then
 
+          ! if (year .eq. 1998 .and. day .eq. 121) then
+          !   CELL(y_dim,x_dim)%TOT_BIO_SPP(cur_pla) = 0.001
+          ! end if
+ 
           ! ## In growing seasons {{{
           CELL(y_dim,x_dim)%G_R(cur_pla)          = CELL(y_dim,x_dim)%R_MAX_CO(cur_pla)&
                                                     *R_MAX(cur_pla)*(1+0.01*(CELL(y_dim,x_dim)%SPP_RDP(cur_pla)))
 
-          CELL(y_dim, x_dim)%SPP_K(cur_pla)       = CELL(y_dim,x_dim)%SPP_K_CO(cur_pla)*K_CO(cur_pla)*CELL(y_dim, x_dim)%DAY_RAIN 
+          CELL(y_dim, x_dim)%SPP_K(cur_pla)       = CELL(y_dim,x_dim)%SPP_K_CO(cur_pla)*K_CO(cur_pla)*CELL(y_dim, x_dim)%DAY_RAIN*CELLAREA
 
-            ! CELL(y_dim, x_dim)%DEL_BIO_SPP(cur_pla) = (CELL(y_dim,x_dim)%G_R(cur_pla)*(CELL(y_dim, x_dim)%TOT_BIO_SPP(cur_pla)&
-            !                                           +CELL(y_dim,x_dim)%SPP_K(cur_pla))&
-            !                                           *(1-(CELL(y_dim, x_dim)%TOT_BIO_SPP(cur_pla)&
-            !                                           +CELL(y_dim, x_dim)%SPP_K(cur_pla))&
-            !                                           /(2*CELL(y_dim, x_dim)%SPP_K(cur_pla)))) 
-            !
-            ! CELL(y_dim, x_dim)%TOT_BIO_SPP(cur_pla) = CELL(y_dim, x_dim)%TOT_BIO_SPP(cur_pla) + CELL(y_dim,x_dim)%DEL_BIO_SPP(cur_pla)
+          ! if (day .eq. 121) then
+          !   ! write(*,*) K_CO(cur_pla)
+          !   ! write(*,*) CELL(y_dim,x_dim)%SPP_K(cur_pla)
+          !   write(*,*) '-------'
+          !   write(*,*) CELL(y_dim,x_dim)%G_R(cur_pla)
+          !   write(*,*) '++++++'
+          ! end if
 
           if (CELL(y_dim,x_dim)%TOT_BIO_SPP(cur_pla) .le. CELL(y_dim,x_dim)%SPP_K(cur_pla)) then
 
-            CELL(y_dim, x_dim)%DEL_BIO_SPP(cur_pla) = (CELL(y_dim,x_dim)%G_R(cur_pla)*(CELL(y_dim, x_dim)%TOT_BIO_SPP(cur_pla)&
-                                                      +CELL(y_dim,x_dim)%SPP_K(cur_pla))&
-                                                      *(1-(CELL(y_dim, x_dim)%TOT_BIO_SPP(cur_pla)&
-                                                      +CELL(y_dim, x_dim)%SPP_K(cur_pla))&
-                                                      /(2*CELL(y_dim, x_dim)%SPP_K(cur_pla)))) 
+            ! cell(y_dim, x_dim)%del_bio_spp(cur_pla) = (cell(y_dim,x_dim)%g_r(cur_pla)*(cell(y_dim, x_dim)%tot_bio_spp(cur_pla)&
+            !                                           +cell(y_dim,x_dim)%spp_k(cur_pla))&
+            !                                           *(1-(cell(y_dim, x_dim)%tot_bio_spp(cur_pla)&
+            !                                           +cell(y_dim, x_dim)%spp_k(cur_pla))&
+            !                                           /(2*cell(y_dim, x_dim)%spp_k(cur_pla)))) 
+
+            cell(y_dim, x_dim)%del_bio_spp(cur_pla) = (cell(y_dim,x_dim)%g_r(cur_pla)*(cell(y_dim, x_dim)%tot_bio_spp(cur_pla)&
+                                                      +cell(y_dim,x_dim)%spp_k(cur_pla)*0.118)&
+                                                      *(1-(cell(y_dim, x_dim)%tot_bio_spp(cur_pla)&
+                                                      +cell(y_dim, x_dim)%spp_k(cur_pla)*0.118)&
+                                                      /(1.118*cell(y_dim, x_dim)%spp_k(cur_pla)))) 
+
+            ! if (year .eq. 1998) then
+            !   write(*,*) '+++++'
+            !   write(*,*) CELL(y_dim,x_dim)%DEL_BIO_SPP(cur_pla)
+            !   write(*,*) '-----'
+            ! end if
 
             CELL(y_dim, x_dim)%TOT_BIO_SPP(cur_pla) = CELL(y_dim, x_dim)%TOT_BIO_SPP(cur_pla) + CELL(y_dim,x_dim)%DEL_BIO_SPP(cur_pla)
 
@@ -43,7 +59,7 @@ subroutine plant_growth
           else
 
             ! ## Not in growing season {{{
-            CELL(y_dim,x_dim)%D_R(cur_pla)=CELL(y_dim,x_dim)%DECREASE_R_CO(cur_pla)*DECREASE_R(cur_pla)/(MAX_Y_DIM*MAX_X_DIM)
+            CELL(y_dim,x_dim)%D_R(cur_pla)=CELL(y_dim,x_dim)%DECREASE_R_CO(cur_pla)*DECREASE_R(cur_pla)*CELLAREA/(MAX_Y_DIM*MAX_X_DIM)
 
             if (CELL(y_dim, x_dim)%TOT_BIO_SPP(cur_pla)-CELL(y_dim,x_dim)%D_R(cur_pla) .ge. 0) then 
 
@@ -64,7 +80,7 @@ subroutine plant_growth
         else
 
           ! ## Not in growing season {{{
-          CELL(y_dim,x_dim)%D_R(cur_pla)=CELL(y_dim,x_dim)%DECREASE_R_CO(cur_pla)*DECREASE_R(cur_pla)/(MAX_Y_DIM*MAX_X_DIM)
+          CELL(y_dim,x_dim)%D_R(cur_pla)=CELL(y_dim,x_dim)%DECREASE_R_CO(cur_pla)*DECREASE_R(cur_pla)*CELLAREA/(MAX_Y_DIM*MAX_X_DIM)
 
           if (CELL(y_dim, x_dim)%TOT_BIO_SPP(cur_pla)-CELL(y_dim,x_dim)%D_R(cur_pla) .ge. 0) then 
 
@@ -84,6 +100,7 @@ subroutine plant_growth
       end do ! end looping plant species
 
       CELL(y_dim,x_dim)%TOT_K=sum(CELL(y_dim,x_dim)%SPP_K(:))
+
 
     end do ! end looping x
   end do ! end looping y

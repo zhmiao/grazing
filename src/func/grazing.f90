@@ -21,7 +21,7 @@ if (GR_SW .eq. 1) then
 
     ! ### First, loop for animal species
     do cur_ani=1,ANI_SPP_NUM
-  
+
       ! ### Second, loop for site preference classes
       do cur_cla=1,SITE_PREF(cur_ani)%SS_CLA_NUM
   

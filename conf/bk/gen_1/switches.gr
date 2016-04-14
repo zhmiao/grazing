@@ -8,13 +8,13 @@
 0                                               ! Switch for seasoncal differences
 -----------------------------------------------------------------------------------------------------
 3                                               ! Switch for management differences, switch number
-1,0,0                                           ! 1) Rotational grazing; 2) Maximum amount of grazing; 3) Minimum amount of grazing
+0,0,0                                           ! 1) Rotational grazing; 2) Maximum amount of grazing; 3) Minimum amount of grazing
 =====================================================================================================
 = Grazing rate options
 =====================================================================================================
 0                                               ! Switch for fixed grazing rate
 -----------------------------------------------------------------------------------------------------
-1                                               ! Switch for grazing as a function of stocking density
+0                                               ! Switch for grazing as a function of stocking density
 -----------------------------------------------------------------------------------------------------
 0                                               ! Switch for grazing limited by unavailable biomass
 =====================================================================================================
