@@ -169,6 +169,8 @@ do x_dim=1,MAX_X_DIM
       ! CELL(y_dim,x_dim)%SPP_LAI(cur_pla)=0.01*(90-82*(1-exp(-0.0102*(CELL(y_dim,x_dim)%TOT_BIO_SPP(cur_pla)/CELLAREA))))&
       !                                        *CELL(y_dim,x_dim)%TOT_BIO_SPP(cur_pla)/CELLAREA
 
+      ! CELL(y_dim,x_dim)%SPP_LAI(cur_pla) = F_LA(cur_pla) * CELL(y_dim,x_dim)%TOT_BIO_SPP(cur_pla) * ASLA(cur_pla) / CELLAREA
+
       CELL(y_dim,x_dim)%SPP_LAI(cur_pla) = F_LA(cur_pla) * CELL(y_dim,x_dim)%TOT_BIO_SPP(cur_pla) * ASLA(cur_pla) / CELLAREA
 
       if (CELL(y_dim,x_dim)%SPP_LAI(cur_pla) .le. 0) then

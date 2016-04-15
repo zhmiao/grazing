@@ -7,7 +7,7 @@ input.data <- read.csv('glo_totbio.csv', header=F)
 # input.data <- input.data[,1]
 
 # For one year
-input.data[,2] <- seq(1,365*40,1)
+input.data[,2] <- seq(1,365*1,1)
 # For two years
 input.data[,2] <- seq(1,730,1)
 
