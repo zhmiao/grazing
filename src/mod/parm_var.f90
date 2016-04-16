@@ -215,7 +215,7 @@ module parameter_var
 
   !}}}
 
-  real :: temp_a, temp_b, temp_c, temp_d, temp_f, temp_g, temp_h, temp_i, temp_j
+  real :: temp_a, temp_b, temp_c, temp_d, temp_f, temp_g, temp_h, temp_i, temp_j, temp_k, temp_l,temp_m
 end module parameter_var
 
 

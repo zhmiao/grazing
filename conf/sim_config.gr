@@ -18,7 +18,7 @@
 = Plant growth parameters
 =====================================================================================================
 1                                               ! Plant species number, B, E, A, C
-280, 275.2294	                           	  		! () Carrying capacity coefficient 
+285, 275.2294	                           	  		! () Carrying capacity coefficient 
 1.00                  												  ! Plant decrease rate
-0.029                     											! Plant maximum growth rate
+0.03                     											! Plant maximum growth rate
 -----------------------------------------------------------------------------------------------------

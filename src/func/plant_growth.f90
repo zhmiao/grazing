@@ -43,12 +43,17 @@ subroutine plant_growth
             !                                           +CELL(y_dim, x_dim)%SPP_K(cur_pla))&
             !                                           /(2*CELL(y_dim, x_dim)%SPP_K(cur_pla)))) 
 
+            ! CELL(y_dim, x_dim)%DEL_BIO_SPP(cur_pla) = (CELL(y_dim,x_dim)%G_R(cur_pla)*(CELL(y_dim, x_dim)%TOT_BIO_SPP(cur_pla)&
+            !                                           +CELL(y_dim,x_dim)%SPP_K(cur_pla)*0.07)&
+            !                                           *(1-(CELL(y_dim, x_dim)%TOT_BIO_SPP(cur_pla)&
+            !                                           +CELL(y_dim, x_dim)%SPP_K(cur_pla)*0.07)&
+            !                                           /(1.07*CELL(y_dim, x_dim)%SPP_K(cur_pla)))) 
+
             CELL(y_dim, x_dim)%DEL_BIO_SPP(cur_pla) = (CELL(y_dim,x_dim)%G_R(cur_pla)*(CELL(y_dim, x_dim)%TOT_BIO_SPP(cur_pla)&
                                                       +CELL(y_dim,x_dim)%SPP_K(cur_pla)*0.07)&
                                                       *(1-(CELL(y_dim, x_dim)%TOT_BIO_SPP(cur_pla)&
                                                       +CELL(y_dim, x_dim)%SPP_K(cur_pla)*0.07)&
                                                       /(1.07*CELL(y_dim, x_dim)%SPP_K(cur_pla)))) 
-
 
             ! if (day .eq. 121) write(*,*) CELL(y_dim,x_dim)%SPP_K(cur_pla)
             ! CELL(y_dim, x_dim)%DEL_BIO_SPP(cur_pla) = (CELL(y_dim,x_dim)%G_R(cur_pla)*(CELL(y_dim, x_dim)%TOT_BIO_SPP(cur_pla)&

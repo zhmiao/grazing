@@ -277,10 +277,17 @@ do x_dim=1,MAX_X_DIM
 
     ! ### 1) Change in photosysthesis {{{
     if (LA_EF_SW(1) .eq. 1) then
-      CELL(y_dim,x_dim)%SPP_PS(cur_pla)=LA_PS_VAR_A(cur_pla)*CELL(y_dim,x_dim)%SPP_LAI(cur_pla)&
-                                          /(LA_PS_VAR_B(cur_pla)+CELL(y_dim,x_dim)%SPP_LAI(cur_pla))
+      ! CELL(y_dim,x_dim)%SPP_PS(cur_pla)=LA_PS_VAR_A(cur_pla)*CELL(y_dim,x_dim)%SPP_LAI(cur_pla)&
+      !                                     /(LA_PS_VAR_B(cur_pla)+CELL(y_dim,x_dim)%SPP_LAI(cur_pla))
 
-      if (CELL(y_dim,x_dim)%SPP_PS(cur_pla) .le. 0) then
+      CELL(y_dim,x_dim)%SPP_PS(cur_pla)=0.2 + (9 * (CELL(y_dim,x_dim)%SPP_LAI(cur_pla) - 2.0))&
+                                          /(2.5 + 1.5 * (CELL(y_dim,x_dim)%SPP_LAI(cur_pla) - 2.0))
+
+
+
+! if (day .eq. 206) write(*,*)0.2 + (8.3 * (3.15 - 2.53))/(1.3 + 1.5 * (3.15 - 2.53)), CELL(y_dim,x_dim)%SPP_LAI(cur_pla), CELL(y_dim,x_dim)%SPP_PS(cur_pla), 'hshshsh'
+
+      if (CELL(y_dim,x_dim)%SPP_PS(cur_pla) .le. 0 .or. CELL(y_dim,x_dim)%SPP_PS(cur_pla) .gt. 50) then
         CELL(y_dim,x_dim)%SPP_PS(cur_pla)=0
       end if
 
