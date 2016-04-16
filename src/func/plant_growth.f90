@@ -18,6 +18,8 @@ subroutine plant_growth
           !   CELL(y_dim,x_dim)%TOT_BIO_SPP(cur_pla) = 0.001
           ! end if
  
+            ! if (day .eq. 121) write(*,*) temp_h, CELL(y_dim,x_dim)%TOT_BIO_SPP(cur_pla)
+
           ! ## In growing seasons {{{
           CELL(y_dim,x_dim)%G_R(cur_pla)          = CELL(y_dim,x_dim)%R_MAX_CO(cur_pla)&
                                                     *R_MAX(cur_pla)*(1+0.01*(CELL(y_dim,x_dim)%SPP_RDP(cur_pla)))
@@ -32,26 +34,28 @@ subroutine plant_growth
           !   write(*,*) '++++++'
           ! end if
 
+
           if (CELL(y_dim,x_dim)%TOT_BIO_SPP(cur_pla) .le. CELL(y_dim,x_dim)%SPP_K(cur_pla)) then
 
-            ! cell(y_dim, x_dim)%del_bio_spp(cur_pla) = (cell(y_dim,x_dim)%g_r(cur_pla)*(cell(y_dim, x_dim)%tot_bio_spp(cur_pla)&
-            !                                           +cell(y_dim,x_dim)%spp_k(cur_pla))&
-            !                                           *(1-(cell(y_dim, x_dim)%tot_bio_spp(cur_pla)&
-            !                                           +cell(y_dim, x_dim)%spp_k(cur_pla))&
-            !                                           /(2*cell(y_dim, x_dim)%spp_k(cur_pla)))) 
+            ! CELL(y_dim, x_dim)%DEL_BIO_SPP(cur_pla) = (CELL(y_dim,x_dim)%G_R(cur_pla)*(CELL(y_dim, x_dim)%TOT_BIO_SPP(cur_pla)&
+            !                                           +CELL(y_dim,x_dim)%SPP_K(cur_pla))&
+            !                                           *(1-(CELL(y_dim, x_dim)%TOT_BIO_SPP(cur_pla)&
+            !                                           +CELL(y_dim, x_dim)%SPP_K(cur_pla))&
+            !                                           /(2*CELL(y_dim, x_dim)%SPP_K(cur_pla)))) 
 
-            cell(y_dim, x_dim)%del_bio_spp(cur_pla) = (cell(y_dim,x_dim)%g_r(cur_pla)*(cell(y_dim, x_dim)%tot_bio_spp(cur_pla)&
-                                                      +cell(y_dim,x_dim)%spp_k(cur_pla)*0.09)&
-                                                      *(1-(cell(y_dim, x_dim)%tot_bio_spp(cur_pla)&
-                                                      +cell(y_dim, x_dim)%spp_k(cur_pla)*0.09)&
-                                                      /(1.09*cell(y_dim, x_dim)%spp_k(cur_pla)))) 
+            CELL(y_dim, x_dim)%DEL_BIO_SPP(cur_pla) = (CELL(y_dim,x_dim)%G_R(cur_pla)*(CELL(y_dim, x_dim)%TOT_BIO_SPP(cur_pla)&
+                                                      +CELL(y_dim,x_dim)%SPP_K(cur_pla)*0.07)&
+                                                      *(1-(CELL(y_dim, x_dim)%TOT_BIO_SPP(cur_pla)&
+                                                      +CELL(y_dim, x_dim)%SPP_K(cur_pla)*0.07)&
+                                                      /(1.07*CELL(y_dim, x_dim)%SPP_K(cur_pla)))) 
+
 
             ! if (day .eq. 121) write(*,*) CELL(y_dim,x_dim)%SPP_K(cur_pla)
-            ! cell(y_dim, x_dim)%del_bio_spp(cur_pla) = (cell(y_dim,x_dim)%g_r(cur_pla)*(cell(y_dim, x_dim)%tot_bio_spp(cur_pla)&
+            ! CELL(y_dim, x_dim)%DEL_BIO_SPP(cur_pla) = (CELL(y_dim,x_dim)%G_R(cur_pla)*(CELL(y_dim, x_dim)%TOT_BIO_SPP(cur_pla)&
             !                                           +95*day)&
-            !                                           *(1-(cell(y_dim, x_dim)%tot_bio_spp(cur_pla)&
+            !                                           *(1-(CELL(y_dim, x_dim)%TOT_BIO_SPP(cur_pla)&
             !                                           +95*day)&
-            !                                           /(1*cell(y_dim, x_dim)%spp_k(cur_pla) + 95*CELL(y_dim,x_dim)%GROW_DAYS(cur_pla)))) 
+            !                                           /(1*CELL(y_dim, x_dim)%SPP_K(cur_pla) + 95*CELL(y_dim,x_dim)%GROW_DAYS(cur_pla)))) 
 
             ! if (year .eq. 1998) then
             !   write(*,*) '+++++'

@@ -134,7 +134,8 @@ subroutine model_output
     ! close(OUTPUT_NUM)
     
 
-if (day .eq. 181 .or. day .eq. 206 .or. day .eq. 232) temp_b=TOT_BIOMASS
+! if (day .eq. 181 .or. day .eq. 206 .or. day .eq. 232) temp_b=TOT_BIOMASS
+if (day .eq. 181 .or. day .eq. 232) temp_b=TOT_BIOMASS
 
 ! if (day .eq. 211 .or. day .eq. 236 .or. day .eq. 261) write(*,*) day, ' ', TOT_BIOMASS, ' ', temp_b
 
@@ -150,9 +151,28 @@ if (day .eq. 181 .or. day .eq. 206 .or. day .eq. 232) temp_b=TOT_BIOMASS
 !
 ! end if
 
-if (day .eq. 186 .or. day .eq. 212 .or. day .eq. 237) temp_a=TOT_BIOMASS
 
-if (day .eq. 206 .or. day .eq. 258) write(*,*)day, '',  (temp_b-temp_a)/temp_b, '', (TOT_BIOMASS/CELLAREA)*0.01
+  do y_dim=1,MAX_Y_DIM
+    do x_dim=1,MAX_X_DIM
+      temp_c=sum(CELL(y_dim,x_dim)%DEL_BIO_SPP(:))
+      temp_d=sum(CELL(y_dim,x_dim)%SPP_PS(:))*84.87654
+      temp_g=sum(CELL(y_dim,x_dim)%SPP_LAI(:))
+      if (temp_h .eq. 1 .and. day .eq. 206) temp_i=sum(CELL(y_dim,x_dim)%DEL_BIO_SPP(:))
+      if (temp_h .eq. 1 .and. day .eq. 258) temp_j=sum(CELL(y_dim,x_dim)%DEL_BIO_SPP(:))
+    end do
+  end do
+
+! if (day .eq. 186 .or. day .eq. 212 .or. day .eq. 237) temp_a=TOT_BIOMASS
+if (day .eq. 186 .or. day .eq. 237) temp_a=TOT_BIOMASS
+
+
+if (day .eq. 206) write(*,'(I3,A8,F6.2,A8,F6.2,A9,F6.2,A9,F6.2,A7,F6.2)')  day, ' GI: ',  (temp_b-temp_a)/temp_b,&
+                                                                           '   DM: ', (TOT_BIOMASS/CELLAREA)*0.01,&
+                                                                           '   LAI: ', temp_g, '  Pnr: ', temp_d,'   R: ', temp_c/temp_i
+
+if (day .eq. 258) write(*,'(I3,A8,F6.2,A8,F6.2,A9,F6.2,A9,F6.2,A7,F6.2)')  day, ' GI: ',  (temp_b-temp_a)/temp_b,&
+                                                                           '   DM: ', (TOT_BIOMASS/CELLAREA)*0.01,&
+                                                                           '   LAI: ', temp_g, '  Pnr: ', temp_d,'   R: ', temp_c/temp_j
 
 ! if (day .eq. 235 .or. day .eq. 260) write(*,*)day, '',  temp_a/temp_b, '', (TOT_BIOMASS/CELLAREA)*0.01
 

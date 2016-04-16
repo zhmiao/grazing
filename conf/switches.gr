@@ -12,9 +12,9 @@
 =====================================================================================================
 = Grazing rate options
 =====================================================================================================
-0                                               ! Switch for fixed grazing rate
+1                                               ! Switch for fixed grazing rate
 -----------------------------------------------------------------------------------------------------
-1                                               ! Switch for grazing as a function of stocking density
+0                                               ! Switch for grazing as a function of stocking density
 -----------------------------------------------------------------------------------------------------
 0                                               ! Switch for grazing limited by unavailable biomass
 =====================================================================================================
@@ -30,13 +30,13 @@
 =====================================================================================================
 1                                               ! Switch for defoliation
 -----------------------------------------------------------------------------------------------------
-1                                               ! Switch for detachment
+0                                               ! Switch for detachment
 -----------------------------------------------------------------------------------------------------
 0                                               ! Effects on soil compactness
 =====================================================================================================
 = Second stage effects
 =====================================================================================================
-0                                               ! Switch for LAI calculation
+1                                               ! Switch for LAI calculation
 -----------------------------------------------------------------------------------------------------
 0                                               ! Switch for respiration rate calculation
 -----------------------------------------------------------------------------------------------------
@@ -50,7 +50,7 @@
 0                                               ! Switch for soil compactness effect on plant growth rate
 -----------------------------------------------------------------------------------------------------
 4                                               ! Switch for effects from LAI, switch numbe
-0,0,0,0,0                                       ! 1) On plant photosynthesis; 2) On rainfall interception; 3) On evaporation; 4) On transpiration; 5) On available light
+1,0,0,0,0                                       ! 1) On plant photosynthesis; 2) On rainfall interception; 3) On evaporation; 4) On transpiration; 5) On available light
 -----------------------------------------------------------------------------------------------------
 3                                               ! Switch for effects from available N, switch number
 0,0,0                                           ! 1) On plant Nitrogen uptake; 2) On plant photosynthesis; 3) On plant root to shoot ratio
@@ -60,7 +60,7 @@
 1                                               ! If there should be grazing effects on plant growth in this particular model
 0                                               ! If Eff Grwoth Days
 0                                               ! If Eff Carrying Capacity
-0                                               ! If Eff R
+0                                               ! If Eff Rm
 0                                               ! If Eff DR
 -----------------------------------------------------------------------------------------------------
 

@@ -43,8 +43,9 @@ subroutine graz_eff_func
           end if
   
           if (IF_EFF_R .eq. 1) then
+
             ! # Third, R_MAX modifications.
-            gx = -1/(CELL(y_dim,x_dim)%SPP_RES(cur_pla)+1)+1&
+            gx = (-1/(CELL(y_dim,x_dim)%SPP_RES(cur_pla)+1)+1&
                           -1/(CELL(y_dim,x_dim)%AN_POOL_D+CELL(y_dim,x_dim)%LIT_N_D+1)+1&
                           +(2*EXP(1.)-2)/((EXP(1.)-2)+EXP((2*CELL(y_dim,x_dim)%LIT_POOL_D-1)**2))-1&
                           -1/(CELL(y_dim,x_dim)%SPP_PS(cur_pla)+1)+1&
@@ -52,10 +53,13 @@ subroutine graz_eff_func
                           +1/(CELL(y_dim,x_dim)%POT_EVP+1)-1&
                           -1/(CELL(y_dim,x_dim)%SPP_TRP(cur_pla)+1)+1&
                           -1/(CELL(y_dim,x_dim)%SPP_NU_D(cur_pla)+1)+1&
-                          -1/(CELL(y_dim,x_dim)%SPP_CC(cur_pla)+1)+1
+                          -1/(CELL(y_dim,x_dim)%SPP_CC(cur_pla)+1)+1)*0.4
 
             ! Coefficient calculation
             CELL(y_dim,x_dim)%R_MAX_CO(cur_pla)=2/(1+EXP(-gx))
+
+            ! CELL(y_dim,x_dim)%R_MAX_CO(cur_pla)=2/(1+EXP(-gx))
+
           end if
 
           if (IF_EFF_DR .eq. 1) then

@@ -10,6 +10,28 @@ program grazing_model
   call model_ini
   call grazing_ini
 
+  do temp_h=1,4
+
+    ! if (temp_h .eq. 1) temp_f = 0.0
+    ! if (temp_h .eq. 2) temp_f = 0.07
+    ! if (temp_h .eq. 3) temp_f = 0.13
+    ! if (temp_h .eq. 4) temp_f = 0.19
+
+    if (temp_h .eq. 1) temp_f = 0.0
+    if (temp_h .eq. 2) temp_f = 0.09
+    if (temp_h .eq. 3) temp_f = 0.16
+    if (temp_h .eq. 4) temp_f = 0.25
+
+    do y_dim=1,MAX_Y_DIM
+      do x_dim=1,MAX_X_DIM
+        CELL(y_dim,x_dim)%TOT_BIO_SPP(:)=0
+      end do
+    end do 
+  
+    write(*,*) ''
+    ! write(*,'(A5,F6.2)') 'DGI: ', temp_f
+
+
   ! # do a yearly and daily loop
   do year=start_yr, end_yr
 
@@ -43,9 +65,11 @@ program grazing_model
 
   end do    ! End looping for years
 
-  write(*,*) ' '
-  write(*,*) '^^^^^^^^^^^^^^^^^^^^^^^^'
-  write(*,*) '< Program is complete. >'
-  write(*,*) '^^^^^^^^^^^^^^^^^^^^^^^^'
+  end do
+
+  ! write(*,*) ' '
+  ! write(*,*) '^^^^^^^^^^^^^^^^^^^^^^^^'
+  ! write(*,*) '< Program is complete. >'
+  ! write(*,*) '^^^^^^^^^^^^^^^^^^^^^^^^'
 
 end program grazing_model

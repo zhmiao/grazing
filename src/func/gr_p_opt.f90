@@ -240,6 +240,7 @@ subroutine grazing_process_opt
 
       ! ### Calculate total demand using fixed rate for each animal
       do cur_ani=1,ANI_SPP_NUM
+        ! write(*,*) 'ani', FIX_GR_R(cur_ani)
         TOT_DMD(cur_ani)=ANI_AV_BIO(cur_ani)*FIX_GR_R(cur_ani)
       end do
 

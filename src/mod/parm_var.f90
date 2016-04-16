@@ -159,7 +159,8 @@ module parameter_var
 
   ! For fixed grazing rate {{{
   real, dimension(:), allocatable     :: FIX_GR_R                 ! (%) Fixed grazing rate for each animal species }}}
-
+  real :: test_gr
+ 
   ! For stocking density function {{{
   real, dimension(:), allocatable     :: MAX_SD                   ! (head/m^2) Maximum stocking density
   real, dimension(:), allocatable     :: MIN_SD                   ! (head/m^2) Minimum stocking density
@@ -214,7 +215,7 @@ module parameter_var
 
   !}}}
 
-  real :: temp_a, temp_b
+  real :: temp_a, temp_b, temp_c, temp_d, temp_f, temp_g, temp_h, temp_i, temp_j
 end module parameter_var
 
 
