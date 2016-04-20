@@ -133,6 +133,23 @@ subroutine model_output
 
     ! close(OUTPUT_NUM)
     
+    if (day .eq. 1) then
+
+      write(COMPARE_DIR,'(A12)')'/out/compare'
+  
+    endif
+
+      inquire(unit=COMPARE_NUM, opened=isopen)
+      if (isopen .eq. .false.) then
+      open(COMPARE_NUM, FILE=CWD(1:len_trim(CWD))//COMPARE_DIR(1:len_trim(COMPARE_DIR))//'.csv',STATUS='REPLACE'&
+                                                                        ,ACTION='WRITE',IOSTAT=ioerr)
+        if (ioerr .ne. 0) then
+          write(*,*) 'Compare outputfile can not be opened'
+          stop
+        end if
+  
+      end if
+  
 
 ! if (day .eq. 181 .or. day .eq. 206 .or. day .eq. 232) temp_b=TOT_BIOMASS
 if (day .eq. 181 .or. day .eq. 232) temp_b=TOT_BIOMASS
@@ -179,6 +196,14 @@ if (day .eq. 206) write(*,'(I3,A8,F6.2,A8,F6.2,A9,F6.2,A9,F6.2,A8,F6.2,A8,F6.2)'
 if (day .eq. 258) write(*,'(I3,A8,F6.2,A8,F6.2,A9,F6.2,A9,F6.2,A8,F6.2,A8,F6.2)')  day, ' GI: ',  (temp_b-temp_a)/temp_b,&
                                                                            '   DM: ', (TOT_BIOMASS/CELLAREA)*0.01,&
                                                                            '   LAI: ', temp_g, '  Pnr: ', temp_d,'   CD: ', temp_c/temp_j,'   DR: ', temp_k/temp_m
+
+if (day .eq. 206) write(COMPARE_NUM,'(I3,A1,F6.2,A1,F6.2,A1,F6.2,A1,F6.2,A1,F6.2,A1,F6.2)')  day, ',',  (temp_b-temp_a)/temp_b,&
+                                                                           ',', (TOT_BIOMASS/CELLAREA)*0.01,&
+                                                                           ',', temp_g, ',', temp_d,',', temp_c/temp_i,',', temp_k/temp_l
+
+if (day .eq. 258) write(COMPARE_NUM,'(I3,A1,F6.2,A1,F6.2,A1,F6.2,A1,F6.2,A1,F6.2,A1,F6.2)')  day, ',',  (temp_b-temp_a)/temp_b,&
+                                                                           ',', (TOT_BIOMASS/CELLAREA)*0.01,&
+                                                                           ',', temp_g, ',', temp_d,',', temp_c/temp_j,',', temp_k/temp_m
 
 ! if (day .eq. 235 .or. day .eq. 260) write(*,*)day, '',  temp_a/temp_b, '', (TOT_BIOMASS/CELLAREA)*0.01
 
