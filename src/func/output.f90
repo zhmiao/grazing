@@ -94,7 +94,7 @@ subroutine model_output
 
     end if
 
-    write(TOT_NUM,*) TOT_BIOMASS,','
+    write(TOT_NUM,*) (TOT_BIOMASS/CELLAREA)*0.01,','
 
     TOT_BIOMASS_Y=TOT_BIOMASS_Y+TOT_BIOMASS
 
