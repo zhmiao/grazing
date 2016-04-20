@@ -179,21 +179,21 @@ subroutine graz_conf_read
       ! # Read in the grazing rate for each animal species
       if (FR_SW .eq. 1) then
 
-      read(GR_CON_SEA,*)
+      ! read(GR_CON_SEA,*)
+      !
+      ! FIX_GR_R(:)=temp_f
 
-      FIX_GR_R(:)=temp_f
-
-        ! read(GR_CON_SEA,*,iostat=ioerr)(FIX_GR_R(cur_ani), cur_ani=1,ANI_SPP_NUM)
-        ! write(*,*) FIX_GR_R(:)
-        ! if (ioerr .ne. 0 ) then 
-        !   write(*,*) 'Fixed grazing rate reading error'
-        !   stop
-        ! else
-        !   write(ECHO_NUM,*) 'Fixed grazing rate for each animal species are: '
-        !   do cur_ani=1,ANI_SPP_NUM
-        !     write(ECHO_NUM,*) FIX_GR_R(cur_ani)
-        !   end do
-        ! end if
+        read(GR_CON_SEA,*,iostat=ioerr)(FIX_GR_R(cur_ani), cur_ani=1,ANI_SPP_NUM)
+        write(*,*) FIX_GR_R(:)
+        if (ioerr .ne. 0 ) then 
+          write(*,*) 'Fixed grazing rate reading error'
+          stop
+        else
+          write(ECHO_NUM,*) 'Fixed grazing rate for each animal species are: '
+          do cur_ani=1,ANI_SPP_NUM
+            write(ECHO_NUM,*) FIX_GR_R(cur_ani)
+          end do
+        end if
 
       else
 
@@ -216,22 +216,22 @@ subroutine graz_conf_read
           stop
         end if
 
-        ! ! For GI loop
-        ! read(GR_CON_SEA,*)
-        ! MAX_SD(:)=temp_f
+        ! For GI loop
+        read(GR_CON_SEA,*)
+        MAX_SD(:)=temp_f
 
         ! ## Read in maximum stoking density
-        read(GR_CON_SEA,*,iostat=ioerr)(MAX_SD(cur_ani), cur_ani=1,ANI_SPP_NUM)
-        if (ioerr .ne. 0 ) then 
-          write(*,*) 'Maximum stocking density reading error'
-          stop
-        else
-          write(ECHO_NUM,*) 'Maximum stocking density for each animal species are: '
-          do cur_ani=1,ANI_SPP_NUM
-            write(ECHO_NUM,*) MAX_SD(cur_ani)
-          end do
-        end if
-
+        ! read(GR_CON_SEA,*,iostat=ioerr)(MAX_SD(cur_ani), cur_ani=1,ANI_SPP_NUM)
+        ! if (ioerr .ne. 0 ) then 
+        !   write(*,*) 'Maximum stocking density reading error'
+        !   stop
+        ! else
+        !   write(ECHO_NUM,*) 'Maximum stocking density for each animal species are: '
+        !   do cur_ani=1,ANI_SPP_NUM
+        !     write(ECHO_NUM,*) MAX_SD(cur_ani)
+        !   end do
+        ! end if
+        !
         ! write(*,*) MAX_SD(:)
 
         ! ## Read in minimum stoking density

@@ -83,9 +83,11 @@ if (GR_SW .eq. 1) then
         CELL(y_dim,x_dim)%TOT_BIO_SPP(cur_pla)=CELL(y_dim,x_dim)%TOT_BIO_SPP(cur_pla)&
                                                 -sum(CELL(y_dim,x_dim)%SPP_GRAZED(:,cur_pla))
   
-        if (CELL(y_dim,x_dim)%TOT_BIO_SPP(cur_pla) .le. 0) then
-          CELL(y_dim,x_dim)%TOT_BIO_SPP(cur_pla)=0
-        end if
+        if (CELL(y_dim,x_dim)%TOT_BIO_SPP(cur_pla) .le. 0) CELL(y_dim,x_dim)%TOT_BIO_SPP(cur_pla)=0
+
+        if (temp_h .eq. 1 .and. CELL(y_dim,x_dim)%TOT_BIO_SPP(cur_pla) .le. 1.87) CELL(y_dim,x_dim)%TOT_BIO_SPP(cur_pla)=1.87
+        if (temp_h .eq. 2 .and. CELL(y_dim,x_dim)%TOT_BIO_SPP(cur_pla) .le. 1.33) CELL(y_dim,x_dim)%TOT_BIO_SPP(cur_pla)=1.33
+        if (temp_h .eq. 3 .and. CELL(y_dim,x_dim)%TOT_BIO_SPP(cur_pla) .le. 0.8)  CELL(y_dim,x_dim)%TOT_BIO_SPP(cur_pla)=0.8
   
       end if !}}}
   

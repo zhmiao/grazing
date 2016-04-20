@@ -12,15 +12,15 @@ program grazing_model
 
   do temp_h=1,4
 
-    ! if (temp_h .eq. 1) temp_f = 0.0
-    ! if (temp_h .eq. 2) temp_f = 0.07
-    ! if (temp_h .eq. 3) temp_f = 0.13
-    ! if (temp_h .eq. 4) temp_f = 0.19
-
     if (temp_h .eq. 1) temp_f = 0.0
-    if (temp_h .eq. 2) temp_f = 0.09
-    if (temp_h .eq. 3) temp_f = 0.16
-    if (temp_h .eq. 4) temp_f = 0.25
+    if (temp_h .eq. 2) temp_f = 0.07
+    if (temp_h .eq. 3) temp_f = 0.13
+    if (temp_h .eq. 4) temp_f = 0.19
+
+    ! if (temp_h .eq. 1) temp_f = 0.0
+    ! if (temp_h .eq. 2) temp_f = 0.09
+    ! if (temp_h .eq. 3) temp_f = 0.16
+    ! if (temp_h .eq. 4) temp_f = 0.25
 
     do y_dim=1,MAX_Y_DIM
       do x_dim=1,MAX_X_DIM
