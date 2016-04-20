@@ -14,10 +14,9 @@ module parameter_var
   character(40)                        :: SIM_CON_NAME='/conf/sim_config.gr'          ! general configuration file
   integer, parameter                   :: SIM_CON_NUM=99                              ! general config device number
   character(30)                        :: OUTPUT_DIR                                  ! output file name
-  integer, parameter                   :: OUTPUT_NUM=100                              ! output device number
-  integer, parameter                   :: OUTPUT_NUM_Y=102                            ! yearly output device number
-  character(30)                        :: COMPARE_DIR                                 ! compare output file name
-  integer, parameter                   :: COMPARE_NUM=103                              ! output device number
+  integer, parameter                   :: TOT_NUM=100                                 ! output device number
+  integer, parameter                   :: YEARLY_NUM=102                              ! yearly output device number
+  integer, parameter                   :: COMPARE_NUM=103                             ! output device number
   character(30)                        :: ECHO_NAME='/.echo.gr'                       ! echo file name
   integer, parameter                   :: ECHO_NUM=300                                ! echo file device number
   integer                              :: SW_NUM                                      ! Used to store number of switches is there are multiple switches
